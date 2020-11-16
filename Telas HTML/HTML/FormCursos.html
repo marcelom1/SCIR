@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-br">
+   <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>SCIR - IFSC</title>
+      <link rel="icon" href="../img/ifsc.ico">
+      <!-- Font Google Knewave CSS -->  
+      <link href="https://fonts.googleapis.com/css?family=Knewave&display=swap" rel="stylesheet">
+      <!-- Bootstrap CSS -->
+       
+      <link rel="stylesheet" href="../CSS/bootstrap.min.css">
+      <link rel ="stylesheet" href="../CSS/jquery.bootgrid.min.css">
+      <!--CSS Próprio -->
+      <link rel="stylesheet" href="../CSS/menu.css">
+      <link rel ="stylesheet" href="../CSS/login.css">
+       <link rel ="stylesheet" href="../CSS/paginacao.css">
+
+   </head>
+   <body class="Fundo">
+      <div class="cabecalho container-fluid d-flex justify-content-between">
+         <div class="logo-ifsc flex-row">
+            <div class="logo-header">
+               <a class="logo" href="" title="Página inicial">
+               <img src="../img/logo-ifsc.svg" class="img-fluid d-none d-sm-block" alt="logo"></a>
+            </div>
+         </div>
+           <div class="logo-ifsc flex-row">
+            <div class="logo-header">
+               <a class="logo" href="" title="Página inicial">
+               <img src="../img/Logo.png" class="img-fluid d-block d-sm-none " width="100" height="100" alt="logo"></a>
+            </div>
+         </div>
+          <div class="form-inline m-5 my-lg-3">
+                    <div class=" dropdown">
+                      <label class=" dropdown-toggle text-success font-weight-bold text-uppercase "type="text" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Marcelo Miglioli
+                      </label>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Alguma ação</a>
+                        <a class="dropdown-item" href="#">Outra ação</a>
+                        <a class="dropdown-item" href="#">Sair</a>
+                      </div>
+                    </div>
+            </div>
+         
+      </div>
+      <nav class="navbar navbar-expand-md navbar-dark  bg-success">
+         <a class="navbar-brand Fonte-Knewave-Red" href="#"> </a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+               <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
+                  <div class="dropdown-menu" aria-labelledby="dropdown01">
+                     <a class="dropdown-item" href="#">Curso</a>
+                     <a class="dropdown-item" href="#">Fluxo de Status</a>
+                     <a class="dropdown-item" href="#">Status</a>
+                     <a class="dropdown-item" href="#">Tipo de Requerimento</a>
+                     <a class="dropdown-item" href="#">Unidade Curricular</a>
+                     <a class="dropdown-item" href="#">Usuário</a>
+                  </div>
+               <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Consulta</a>
+                  <div class="dropdown-menu" aria-labelledby="dropdown01">
+                     <a class="dropdown-item" href="#">Requerimentos</a>
+                  </div>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="#">Minha Fila </a>
+               </li>
+            </ul>
+         </div>
+      </nav>
+      <main >
+          
+         <!-- AQUI VAI O CONTEUDO DA PAGINA -->
+         <div class="pt-5 form-signin ">
+            <form class="FundoEmpresa mt-3  centro">
+               <h3 class="pb-3">Cadastro Curso</h3>
+               <button type="button" class="btn bg-success botao_cor btn-sm">Novo</button>
+               <div class="form-row pb-1 pt-4 ">
+                   <div class="form-group col-md-2">
+                     <label for="CodigoEmpresa">Código</label>
+                     <div class="input-group mb-1">
+                        <input type="text" class="form-control" placeholder="Código" >
+                        <div class="input-group-append">
+                           <button class="btn btn-outline-secondary" type="button" id="button-addon2"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                              <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                              <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                            </svg></button>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label for="Nome">Nome</label>
+                     <input type="text" class="form-control" id="NomeCurso" placeholder="Nome">
+                  </div>
+                  
+               </div>
+               <div class="form-row pb-5 ">
+                  <div class="col-auto">
+                      <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="autoSizingCheck">
+                        <label class="form-check-label" for="autoSizingCheck">
+                          Ativo
+                        </label>
+                      </div>
+                    </div>
+               </div>
+               <button type="submit" id="Botao_Salvar" class="btn botao_cor_verde btn-lg">Salvar</button>
+
+    <div class="form-row float-right">
+        <div class="form-group col-md-1">
+            <input type="button" id="Botao_Excluir_Formulario_Empresa" formaction="/Empresa/Excluir" value="Excluir" class="btn botao_cor btn-lg">
+        </div>
+    </div> 
+            </form>
+             
+
+         </div>
+         <!-- AQUI VAI O CONTEUDO DA PAGINA -->
+      </main>
+      <script src="../JS/jquery-3.5.1.min.js"></script>
+      <script src="../JS/jquery.js"></script>
+      <script src="../JS/popper.min.js"></script>
+      <script src="../JS/bootstrap.min.js"></script>
+      <script src="../JS/jquery.bootgrid.min.js"></script>
+      <script>
+       
+   
+          $("#grid-basic").bootgrid({
+              labels: {
+                search: "Pesquisar",
+                infos: "Mostrando {{ctx.start}} a {{ctx.end}} de {{ctx.total}} resultados",
+                all: "Tudo"
+              },
+              formatters: {
+                "commands": function(column, row)
+                {
+                    return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" data-row-id=\"" + row.id + "\"><span class=\"zmdi zmdi-edit\"></span></button> " +
+                    "<button type=\"button\" class=\"btn btn-icon command-delete waves-effect waves-circle\" data-row-id=\"" + row.id + "\"><span class=\"zmdi zmdi-delete\"></span></button>";
+                },
+                "checkbox-activo": function(column, row)
+                {
+                    return "<input type=\"checkbox\" value=\"1\" checked=\"checked\" disabled=\"disabled\">";
+                }
+              },
+              
+
+            });
+
+    </script>
+    
+       
+   </body>
+</html>
