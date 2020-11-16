@@ -1,0 +1,55 @@
+.Fonte-Knewave-Red{
+    font-family: 'Knewave', cursive;
+    color: red!important;
+}
+.Letra_Vermelha{
+    color: red;
+}
+
+.botao_cor{
+    color: white;
+}
+
+.Fundo {
+ background-color: #D9D9D9;  
+}
+
+.cabecalho{
+    background-color: white;
+}
+
+.FundoSecao {
+    /* Declaração para aparecer no Firefox */
+    -moz-border-radius: 20px;
+    /* Para exibir nos outros navegadores como Chrome, safari, opera*/
+    -webkit-border-radius: 20px;
+    border-radius: 15px;
+    background-color: white;
+    border-style: solid;
+    border-color: #636363;
+    color: white;
+    padding: 2%;
+    width: 95%;
+    color: black;
+}
+
+.centro {
+    position: absolute;
+    left: 2.5%;
+}
+
+.botao_cor {
+    background-color: #fd5759;
+    color: white;
+}
+
+.lupa {
+    left: 20%;
+}
+
+.botao_cor_verde {
+    background-color: green;
+    color: white;
+}
+
+
