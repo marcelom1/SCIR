@@ -269,9 +269,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CursosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DAO\Cadastros\CursosDao.cs" />
+    <Compile Include="DAO\ScirContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20201129185643_inicial.cs" />
+    <Compile Include="Migrations\20201129185643_inicial.designer.cs">
+      <DependentUpon>20201129185643_inicial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
+    <Compile Include="Models\Cursos.cs" />
+    <Compile Include="Models\ViewModels\CursoVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1443,6 +1452,7 @@
     <Content Include="Content\img\Logo.png" />
     <Content Include="Content\jquery.bootgrid.css" />
     <Content Include="Content\jquery.bootgrid.min.css" />
+    <Content Include="Content\js\CadastroCurso.js" />
     <Content Include="Content\login.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\paginacao.css" />
@@ -1493,10 +1503,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cursos\Index.cshtml" />
+    <Content Include="Views\Cursos\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

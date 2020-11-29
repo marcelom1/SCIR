@@ -82,20 +82,20 @@
 
         <!-- AQUI VAI O CONTEUDO DA PAGINA -->
         <div class="pt-5 form-signin ">
-            <form class="FundoEmpresa mt-3  centro">
+            <div class="FundoEmpresa mt-3  centro">
                 @RenderBody()
-            </form>
+            </div>
         </div>
         <!-- AQUI VAI O CONTEUDO DA PAGINA -->
     </main>
     <script src="~/Scripts/jquery-3.5.1.min.js"></script>
     <script src="~/Scripts/jquery.js"></script>
-    <script src="~/Scripts/popper.min.js"></script>
+    <!--  <script src="~/Scripts/popper.min.js"></script>-->
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.bootgrid.min.js"></script>
 
-     @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false)
 
 
 </body>
-</html>
+    </html>
