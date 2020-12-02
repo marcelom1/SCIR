@@ -3,6 +3,7 @@ using SCIR.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Web;
 using System.Web.Mvc;
 
@@ -61,5 +62,24 @@ namespace SCIR.Controllers
 
             return RedirectToAction("Index", "Cursos");
         }
+
+        public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10)
+        {
+            var chave = Request.Form.AllKeys.Where(k => k.StartsWith("sort")).First();
+            var ordenacao = Request[chave];
+            var campo = chave.Replace("sort[", string.Empty).Replace("]", string.Empty);
+
+            var campoOrdenacao = String.Format("{0} {1}", campo, ordenacao);
+
+            var pesquisa = dbCursos.ListGrid(current, rowCount, campoOrdenacao, searchPhrase);
+            var totalRegistros = dbCursos.TotalRegistros();
+
+            return Json(new { rows = pesquisa,
+                              current,
+                              rowCount,
+                              total = totalRegistros
+            }, JsonRequestBehavior.AllowGet );
+        }
+
     }
 }

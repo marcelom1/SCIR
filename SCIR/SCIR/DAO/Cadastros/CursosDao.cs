@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Web;
+using PagedList;
 
 namespace SCIR.DAO.Cadastros
 {
@@ -17,11 +19,44 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public IList<Cursos> List()
+        public IPagedList<Cursos> ListGrid(int pagina = 1, int registros = 10, string campoOrdenacao = "Id asc", string searchParser = "")
+        {
+            var where = "";
+            if (!string.IsNullOrWhiteSpace(searchParser))
+            {
+                int id = 0;
+                if (int.TryParse(searchParser, out id)) 
+                    where = string.Format("Id = {0}", id);
+
+                bool ativo = true;
+                if (bool.TryParse(searchParser, out ativo))
+                {
+                    if (!string.IsNullOrWhiteSpace(where))
+                        where += " OR ";
+                    where += string.Format("Ativo = {0} ", ativo);
+                }
+
+                if (!string.IsNullOrWhiteSpace(where))
+                    where += " OR ";
+
+                where += string.Format("Nome.Contains(\"{0}\")", searchParser);
+            }
+            else
+            {
+                where = "1=1";
+            }
+
+            using (var contexto = new ScirContext())
+            {
+                return contexto.Cursos.Where(where).OrderBy(campoOrdenacao).ToPagedList(pagina, registros);
+            }
+        }
+
+        public int TotalRegistros()
         {
             using (var contexto = new ScirContext())
             {
-                return contexto.Cursos.ToList();
+                return contexto.Cursos.Count();
             }
         }
 
