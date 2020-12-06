@@ -31,38 +31,31 @@ namespace SCIR.Controllers
         }
 
         [HttpPost]
-        public ActionResult Salvar(Cursos curso, bool Consistido = false)
+        public ActionResult Salvar(Cursos curso)
         {
             var model = new CursoVM();
-          
-            if (curso.Id != 0)
+            try
             {
-                var consistencia = cursoServer.ConsisteAtualizar(curso);
-                if (!Consistido && (consistencia.Inconsistencias.Any() || consistencia.Advertencias.Any()))
-                {
-                    model.Curso = curso;
-                    model.Consistencia = consistencia;
-                }
-                else
+                if (curso.Id != 0)
                 {
                     cursoServer.Atualizar(curso);
                     model.Curso = curso;
                 }
-            }
-            else 
-            {
-                var consistencia = cursoServer.ConsisteNovo(curso);
-                if (!Consistido && (consistencia.Inconsistencias.Any() || consistencia.Advertencias.Any()))
-                {
-                    model.Curso = curso;
-                    model.Consistencia = consistencia;
-                }
                 else
-                {
+                { 
                     cursoServer.Novo(curso);
                     model.Curso = curso;
                 }
             }
+            catch (Exception e)
+            {
+
+                model.Curso = curso;
+                var consistencia = new ConsisteUtils();
+                consistencia.Add(e.Message, ConsisteUtils.Tipo.Inconsistencia);
+                model.Consistencia = consistencia;
+            }
+            
        
             return View("Form", model);
         }
@@ -73,6 +66,29 @@ namespace SCIR.Controllers
             cursoServer.Excluir(curso);
 
             return RedirectToAction("Index", "Cursos");
+        }
+
+        [HttpPost]
+        public JsonResult ConsisteNovoAtualiza(Cursos curso)
+        {
+            var consistencia = new ConsisteUtils();
+
+            if (curso.Id != 0)
+                consistencia = cursoServer.ConsisteAtualizar(curso);
+            else
+                consistencia = cursoServer.ConsisteNovo(curso);
+
+            return Json(consistencia, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult ConsisteExcluir(Cursos curso)
+        {
+            var consistencia = new ConsisteUtils();
+
+            consistencia = cursoServer.ConsisteExcluir(curso);
+          
+            return Json(consistencia, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10)
@@ -87,6 +103,8 @@ namespace SCIR.Controllers
                               total = response.QuantidadeRegistros
             }, JsonRequestBehavior.AllowGet );
         }
+
+
 
 
     }
