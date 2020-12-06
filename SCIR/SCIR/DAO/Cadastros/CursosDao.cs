@@ -5,12 +5,13 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Web;
 using PagedList;
+using SCIR.Utils;
 
 namespace SCIR.DAO.Cadastros
 {
-    public class CursosDao
+    internal class CursosDao : ICadastrosDao<Cursos>
     {
-        public void Add(Cursos curso)
+        public void Insert(Cursos curso)
         {
             using (var context = new ScirContext())
             {
@@ -19,17 +20,17 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public IPagedList<Cursos> ListGrid(int pagina = 1, int registros = 10, string campoOrdenacao = "Id asc", string searchParser = "")
+        public IPagedList<Cursos> ListGrid(FormatGridUtils request)
         {
             var where = "";
-            if (!string.IsNullOrWhiteSpace(searchParser))
+            if (!string.IsNullOrWhiteSpace(request.SearchPhrase))
             {
                 int id = 0;
-                if (int.TryParse(searchParser, out id)) 
+                if (int.TryParse(request.SearchPhrase, out id)) 
                     where = string.Format("Id = {0}", id);
 
                 bool ativo = true;
-                if (bool.TryParse(searchParser, out ativo))
+                if (bool.TryParse(request.SearchPhrase, out ativo))
                 {
                     if (!string.IsNullOrWhiteSpace(where))
                         where += " OR ";
@@ -39,7 +40,7 @@ namespace SCIR.DAO.Cadastros
                 if (!string.IsNullOrWhiteSpace(where))
                     where += " OR ";
 
-                where += string.Format("Nome.Contains(\"{0}\")", searchParser);
+                where += string.Format("Nome.Contains(\"{0}\")", request.SearchPhrase);
             }
             else
             {
@@ -48,7 +49,10 @@ namespace SCIR.DAO.Cadastros
 
             using (var contexto = new ScirContext())
             {
-                return contexto.Cursos.Where(where).OrderBy(campoOrdenacao).ToPagedList(pagina, registros);
+                if (string.IsNullOrWhiteSpace(request.CampoOrdenacao))
+                    request.CampoOrdenacao = "Id asc";
+
+                return contexto.Cursos.Where(where).OrderBy(request.CampoOrdenacao).ToPagedList(request.Current, request.RowCount);
             }
         }
 
@@ -86,5 +90,12 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
+        public bool Exist(Cursos curso)
+        {
+            using (var contexto = new ScirContext())
+            {
+                return contexto.Cursos.Contains(curso);
+            }
+        }
     }
 }

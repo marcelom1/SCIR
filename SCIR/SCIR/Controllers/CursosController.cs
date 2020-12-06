@@ -1,5 +1,7 @@
-﻿using SCIR.DAO.Cadastros;
+﻿using SCIR.Business.Cadastros;
 using SCIR.Models;
+using SCIR.Models.ViewModels;
+using SCIR.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace SCIR.Controllers
 {
     public class CursosController : Controller
     {
-        private CursosDao dbCursos = new CursosDao();
+        private CursosServer cursoServer = new CursosServer();
 
         public ActionResult Index()
         {
@@ -20,66 +22,72 @@ namespace SCIR.Controllers
 
         public ActionResult Form(int id = 0)
         {
-            var model = new Cursos();
+            var model = new CursoVM();
 
             if (id != 0)
-                model = dbCursos.BuscarPorId(id);
+                model.Curso = cursoServer.GetEntidade(id);
 
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Novo(Cursos curso)
+        public ActionResult Salvar(Cursos curso, bool Consistido = false)
         {
-
-            var pesquisa = dbCursos.BuscarPorId(curso.Id);
-            var model = new Cursos();
-           
-            if (ModelState.IsValid)
+            var model = new CursoVM();
+          
+            if (curso.Id != 0)
             {
-                //Caso já existir ela será atualizada
-                if (pesquisa != null)
+                var consistencia = cursoServer.ConsisteAtualizar(curso);
+                if (!Consistido && (consistencia.Inconsistencias.Any() || consistencia.Advertencias.Any()))
                 {
-                    dbCursos.Update(curso);
-                    return RedirectToAction("Index", "Cursos");
+                    model.Curso = curso;
+                    model.Consistencia = consistencia;
                 }
-                else //Senão é nova sendo adicionada
+                else
                 {
-                    dbCursos.Add(curso);
-                    return RedirectToAction("Form", new { id = curso.Id });
+                    cursoServer.Atualizar(curso);
+                    model.Curso = curso;
                 }
             }
+            else 
+            {
+                var consistencia = cursoServer.ConsisteNovo(curso);
+                if (!Consistido && (consistencia.Inconsistencias.Any() || consistencia.Advertencias.Any()))
+                {
+                    model.Curso = curso;
+                    model.Consistencia = consistencia;
+                }
+                else
+                {
+                    cursoServer.Novo(curso);
+                    model.Curso = curso;
+                }
+            }
+       
             return View("Form", model);
         }
 
         [HttpPost]
         public ActionResult Excluir(Cursos curso)
         {
-            var pesquisa = dbCursos.BuscarPorId(curso.Id);
-
-            if (pesquisa != null)
-                dbCursos.Delete(pesquisa);
+            cursoServer.Excluir(curso);
 
             return RedirectToAction("Index", "Cursos");
         }
 
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10)
         {
-            var chave = Request.Form.AllKeys.Where(k => k.StartsWith("sort")).First();
-            var ordenacao = Request[chave];
-            var campo = chave.Replace("sort[", string.Empty).Replace("]", string.Empty);
+            var request = FormatGridUtils.Format(Request, searchPhrase, current, rowCount);
 
-            var campoOrdenacao = String.Format("{0} {1}", campo, ordenacao);
+            var response = cursoServer.Listar(request);
 
-            var pesquisa = dbCursos.ListGrid(current, rowCount, campoOrdenacao, searchPhrase);
-            var totalRegistros = dbCursos.TotalRegistros();
-
-            return Json(new { rows = pesquisa,
+            return Json(new { rows = response.Entidades,
                               current,
                               rowCount,
-                              total = totalRegistros
+                              total = response.QuantidadeRegistros
             }, JsonRequestBehavior.AllowGet );
         }
+
 
     }
 }

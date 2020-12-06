@@ -276,10 +276,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\Cadastros\CursosServer.cs" />
     <Compile Include="Controllers\CursosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAO\Cadastros\CursosDao.cs" />
+    <Compile Include="DAO\ICadastrosDao.cs" />
     <Compile Include="DAO\ScirContext.cs" />
+    <Compile Include="Datacontract\Grid\ResponseGrid.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -291,6 +294,8 @@
     <Compile Include="Models\Cursos.cs" />
     <Compile Include="Models\ViewModels\CursoVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ConsisteUtils.cs" />
+    <Compile Include="Utils\FormatGridUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -301,6 +306,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\CadastroCurso.css" />
     <Content Include="Content\img\1.jpeg" />
     <Content Include="Content\img\2.jpeg" />
     <Content Include="Content\img\3.jpeg" />
@@ -1462,6 +1468,7 @@
     <Content Include="Content\jquery.bootgrid.css" />
     <Content Include="Content\jquery.bootgrid.min.css" />
     <Content Include="Content\js\CadastroCurso.js" />
+    <Content Include="Content\js\NotificationAlert.js" />
     <Content Include="Content\login.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\PagedList.css" />
