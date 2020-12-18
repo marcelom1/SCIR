@@ -1,7 +1,8 @@
-﻿.erro {
-    
-}
-
+﻿
 .Oculto {
     display: none;
+}
+
+[aria-disabled^="false"] {
+    cursor: Pointer;
 }

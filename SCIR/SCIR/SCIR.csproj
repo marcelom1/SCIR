@@ -1468,6 +1468,8 @@
     <Content Include="Content\jquery.bootgrid.css" />
     <Content Include="Content\jquery.bootgrid.min.css" />
     <Content Include="Content\js\CadastroCurso.js" />
+    <Content Include="Content\js\CadastroCursoIndex.js" />
+    <Content Include="Content\js\GridInit.js" />
     <Content Include="Content\js\NotificationAlert.js" />
     <Content Include="Content\login.css" />
     <Content Include="Content\menu.css" />

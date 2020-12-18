@@ -103,8 +103,8 @@ namespace SCIR.Business.Cadastros
         public ResponseGrid<Cursos> Listar(FormatGridUtils request)
         {
             var response = new ResponseGrid<Cursos>();
-            response.Entidades = dbCursos.ListGrid(request).ToList();
-            response.QuantidadeRegistros = dbCursos.TotalRegistros();
+            response.Entidades = dbCursos.ListGrid(request);
+            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
 
             return response;
         }

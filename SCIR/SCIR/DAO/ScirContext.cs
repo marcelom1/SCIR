@@ -12,7 +12,7 @@ namespace SCIR.DAO
         public DbSet<Cursos> Cursos { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("Server=localhost;User Id=root;Database=dbscir"); ;
+            optionsBuilder.UseMySql("Server=localhost;User Id=root;Database=dbscir;Uid=root;Pwd=1475963m"); ;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

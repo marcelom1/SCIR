@@ -90,6 +90,7 @@ namespace SCIR.Controllers
           
             return Json(consistencia, JsonRequestBehavior.AllowGet);
         }
+        
 
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10)
         {

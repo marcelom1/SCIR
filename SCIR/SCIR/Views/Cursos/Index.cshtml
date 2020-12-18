@@ -6,7 +6,7 @@
 
 
 @section css{
-
+    <link href="~/Content/css/CadastroCurso.css" rel="stylesheet" />
 }
 
 <h3 class="pb-3">Cadastro Curso</h3>
@@ -23,37 +23,10 @@
 </table>
 
 @section scripts{
+    <script src="~/Content/js/GridInit.js"></script>
+    <script src="~/Content/js/CadastroCursoIndex.js"></script>
     <script>
-        $("#grid-basic").bootgrid(
-        {
-            ajax: true,
-            url: "@Url.Action("Listar")",
-            labels: {
-                search: "Pesquisar",
-                infos: "Mostrando {{ctx.start}} a {{ctx.end}} de {{ctx.total}} resultados",
-                all: "Tudo",
-                loading: "Carregando...",
-                noResults: "Nenhum resultado encontrado!",
-                refresh: "Atualizar"
-            },
-            formatters: {
-            "commands": function(column, row)
-            {
-                return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" data-row-id=\"" + row.id + "\"><span class=\"zmdi zmdi-edit\"></span></button> " +
-                "<button type=\"button\" class=\"btn btn-icon command-delete waves-effect waves-circle\" data-row-id=\"" + row.id + "\"><span class=\"zmdi zmdi-delete\"></span></button>";
-            },
-            "checkbox-activo": function(column, row)
-            {
-                var checked = "";
-                if (row.Ativo) {
-                    checked = "checked=\"checked\"";
-                }
-                return "<input type=\"checkbox\" value=\"1\" " + checked +" disabled=\"disabled\">";
-            }
-            },
-
-        });
-
-
+        var listaGrid = "@Url.Action("Listar")";
     </script>
+
 }

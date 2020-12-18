@@ -14,3 +14,14 @@
 function FunctionNaoDefinida() {
     $("#alertConfirmation").remove();
 }
+
+function VerificarConsistencia(mensagem, tipo, ClickConfirmation, ClickCancel) {
+    if (mensagem != "") {
+        var msg = TratarMsgConsistencia(mensagem);
+        addNotification(msg, tipo,ClickConfirmation , ClickCancel)
+    }
+}
+
+function TratarMsgConsistencia(mensagem) {
+    return mensagem.replaceAll("|", "<br>")
+}
