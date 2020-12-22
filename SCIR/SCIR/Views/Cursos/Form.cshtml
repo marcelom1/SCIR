@@ -8,7 +8,7 @@
 
 
 @section css{
-    <link href="~/Content/css/CadastroCurso.css" rel="stylesheet" />
+    <link href="~/Content/css/Cursos/CadastroCursoForm.css" rel="stylesheet" />
 }
 <div id="alert">
 
@@ -16,7 +16,7 @@
 <hr>
 <h3 class="pb-3">Cadastro Curso</h3>
 
-<input onclick="location.href='/Cursos/Form'" class = "btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Novo">
+<input onclick="location.href='/Cursos/Form'" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Novo">
 
 @using (Html.BeginForm("Salvar", "Cursos", FormMethod.Post, new { @id = "CadastroCurso", @name = "CadastroCurso" }))
 {
@@ -64,19 +64,19 @@
 
 
 @section scripts{
-    <script src="~/Content/js/CadastroCurso.js"></script>
+    <script src="~/Content/js/Cursos/CadastroCurso.js"></script>
     <script>
         var consistencia = "";
         var consistenciaTipo = 1;
 
         if (@Model.Consistencia.Inconsistencias.Any())
         {
-            consistencia = "@Model.Consistencia.InconsistenciasToString"; 
+            consistencia = "@Model.Consistencia.InconsistenciasToString";
             consistenciaTipo = 1;
-            
+
         }else if (@Model.Consistencia.Advertencias.Any())
         {
-           consistencia  = "@Model.Consistencia.AdvertenciasToString"; 
+           consistencia  = "@Model.Consistencia.AdvertenciasToString";
            consistenciaTipo = 2;
         }
 

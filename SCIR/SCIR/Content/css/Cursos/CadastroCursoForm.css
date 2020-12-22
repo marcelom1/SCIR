@@ -6,3 +6,7 @@
 [aria-disabled^="false"] {
     cursor: Pointer;
 }
+
+.ponteiro {
+    cursor: pointer;
+}

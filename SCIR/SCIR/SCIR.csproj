@@ -306,7 +306,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\css\CadastroCurso.css" />
+    <Content Include="Content\css\Cursos\CadastroCursoForm.css" />
+    <Content Include="Content\css\Cursos\CadastroCursoIndex.css" />
     <Content Include="Content\img\1.jpeg" />
     <Content Include="Content\img\2.jpeg" />
     <Content Include="Content\img\3.jpeg" />
@@ -1467,10 +1468,10 @@
     <Content Include="Content\img\Logo.png" />
     <Content Include="Content\jquery.bootgrid.css" />
     <Content Include="Content\jquery.bootgrid.min.css" />
-    <Content Include="Content\js\CadastroCurso.js" />
-    <Content Include="Content\js\CadastroCursoIndex.js" />
-    <Content Include="Content\js\GridInit.js" />
-    <Content Include="Content\js\NotificationAlert.js" />
+    <Content Include="Content\js\Cursos\CadastroCursoForm.js" />
+    <Content Include="Content\js\Cursos\CadastroCursoIndex.js" />
+    <Content Include="Content\js\Utils\GridInit.js" />
+    <Content Include="Content\js\Utils\NotificationAlert.js" />
     <Content Include="Content\login.css" />
     <Content Include="Content\menu.css" />
     <Content Include="Content\PagedList.css" />

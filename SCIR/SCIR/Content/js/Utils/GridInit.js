@@ -15,14 +15,14 @@
             formatters: {
                 "commands": function (column, row) {
 
-                    var divInicio = ' <div style="margin: 0 15px;">' 
+                    var divInicio = ' <div ">' 
 
                     var iconDelete = ' <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">' +
                         '    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />' +
                         '</svg>'
 
 
-                    var buttonDelete = '<a href="#" style="margin: 0 8px;" class="text-danger" id="Botao_Excluir" onclick="">' + iconDelete + '</a>'
+                    var buttonDelete = '<span style="margin: 0px 0px 0px 8px;" class="text-danger ponteiro" id="Botao_Excluir" onclick="GridDelete(' + row.Id + ')">' + iconDelete + '</span>'
 
 
                     var iconEdit = '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">' +
@@ -30,7 +30,7 @@
                         ' </svg>'
 
 
-                    var buttonEdit = '<a href="#" style="margin: 0 8px;" class="text-primary" onclick="">' + iconEdit + '</a>'
+                    var buttonEdit = '<span style="margin: 0px 0px 0px 8px;" class="text-primary ponteiro" onclick="GridEdit(' + row.Id + ')">' + iconEdit + '</span>'
 
                     var divFinal = '</div>'
 
@@ -47,12 +47,10 @@
             searchSettings: {
                 delay: 100,
                 characters: 3
-            },
+            }
             
-        }).on("click.rs.jquery.bootgrid", function (e, columns, rows) {
-            console.log(rows.Id);
-            //window.location.href = '/Cursos/Form?id=' + rows.Id;
-            console.log(e);
         });
 
+    $("#grid-basic-header").removeClass("container-fluid");
+    $("#grid-basic").addClass("table-responsive-md");
 }
