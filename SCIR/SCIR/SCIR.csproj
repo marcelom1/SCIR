@@ -279,7 +279,9 @@
     <Compile Include="Business\Cadastros\CursosServer.cs" />
     <Compile Include="Controllers\CursosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UnidadeCurricularController.cs" />
     <Compile Include="DAO\Cadastros\CursosDao.cs" />
+    <Compile Include="DAO\Cadastros\UnidadeCurricularDao.cs" />
     <Compile Include="DAO\ICadastrosDao.cs" />
     <Compile Include="DAO\ScirContext.cs" />
     <Compile Include="Datacontract\Grid\ResponseGrid.cs" />
@@ -290,8 +292,13 @@
     <Compile Include="Migrations\20201129185643_inicial.designer.cs">
       <DependentUpon>20201129185643_inicial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20201222210156_UnidadeCurricular.cs" />
+    <Compile Include="Migrations\20201222210156_UnidadeCurricular.designer.cs">
+      <DependentUpon>20201222210156_UnidadeCurricular.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\Cursos.cs" />
+    <Compile Include="Models\UnidadeCurricular.cs" />
     <Compile Include="Models\ViewModels\CursoVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConsisteUtils.cs" />
@@ -1524,6 +1531,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cursos\Index.cshtml" />
     <Content Include="Views\Cursos\Form.cshtml" />
+    <Content Include="Views\UnidadeCurricular\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

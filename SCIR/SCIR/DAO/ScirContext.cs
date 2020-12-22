@@ -10,6 +10,7 @@ namespace SCIR.DAO
     public class ScirContext : DbContext
     {
         public DbSet<Cursos> Cursos { get; set; }
+        public DbSet<UnidadeCurricular> UnidadeCurricular { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("Server=localhost;User Id=root;Database=dbscir;Uid=root;Pwd=1475963m"); ;
