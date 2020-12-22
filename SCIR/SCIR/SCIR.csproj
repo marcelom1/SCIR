@@ -309,8 +309,8 @@
     <Content Include="Content\css\Cursos\CadastroCursoForm.css" />
     <Content Include="Content\css\Cursos\CadastroCursoIndex.css" />
     <Content Include="Content\img\1.jpeg" />
-    <Content Include="Content\img\2.jpeg" />
-    <Content Include="Content\img\3.jpeg" />
+    <Content Include="Content\img\2.png" />
+    <Content Include="Content\img\3.png" />
     <Content Include="Content\img\bootstrap-icons-1.1.0\alarm-fill.svg" />
     <Content Include="Content\img\bootstrap-icons-1.1.0\alarm.svg" />
     <Content Include="Content\img\bootstrap-icons-1.1.0\align-bottom.svg" />

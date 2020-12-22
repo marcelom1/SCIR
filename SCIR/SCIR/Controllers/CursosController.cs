@@ -40,11 +40,13 @@ namespace SCIR.Controllers
                 {
                     cursoServer.Atualizar(curso);
                     model.Curso = curso;
+                    model.Consistencia.Add("Alterado com sucesso!", ConsisteUtils.Tipo.Sucesso);
                 }
                 else
                 { 
                     cursoServer.Novo(curso);
                     model.Curso = curso;
+                    model.Consistencia.Add("Incluido com sucesso!", ConsisteUtils.Tipo.Sucesso);
                 }
             }
             catch (Exception e)
@@ -63,9 +65,41 @@ namespace SCIR.Controllers
         [HttpPost]
         public ActionResult Excluir(Cursos curso)
         {
-            cursoServer.Excluir(curso);
+            var model = new CursoVM();
+            try
+            {
+                cursoServer.Excluir(curso);
+                model.Consistencia.Add("Registro excluído com sucesso!", ConsisteUtils.Tipo.Sucesso);
+            }
+            catch (Exception e)
+            {
+                model.Curso = curso;
+                var consistencia = new ConsisteUtils();
+                consistencia.Add(e.Message, ConsisteUtils.Tipo.Inconsistencia);
+                model.Consistencia = consistencia;
+
+                return View("Form", model);
+            }
+           
 
             return RedirectToAction("Index", "Cursos");
+        }
+
+        [HttpPost]
+        public JsonResult ExcluirAjax(Cursos curso)
+        {
+            var consistencia = new ConsisteUtils();
+            try
+            {
+                cursoServer.Excluir(curso);
+                consistencia.Add("Registro excluído com sucesso!", ConsisteUtils.Tipo.Sucesso);
+            }
+            catch (Exception e)
+            {
+                consistencia.Add(e.Message, ConsisteUtils.Tipo.Inconsistencia);
+            }
+
+            return Json(consistencia, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -104,9 +138,6 @@ namespace SCIR.Controllers
                               total = response.QuantidadeRegistros
             }, JsonRequestBehavior.AllowGet );
         }
-
-
-
 
     }
 }

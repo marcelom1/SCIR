@@ -5,6 +5,7 @@
     }
 
     $("#Botao_Excluir_Cadastro").click(function () {
+        LimparAlertas();
         var id = $("#Curso_id").val();
         var nome = $("#NomeCurso").val();
         var ativo = $("#Ativo").is(':checked');
@@ -41,6 +42,7 @@
     });
     
     $("#Botao_Salvar").click(function (e) {
+        LimparAlertas();
         e.preventDefault();
         var id = $("#Curso_id").val();
         var nome = $("#NomeCurso").val();
@@ -89,7 +91,7 @@ function ConfirmarExclusao() {
     CursoId.attr("disabled", false);
     formulario.attr("action", "/Cursos/Excluir");
     formulario.submit();
-    FunctionNaoDefinida();
+    LimparAlertas();
 }
 
 function ConfirmarSalvar() {
@@ -99,14 +101,14 @@ function ConfirmarSalvar() {
     var CursoId = $("#Curso_id");
     CursoId.attr("disabled", false);
     formulario.submit();
-    FunctionNaoDefinida()
+    LimparAlertas()
 
 }
 
 function buttonCancelar() {
     $(".blockConfirmation").prop('disabled', false);
     DesabilitarId();
-    FunctionNaoDefinida();
+    LimparAlertas();
 }
 
 function DesabilitarId() {

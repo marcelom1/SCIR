@@ -23,14 +23,14 @@
     <div class="cabecalho container-fluid d-flex justify-content-between">
         <div class="logo-ifsc flex-row">
             <div class="logo-header">
-                <a class="logo" href="" title="Página inicial">
+                <a class="logo" href="/" title="Página inicial">
                     <img src="~/Content/img/logo-ifsc.svg" class="img-fluid d-none d-sm-block" alt="logo">
                 </a>
             </div>
         </div>
         <div class="logo-ifsc flex-row">
             <div class="logo-header">
-                <a class="logo" href="" title="Página inicial">
+                <a class="logo" href="/" title="Página inicial">
                     <img src="~/Content/img/Logo.png" class="img-fluid d-block d-sm-none " width="100" height="100" alt="logo">
                 </a>
             </div>
@@ -59,7 +59,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="#">Curso</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Cursos")">Curso</a>
                         <a class="dropdown-item" href="#">Fluxo de Status</a>
                         <a class="dropdown-item" href="#">Status</a>
                         <a class="dropdown-item" href="#">Tipo de Requerimento</a>

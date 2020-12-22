@@ -9,46 +9,35 @@
     
 }
 
-<h3 class="pb-3">Cadastro Curso</h3>
-<button type="button" class="btn bg-success botao_cor btn-sm">Novo</button>
-<table id="grid-basic" class="table table-condensed table-hover table-striped">
-    <thead>
-        <tr>
-            <th data-column-id="Id" data-type="numeric">Id</th>
-            <th data-column-id="Nome">Nome</th>
-            <th data-column-id="Ativo" data-formatter="checkbox-activo">Ativo</th>
-            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ação</th>
-        </tr>
-    </thead>
-</table>
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" src="~/Content/img/1.jpeg" alt="Primeiro Slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="~/Content/img/2.png" alt="Segundo Slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" src="~/Content/img/3.png" alt="Terceiro Slide">
+        </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Anterior</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Próximo</span>
+    </a>
 
-@section scripts{
-    <script>
-
-
-        $("#grid-basic").bootgrid(
-            {
-                ajax: true,
-                url: "@Url.Action("Listar")",
-                labels: {
-                search: "Pesquisar",
-                infos: "Mostrando {{ctx.start}} a {{ctx.end}} de {{ctx.total}} resultados",
-                all: "Tudo"
-                },
-                formatters: {
-                "commands": function(column, row)
-                {
-                    return "<button type=\"button\" class=\"btn btn-icon command-edit waves-effect waves-circle\" data-row-id=\"" + row.id + "\"><span class=\"zmdi zmdi-edit\"></span></button> " +
-                    "<button type=\"button\" class=\"btn btn-icon command-delete waves-effect waves-circle\" data-row-id=\"" + row.id + "\"><span class=\"zmdi zmdi-delete\"></span></button>";
-                },
-                "checkbox-activo": function(column, row)
-                {
-                    return "<input type=\"checkbox\" value=\"1\" checked=\"checked\" disabled=\"disabled\">";
-                }
-                },
+    @section scripts{
+        <script>
 
 
-            });
-
-    </script>
-}
+        </script>
+    }

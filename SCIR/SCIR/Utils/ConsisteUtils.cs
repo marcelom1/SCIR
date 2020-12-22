@@ -9,34 +9,45 @@ namespace SCIR.Utils
     {
         public IList<string> Advertencias { get; }
         public IList<string> Inconsistencias { get; }
+        public IList<string> Sucesso { get; }
         public string AdvertenciasToString
         {
             get => ToString(Advertencias);
         }
+
         public string InconsistenciasToString
         {
             get => ToString(Inconsistencias);
+        }
+
+        public string SucessoToString
+        {
+            get => ToString(Sucesso);
         }
 
 
         public enum Tipo
         {
             Advertecia,
-            Inconsistencia
+            Inconsistencia,
+            Sucesso
         }
 
         public ConsisteUtils()
         {
             Advertencias = new List<string>();
             Inconsistencias = new List<string>();
+            Sucesso = new List<string>();
         }
 
         public void Add(string msg, Tipo tipo)
         {
             if (tipo == Tipo.Advertecia)
                 Advertencias.Add(msg);
-            else
+            else if (tipo == Tipo.Inconsistencia)
                 Inconsistencias.Add(msg);
+            else if (tipo == Tipo.Sucesso)
+                Sucesso.Add(msg);
         }
 
         private string ToString(IList<string> lista)

@@ -10,7 +10,7 @@ namespace SCIR.Models.ViewModels
     {
         public Cursos Curso { get; set; }
         public ConsisteUtils Consistencia { get; set; }
-        
+      
         public CursoVM()
         {
             Curso = new Cursos();

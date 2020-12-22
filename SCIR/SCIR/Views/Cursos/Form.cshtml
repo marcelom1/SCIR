@@ -64,22 +64,26 @@
 
 
 @section scripts{
-    <script src="~/Content/js/Cursos/CadastroCurso.js"></script>
+    <script src="~/Content/js/Cursos/CadastroCursoForm.js"></script>
     <script>
         var consistencia = "";
         var consistenciaTipo = 1;
-
-        if (@Model.Consistencia.Inconsistencias.Any())
+        
+        if (JSON.parse("@Model.Consistencia.Inconsistencias.Any()".toLowerCase()))
         {
             consistencia = "@Model.Consistencia.InconsistenciasToString";
             consistenciaTipo = 1;
 
-        }else if (@Model.Consistencia.Advertencias.Any())
+        }else if (JSON.parse("@Model.Consistencia.Advertencias.Any()".toLowerCase()))
         {
            consistencia  = "@Model.Consistencia.AdvertenciasToString";
            consistenciaTipo = 2;
+        } else if (JSON.parse("@Model.Consistencia.Sucesso.Any()".toLowerCase()))
+        {
+           consistencia  = "@Model.Consistencia.SucessoToString";
+           consistenciaTipo = 3;
         }
-
+        
         VerificarConsistencia(consistencia, consistenciaTipo);
     </script>
 }
