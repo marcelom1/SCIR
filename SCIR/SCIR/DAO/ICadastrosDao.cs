@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace SCIR.DAO
 {
-    public interface ICadastrosDao<T>
+    public interface ICadastrosDao<T,T2>
     {
         void Insert(T entidade);
-        IPagedList<T> ListGrid(FormatGridUtils request);
+        IPagedList<T2> ListGrid(FormatGridUtils request);
         int TotalRegistros();
         T BuscarPorId(int id);
         void Update(T entidade);

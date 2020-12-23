@@ -21,18 +21,6 @@ namespace SCIR.Business.Cadastros
             if (string.IsNullOrWhiteSpace(curso.Nome))
                 consiste.Add("O campo Nome não pode ficar em branco",ConsisteUtils.Tipo.Inconsistencia);
 
-            if (string.IsNullOrWhiteSpace(curso.Nome))
-                consiste.Add("O campo Nome não pode ficar em branco2", ConsisteUtils.Tipo.Inconsistencia);
-
-            if (string.IsNullOrWhiteSpace(curso.Nome))
-                consiste.Add("O campo Nome não pode ficar em branco3", ConsisteUtils.Tipo.Inconsistencia);
-
-            if (string.IsNullOrWhiteSpace(curso.Nome))
-                consiste.Add("O campo Nome não pode ficar em branco4", ConsisteUtils.Tipo.Inconsistencia);
-
-            if (string.IsNullOrWhiteSpace(curso.Nome))
-                consiste.Add("O campo Nome não pode ficar em branco5", ConsisteUtils.Tipo.Inconsistencia);
-
             return consiste;
         }
 
@@ -113,6 +101,11 @@ namespace SCIR.Business.Cadastros
         {
             return dbCursos.BuscarPorId(id);
         }
-        
+
+        public IList<Cursos> GetFiltroEntidadeString(string coluna ,string searchTerm)
+        {
+            return dbCursos.FiltroPorColuna(coluna,searchTerm);
+        }
+
     }
 }

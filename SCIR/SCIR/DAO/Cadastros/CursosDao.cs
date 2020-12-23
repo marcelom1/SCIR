@@ -6,10 +6,11 @@ using System.Linq.Dynamic;
 using System.Web;
 using PagedList;
 using SCIR.Utils;
+using Microsoft.EntityFrameworkCore;
 
 namespace SCIR.DAO.Cadastros
 {
-    internal class CursosDao : ICadastrosDao<Cursos>
+    internal class CursosDao : ICadastrosDao<Cursos,Cursos>
     {
         public void Insert(Cursos curso)
         {
@@ -52,7 +53,7 @@ namespace SCIR.DAO.Cadastros
                 if (string.IsNullOrWhiteSpace(request.CampoOrdenacao))
                     request.CampoOrdenacao = "Id asc";
 
-                return contexto.Cursos.Where(where).OrderBy(request.CampoOrdenacao).ToPagedList(request.Current, request.RowCount);
+                return contexto.Cursos.AsNoTracking().Where(where).OrderBy(request.CampoOrdenacao).ToPagedList(request.Current, request.RowCount);
             }
         }
 
@@ -95,6 +96,25 @@ namespace SCIR.DAO.Cadastros
             using (var contexto = new ScirContext())
             {
                 return contexto.Cursos.Contains(curso);
+            }
+        }
+
+        public IList<Cursos> FiltroPorColuna(string coluna, string searchPhrase)
+        {
+            var where = "";
+            if (!string.IsNullOrWhiteSpace(searchPhrase))
+            {
+                where += string.Format(coluna+".Contains(\"{0}\")", searchPhrase);
+            }
+            else
+            {
+                where = "1=1";
+            }
+
+            using (var contexto = new ScirContext())
+            {
+                var ordenacao = coluna + " ASC";
+                return contexto.Cursos.Where(where).OrderBy(ordenacao).ToList();
             }
         }
     }

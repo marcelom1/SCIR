@@ -1,4 +1,6 @@
-﻿using PagedList;
+﻿using Microsoft.EntityFrameworkCore;
+using PagedList;
+using SCIR.Datacontract.Grid;
 using SCIR.Models;
 using SCIR.Utils;
 using System;
@@ -9,13 +11,13 @@ using System.Web;
 
 namespace SCIR.DAO.Cadastros
 {
-    public class UnidadeCurricularDao : ICadastrosDao<UnidadeCurricular>
+    public class UnidadeCurricularDao : ICadastrosDao<UnidadeCurricular, UnidadeCurricularGridDC>
     {
         public UnidadeCurricular BuscarPorId(int id)
         {
             using (var contexto = new ScirContext())
             {
-                return contexto.UnidadeCurricular.Where(e => e.Id == id).FirstOrDefault();
+                return contexto.UnidadeCurricular.Include(e => e.Curso).Where(e => e.Id == id).FirstOrDefault();
             }
         }
 
@@ -40,12 +42,13 @@ namespace SCIR.DAO.Cadastros
         {
             using (var context = new ScirContext())
             {
+                entidade.Curso = context.Cursos.Find(entidade.CursoId);
                 context.UnidadeCurricular.Add(entidade);
                 context.SaveChanges();
             }
         }
 
-        public IPagedList<UnidadeCurricular> ListGrid(FormatGridUtils request)
+        public IPagedList<UnidadeCurricularGridDC> ListGrid(FormatGridUtils request)
         {
             var where = "";
             if (!string.IsNullOrWhiteSpace(request.SearchPhrase))
@@ -77,7 +80,19 @@ namespace SCIR.DAO.Cadastros
                 if (string.IsNullOrWhiteSpace(request.CampoOrdenacao))
                     request.CampoOrdenacao = "Id asc";
 
-                return contexto.UnidadeCurricular.Where(where).OrderBy(request.CampoOrdenacao).ToPagedList(request.Current, request.RowCount);
+                var listUnidadeCurricular = contexto.UnidadeCurricular.Include(e=>e.Curso).AsNoTracking().Where(where).OrderBy(request.CampoOrdenacao).ToPagedList(request.Current, request.RowCount);
+
+                var lista = new List<UnidadeCurricularGridDC>();
+                foreach (var item in listUnidadeCurricular)
+                {
+                    lista.Add(new UnidadeCurricularGridDC {
+                        Id = item.Id,
+                        Ativo = item.Ativo,
+                        Nome = item.Nome,
+                        Curso = item.Curso.Id +" - "+ item.Curso.Nome
+                    });
+                }
+                return lista.ToPagedList(request.Current, request.RowCount);
             }
         }
 
@@ -93,6 +108,7 @@ namespace SCIR.DAO.Cadastros
         {
             using (var contexto = new ScirContext())
             {
+                entidade.Curso = contexto.Cursos.Find(entidade.CursoId);
                 contexto.UnidadeCurricular.Update(entidade);
                 contexto.SaveChanges();
             }
