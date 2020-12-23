@@ -38,7 +38,10 @@
                 },
                 "checkbox-activo": function (column, row) {
                     var checked = "";
-                    if (row.Ativo) {
+
+                    if ((row.Ativo) && (column.id == "Ativo")) {
+                        checked = "checked=\"checked\"";
+                    }else if ((row.Cancelamento) && (column.id == "Cancelamento")) {
                         checked = "checked=\"checked\"";
                     }
                     return "<input type=\"checkbox\" value=\"1\" " + checked + " disabled=\"disabled\">";

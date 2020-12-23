@@ -14,6 +14,7 @@ namespace SCIR.DAO
         public DbSet<TipoValidacaoCurricular> TipoValidacaoCurricular { get; set; }
         public DbSet<TipoFormulario> TipoFormulario { get; set; }
         public DbSet<TipoRequerimento> TipoRequerimento { get; set; }
+        public DbSet<StatusRequerimento> StatusRequerimento { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
