@@ -326,8 +326,14 @@
     <Compile Include="Migrations\20201223200537_StatusRequerimento.designer.cs">
       <DependentUpon>20201223200537_StatusRequerimento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20201223205816_Papeis.cs" />
+    <Compile Include="Migrations\20201223205816_Papeis.designer.cs">
+      <DependentUpon>20201223205816_Papeis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\Cursos.cs" />
+    <Compile Include="Models\FluxoStatus.cs" />
+    <Compile Include="Models\Papel.cs" />
     <Compile Include="Models\StatusRequerimento.cs" />
     <Compile Include="Models\TipoFormulario.cs" />
     <Compile Include="Models\TipoRequerimento.cs" />

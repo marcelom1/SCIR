@@ -15,6 +15,7 @@ namespace SCIR.DAO
         public DbSet<TipoFormulario> TipoFormulario { get; set; }
         public DbSet<TipoRequerimento> TipoRequerimento { get; set; }
         public DbSet<StatusRequerimento> StatusRequerimento { get; set; }
+        public DbSet<Papel> Papel { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,6 +28,10 @@ namespace SCIR.DAO
                                                                    new TipoValidacaoCurricular { Id = 2, Ativo = true, Nome = "Reconhecimento de Saberes" });
 
             modelBuilder.Entity<TipoFormulario>().HasData(new TipoFormulario { Id = 1, Nome = "Formulário Validação Unidade Curricular" });
+
+            modelBuilder.Entity<Papel>().HasData(new Papel { Id = 1, Ativo = true, Nome = "Administrador" },
+                                                 new Papel { Id = 2, Ativo = true, Nome = "Servidor" },
+                                                 new Papel { Id = 3, Ativo = true, Nome = "Discente" });
         }
 
         
