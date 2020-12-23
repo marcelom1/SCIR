@@ -302,8 +302,18 @@
     <Compile Include="Migrations\20201223152058_AtualizarUnidadeCurricular.designer.cs">
       <DependentUpon>20201223152058_AtualizarUnidadeCurricular.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20201223170303_TipoValidacaoCurricular.cs" />
+    <Compile Include="Migrations\20201223170303_TipoValidacaoCurricular.designer.cs">
+      <DependentUpon>20201223170303_TipoValidacaoCurricular.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20201223170906_TipoFormulario.cs" />
+    <Compile Include="Migrations\20201223170906_TipoFormulario.designer.cs">
+      <DependentUpon>20201223170906_TipoFormulario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\Cursos.cs" />
+    <Compile Include="Models\TipoFormulario.cs" />
+    <Compile Include="Models\TipoValidacaoCurricular.cs" />
     <Compile Include="Models\UnidadeCurricular.cs" />
     <Compile Include="Models\ViewModels\CursoVM.cs" />
     <Compile Include="Models\ViewModels\UnidadeCurricularVM.cs" />
