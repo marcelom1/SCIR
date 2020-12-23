@@ -1,36 +1,35 @@
 ﻿@using SCIR.Models.ViewModels
 
-@model UnidadeCurricularVM
-
+@model TipoRequerimentoVM
 
 
 @{
-    ViewBag.Title = "Unidade Curricular";
+    ViewBag.Title = "Tipo Requerimento";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 @section css{
     <link href="~/Content/css/select2.min.css" rel="stylesheet" />
-    <link href="~/Content/css/UnidadeCurricular/CadastroUnidadeCurricularForm.css" rel="stylesheet" />
+    <link href="~/Content/css/TipoRequerimento/CadastroTipoRequerimentoForm.css" rel="stylesheet" />
 }
 <div id="alert">
 
 </div>
 <hr>
-<h3 class="pb-3">Cadastro Unidade Curricular</h3>
+<h3 class="pb-3">Cadastro Tipo Requerimento</h3>
 
-<input onclick="location.href='/UnidadeCurricular/Form'" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Novo">
+<input onclick="location.href='/TipoRequerimento/Form'" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Novo">
 
-@using (Html.BeginForm("Salvar", "UnidadeCurricular", FormMethod.Post, new { @id = "CadastroUnidadeCurricular", @name = "CadastroUnidadeCurricular" }))
+@using (Html.BeginForm("Salvar", "TipoRequerimento", FormMethod.Post, new { @id = "CadastroTipoRequerimento", @name = "CadastroTipoRequerimento" }))
 {
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-2">
             <label for="Codigo">Código</label>
             <div class="input-group mb-1">
-                <input type="text" class="form-control blockConfirmation" id="UniadadeCurricular_id" placeholder="Código" disabled name="unidadeCurricular.Id" value="@Model.UnidadeCurricular.Id">
+                <input type="text" class="form-control blockConfirmation" id="TipoRequerimento_id" placeholder="Código" disabled name="tipoRequerimento.Id" value="@Model.TipoRequerimento.Id">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary blockConfirmation" onclick="location.href='@Url.Action("Index", "UnidadeCurricular")';" type="button" id="button-addon2">
+                    <button class="btn btn-outline-secondary blockConfirmation" onclick="location.href='@Url.Action("Index", "TipoRequerimento")';" type="button" id="button-addon2">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
                             <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
@@ -41,13 +40,13 @@
         </div>
         <div class="form-group col-md-6">
             <label for="Nome">Nome</label>
-            <input type="text" class="form-control blockConfirmation" id="Nome" placeholder="Nome" name="unidadeCurricular.Nome" value="@Model.UnidadeCurricular.Nome">
+            <input type="text" class="form-control blockConfirmation" id="Nome" placeholder="Nome" name="tipoRequerimento.Nome" value="@Model.TipoRequerimento.Nome">
         </div>
         <div class="form-group col-md-3">
             <div class="form-group col-md-12">
-                <label for="Curso">Curso</label>
-                <select class="js-example-basic-single select2" id="Select2_Curso" name="unidadeCurricular.CursoId">
-                    <option value="@Model.UnidadeCurricular.CursoId">@Model.UnidadeCurricular.Curso.Nome</option>
+                <label for="TipoFormulario">Tipo Formulario</label>
+                <select class="js-example-basic-single select2" id="Select2_TipoFormulario" name="tipoRequerimento.TipoFormularioId">
+                    <option value="@Model.TipoRequerimento.TipoFormularioId">@Model.TipoRequerimento.TipoFormulario.Nome</option>
                 </select>
             </div>
         </div>
@@ -57,7 +56,7 @@
     <div class="form-row pb-5 ">
         <div class="col-auto">
             <div class="form-check mb-2">
-                <input class="form-check-input blockConfirmation" type="checkbox" name="unidadeCurricular.Ativo" value="true" checked="@Model.UnidadeCurricular.Ativo" id="Ativo">
+                <input class="form-check-input blockConfirmation" type="checkbox" name="tipoRequerimento.Ativo" value="true" checked="@Model.TipoRequerimento.Ativo" id="Ativo">
                 <label class="form-check-label" for="Ativo">
                     Ativo
                 </label>
@@ -76,7 +75,7 @@
 @section scripts{
     <script src="~/Content/js/select2.min.js"></script>
     <script src="~/Content/js/pt-BR.js"></script>
-    <script src="~/Content/js/UnidadeCurricular/CadastroUnidadeCurricularForm.js"></script>
+    <script src="~/Content/js/TipoRequerimento/CadastroTipoRequerimentoForm.js"></script>
     <script>
         var consistencia = "";
         var consistenciaTipo = 1;

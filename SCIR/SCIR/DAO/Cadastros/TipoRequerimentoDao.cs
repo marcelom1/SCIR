@@ -11,49 +11,49 @@ using System.Web;
 
 namespace SCIR.DAO.Cadastros
 {
-    public class UnidadeCurricularDao : ICadastrosDao<UnidadeCurricular, UnidadeCurricularGridDC>
+    public class TipoRequerimentoDao : ICadastrosDao<TipoRequerimento, TipoRequerimentoGridDC>
     {
-        public UnidadeCurricular BuscarPorId(int id)
+        public TipoRequerimento BuscarPorId(int id)
         {
             using (var contexto = new ScirContext())
             {
-                return contexto.UnidadeCurricular.Include(e => e.Curso).Where(e => e.Id == id).FirstOrDefault();
+                return contexto.TipoRequerimento.Include(e => e.TipoFormulario).Where(e => e.Id == id).FirstOrDefault();
             }
         }
 
-        public void Delete(UnidadeCurricular entidade)
+        public void Delete(TipoRequerimento entidade)
         {
             using (var contexto = new ScirContext())
             {
-                contexto.UnidadeCurricular.Remove(entidade);
+                contexto.TipoRequerimento.Remove(entidade);
                 contexto.SaveChanges();
             }
         }
 
-        public bool Exist(UnidadeCurricular entidade)
+        public bool Exist(TipoRequerimento entidade)
         {
             using (var contexto = new ScirContext())
             {
-                return contexto.UnidadeCurricular.Contains(entidade);
+                return contexto.TipoRequerimento.Contains(entidade);
             }
         }
 
-        public IList<UnidadeCurricular> FiltroPorColuna(string coluna, string searchPhrase)
+        public IList<TipoRequerimento> FiltroPorColuna(string coluna, string searchPhrase)
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(UnidadeCurricular entidade)
+        public void Insert(TipoRequerimento entidade)
         {
             using (var context = new ScirContext())
             {
-                entidade.Curso = context.Cursos.Find(entidade.CursoId);
-                context.UnidadeCurricular.Add(entidade);
+                entidade.TipoFormulario = context.TipoFormulario.Find(entidade.TipoFormularioId);
+                context.TipoRequerimento.Add(entidade);
                 context.SaveChanges();
             }
         }
 
-        public IPagedList<UnidadeCurricularGridDC> ListGrid(FormatGridUtils request)
+        public IPagedList<TipoRequerimentoGridDC> ListGrid(FormatGridUtils request)
         {
             var where = "";
             if (!string.IsNullOrWhiteSpace(request.SearchPhrase))
@@ -85,16 +85,17 @@ namespace SCIR.DAO.Cadastros
                 if (string.IsNullOrWhiteSpace(request.CampoOrdenacao))
                     request.CampoOrdenacao = "Id asc";
 
-                var listUnidadeCurricular = contexto.UnidadeCurricular.Include(e=>e.Curso).AsNoTracking().Where(where).OrderBy(request.CampoOrdenacao).ToPagedList(request.Current, request.RowCount);
+                var listUnidadeCurricular = contexto.TipoRequerimento.Include(e => e.TipoFormulario).AsNoTracking().Where(where).OrderBy(request.CampoOrdenacao).ToPagedList(request.Current, request.RowCount);
 
-                var lista = new List<UnidadeCurricularGridDC>();
+                var lista = new List<TipoRequerimentoGridDC>();
                 foreach (var item in listUnidadeCurricular)
                 {
-                    lista.Add(new UnidadeCurricularGridDC {
+                    lista.Add(new TipoRequerimentoGridDC
+                    {
                         Id = item.Id,
                         Ativo = item.Ativo,
                         Nome = item.Nome,
-                        Curso = item.Curso.Id +" - "+ item.Curso.Nome
+                        TipoFormulario = item.TipoFormulario.Id + " - " + item.TipoFormulario.Nome
                     });
                 }
                 return lista.ToPagedList(request.Current, request.RowCount);
@@ -109,14 +110,15 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public void Update(UnidadeCurricular entidade)
+        public void Update(TipoRequerimento entidade)
         {
             using (var contexto = new ScirContext())
             {
-                entidade.Curso = contexto.Cursos.Find(entidade.CursoId);
-                contexto.UnidadeCurricular.Update(entidade);
+                entidade.TipoFormulario = contexto.TipoFormulario.Find(entidade.TipoFormularioId);
+                contexto.TipoRequerimento.Update(entidade);
                 contexto.SaveChanges();
             }
         }
+
     }
 }

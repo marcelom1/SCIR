@@ -277,15 +277,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Business\Cadastros\CursosServer.cs" />
+    <Compile Include="Business\Cadastros\TipoRequerimentoServer.cs" />
     <Compile Include="Business\Cadastros\UnidadeCurricularServer.cs" />
     <Compile Include="Controllers\CursosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TipoRequerimentoController.cs" />
     <Compile Include="Controllers\UnidadeCurricularController.cs" />
     <Compile Include="DAO\Cadastros\CursosDao.cs" />
+    <Compile Include="DAO\Cadastros\TipoFormularioDao.cs" />
+    <Compile Include="DAO\Cadastros\TipoRequerimentoDao.cs" />
     <Compile Include="DAO\Cadastros\UnidadeCurricularDao.cs" />
     <Compile Include="DAO\ICadastrosDao.cs" />
     <Compile Include="DAO\ScirContext.cs" />
     <Compile Include="Datacontract\Grid\ResponseGrid.cs" />
+    <Compile Include="Datacontract\Grid\TipoRequerimentoGridDC.cs" />
     <Compile Include="Datacontract\Grid\UnidadeCurricularGridDC.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -310,12 +315,18 @@
     <Compile Include="Migrations\20201223170906_TipoFormulario.designer.cs">
       <DependentUpon>20201223170906_TipoFormulario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20201223185532_TipoRequerimento.cs" />
+    <Compile Include="Migrations\20201223185532_TipoRequerimento.designer.cs">
+      <DependentUpon>20201223185532_TipoRequerimento.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\Cursos.cs" />
     <Compile Include="Models\TipoFormulario.cs" />
+    <Compile Include="Models\TipoRequerimento.cs" />
     <Compile Include="Models\TipoValidacaoCurricular.cs" />
     <Compile Include="Models\UnidadeCurricular.cs" />
     <Compile Include="Models\ViewModels\CursoVM.cs" />
+    <Compile Include="Models\ViewModels\TipoRequerimentoVM.cs" />
     <Compile Include="Models\ViewModels\UnidadeCurricularVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConsisteUtils.cs" />
@@ -333,6 +344,8 @@
     <Content Include="Content\css\Cursos\CadastroCursoForm.css" />
     <Content Include="Content\css\Cursos\CadastroCursoIndex.css" />
     <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\css\TipoRequerimento\CadastroTipoRequerimentoForm.css" />
+    <Content Include="Content\css\TipoRequerimento\CadastroTipoRequerimentoIndex.css" />
     <Content Include="Content\css\UnidadeCurricular\CadastroUnidadeCurricularForm.css" />
     <Content Include="Content\css\UnidadeCurricular\CadastroUnidadeCurricularIndex.css" />
     <Content Include="Content\img\1.jpeg" />
@@ -1498,6 +1511,8 @@
     <Content Include="Content\js\Cursos\CadastroCursoForm.js" />
     <Content Include="Content\js\Cursos\CadastroCursoIndex.js" />
     <Content Include="Content\js\pt-BR.js" />
+    <Content Include="Content\js\TipoRequerimento\CadastroTipoRequerimentoForm.js" />
+    <Content Include="Content\js\TipoRequerimento\CadastroTipoRequerimentoIndex.js" />
     <Content Include="Content\js\UnidadeCurricular\CadastroUnidadeCurricularForm.js" />
     <Content Include="Content\js\UnidadeCurricular\CadastroUnidadeCurricularIndex.js" />
     <Content Include="Content\js\Utils\GridInit.js" />
@@ -1557,6 +1572,8 @@
     <Content Include="Views\Cursos\Form.cshtml" />
     <Content Include="Views\UnidadeCurricular\Index.cshtml" />
     <Content Include="Views\UnidadeCurricular\Form.cshtml" />
+    <Content Include="Views\TipoRequerimento\Index.cshtml" />
+    <Content Include="Views\TipoRequerimento\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,5 +17,6 @@ namespace SCIR.DAO
         void Update(T entidade);
         void Delete(T entidade);
         bool Exist(T entidade);
+        IList<T> FiltroPorColuna(string coluna, string searchPhrase);
     }
 }
