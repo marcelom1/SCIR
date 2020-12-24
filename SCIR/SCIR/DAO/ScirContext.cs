@@ -16,6 +16,7 @@ namespace SCIR.DAO
         public DbSet<TipoRequerimento> TipoRequerimento { get; set; }
         public DbSet<StatusRequerimento> StatusRequerimento { get; set; }
         public DbSet<Papel> Papel { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,6 +33,9 @@ namespace SCIR.DAO
             modelBuilder.Entity<Papel>().HasData(new Papel { Id = 1, Ativo = true, Nome = "Administrador" },
                                                  new Papel { Id = 2, Ativo = true, Nome = "Servidor" },
                                                  new Papel { Id = 3, Ativo = true, Nome = "Discente" });
+
+            //modelBuilder.Entity<Usuario>().HasData(new Usuario { Id = 1, Ativo = true, Nome = "Administrador", Email = "marcelo.miglioli@hotmail.com", PapelId = 1, Senha = "123", Papel = Papel.Find(1) });
+                                               
         }
 
         

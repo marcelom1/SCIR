@@ -280,21 +280,26 @@
     <Compile Include="Business\Cadastros\StatusRequerimentoServer.cs" />
     <Compile Include="Business\Cadastros\TipoRequerimentoServer.cs" />
     <Compile Include="Business\Cadastros\UnidadeCurricularServer.cs" />
+    <Compile Include="Business\Cadastros\UsuarioServer.cs" />
     <Compile Include="Controllers\CursosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StatusRequerimentoController.cs" />
     <Compile Include="Controllers\TipoRequerimentoController.cs" />
     <Compile Include="Controllers\UnidadeCurricularController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="DAO\Cadastros\CursosDao.cs" />
+    <Compile Include="DAO\Cadastros\PapelDao.cs" />
     <Compile Include="DAO\Cadastros\StatusRequerimentoDao.cs" />
     <Compile Include="DAO\Cadastros\TipoFormularioDao.cs" />
     <Compile Include="DAO\Cadastros\TipoRequerimentoDao.cs" />
     <Compile Include="DAO\Cadastros\UnidadeCurricularDao.cs" />
+    <Compile Include="DAO\Cadastros\UsuarioDao.cs" />
     <Compile Include="DAO\ICadastrosDao.cs" />
     <Compile Include="DAO\ScirContext.cs" />
     <Compile Include="Datacontract\Grid\ResponseGrid.cs" />
     <Compile Include="Datacontract\Grid\TipoRequerimentoGridDC.cs" />
     <Compile Include="Datacontract\Grid\UnidadeCurricularGridDC.cs" />
+    <Compile Include="Datacontract\Grid\UsuarioGridDC.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -330,6 +335,10 @@
     <Compile Include="Migrations\20201223205816_Papeis.designer.cs">
       <DependentUpon>20201223205816_Papeis.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20201224180159_usuario.cs" />
+    <Compile Include="Migrations\20201224180159_usuario.designer.cs">
+      <DependentUpon>20201224180159_usuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\Cursos.cs" />
     <Compile Include="Models\FluxoStatus.cs" />
@@ -339,10 +348,12 @@
     <Compile Include="Models\TipoRequerimento.cs" />
     <Compile Include="Models\TipoValidacaoCurricular.cs" />
     <Compile Include="Models\UnidadeCurricular.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\ViewModels\CursoVM.cs" />
     <Compile Include="Models\ViewModels\StatusRequerimentoVM.cs" />
     <Compile Include="Models\ViewModels\TipoRequerimentoVM.cs" />
     <Compile Include="Models\ViewModels\UnidadeCurricularVM.cs" />
+    <Compile Include="Models\ViewModels\UsuarioVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConsisteUtils.cs" />
     <Compile Include="Utils\FormatGridUtils.cs" />
@@ -365,6 +376,8 @@
     <Content Include="Content\css\TipoRequerimento\CadastroTipoRequerimentoIndex.css" />
     <Content Include="Content\css\UnidadeCurricular\CadastroUnidadeCurricularForm.css" />
     <Content Include="Content\css\UnidadeCurricular\CadastroUnidadeCurricularIndex.css" />
+    <Content Include="Content\css\Usuario\CadastroUsuarioForm.css" />
+    <Content Include="Content\css\Usuario\CadastroUsuarioIndex.css" />
     <Content Include="Content\img\1.jpeg" />
     <Content Include="Content\img\2.png" />
     <Content Include="Content\img\3.png" />
@@ -1534,6 +1547,8 @@
     <Content Include="Content\js\TipoRequerimento\CadastroTipoRequerimentoIndex.js" />
     <Content Include="Content\js\UnidadeCurricular\CadastroUnidadeCurricularForm.js" />
     <Content Include="Content\js\UnidadeCurricular\CadastroUnidadeCurricularIndex.js" />
+    <Content Include="Content\js\Usuario\CadastroUsuarioForm.js" />
+    <Content Include="Content\js\Usuario\CadastroUsuarioIndex.js" />
     <Content Include="Content\js\Utils\GridInit.js" />
     <Content Include="Content\js\Utils\NotificationAlert.js" />
     <Content Include="Content\login.css" />
@@ -1595,6 +1610,8 @@
     <Content Include="Views\TipoRequerimento\Form.cshtml" />
     <Content Include="Views\StatusRequerimento\Index.cshtml" />
     <Content Include="Views\StatusRequerimento\Form.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Usuario\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
