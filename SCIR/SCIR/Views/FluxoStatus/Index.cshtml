@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section css{
+    <link href="~/Content/css/FluxoStatus/CadastroFluxoStatusIndex.css" rel="stylesheet" />
+}
+
+<div id="alert">
+
+</div>
+<hr>
+<h3 class="pb-3">Cadastro Fluxo Status</h3>
+@Html.ActionLink("Novo", "/Form", null, new { @class = "btn bg-success botao_cor btn-sm" })
+<table id="grid-basic" class="table table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th data-column-id="StatusAtualNome" data-order="asc">Status</th>
+            <th data-column-id="TipoRequerimentoNome">Tipo Requerimento</th>
+            <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ação</th>
+        </tr>
+    </thead>
+</table>
+
+@section scripts{
+    <script src="~/Content/js/Utils/GridInit.js"></script>
+    <script src="~/Content/js/FluxoStatus/CadastroFluxoStatusIndex.js"></script>
+    <script>
+        var listaGrid = "@Url.Action("Listar")";
+    </script>
+
+}

@@ -106,5 +106,10 @@ namespace SCIR.Business.Cadastros
         {
             return dbTipoFormulario.FiltroPorColuna(coluna, searchTerm);
         }
+
+        public IList<TipoRequerimento> GetFiltroEntidadeString(string coluna, string searchTerm)
+        {
+            return dbTipoRequerimento.FiltroPorColuna(coluna, searchTerm);
+        }
     }
 }

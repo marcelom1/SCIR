@@ -277,17 +277,20 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Business\Cadastros\CursosServer.cs" />
+    <Compile Include="Business\Cadastros\FluxoStatusServer.cs" />
     <Compile Include="Business\Cadastros\StatusRequerimentoServer.cs" />
     <Compile Include="Business\Cadastros\TipoRequerimentoServer.cs" />
     <Compile Include="Business\Cadastros\UnidadeCurricularServer.cs" />
     <Compile Include="Business\Cadastros\UsuarioServer.cs" />
     <Compile Include="Controllers\CursosController.cs" />
+    <Compile Include="Controllers\FluxoStatusController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\StatusRequerimentoController.cs" />
     <Compile Include="Controllers\TipoRequerimentoController.cs" />
     <Compile Include="Controllers\UnidadeCurricularController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="DAO\Cadastros\CursosDao.cs" />
+    <Compile Include="DAO\Cadastros\FluxoStatusDao.cs" />
     <Compile Include="DAO\Cadastros\PapelDao.cs" />
     <Compile Include="DAO\Cadastros\StatusRequerimentoDao.cs" />
     <Compile Include="DAO\Cadastros\TipoFormularioDao.cs" />
@@ -296,6 +299,7 @@
     <Compile Include="DAO\Cadastros\UsuarioDao.cs" />
     <Compile Include="DAO\ICadastrosDao.cs" />
     <Compile Include="DAO\ScirContext.cs" />
+    <Compile Include="Datacontract\Grid\FluxoStatusGridDC.cs" />
     <Compile Include="Datacontract\Grid\ResponseGrid.cs" />
     <Compile Include="Datacontract\Grid\TipoRequerimentoGridDC.cs" />
     <Compile Include="Datacontract\Grid\UnidadeCurricularGridDC.cs" />
@@ -339,6 +343,10 @@
     <Compile Include="Migrations\20201224180159_usuario.designer.cs">
       <DependentUpon>20201224180159_usuario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20201227190928_fluxoStatus.cs" />
+    <Compile Include="Migrations\20201227190928_fluxoStatus.designer.cs">
+      <DependentUpon>20201227190928_fluxoStatus.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\Cursos.cs" />
     <Compile Include="Models\FluxoStatus.cs" />
@@ -350,6 +358,7 @@
     <Compile Include="Models\UnidadeCurricular.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Models\ViewModels\CursoVM.cs" />
+    <Compile Include="Models\ViewModels\FluxoStatusVM.cs" />
     <Compile Include="Models\ViewModels\StatusRequerimentoVM.cs" />
     <Compile Include="Models\ViewModels\TipoRequerimentoVM.cs" />
     <Compile Include="Models\ViewModels\UnidadeCurricularVM.cs" />
@@ -369,6 +378,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\Cursos\CadastroCursoForm.css" />
     <Content Include="Content\css\Cursos\CadastroCursoIndex.css" />
+    <Content Include="Content\css\FluxoStatus\CadastroFluxoStatusForm.css" />
+    <Content Include="Content\css\FluxoStatus\CadastroFluxoStatusIndex.css" />
     <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\css\StatusRequerimento\CadastroStatusRequerimentoForm.css" />
     <Content Include="Content\css\StatusRequerimento\CadastroStatusRequerimentoIndex.css" />
@@ -1540,6 +1551,8 @@
     <Content Include="Content\jquery.bootgrid.min.css" />
     <Content Include="Content\js\Cursos\CadastroCursoForm.js" />
     <Content Include="Content\js\Cursos\CadastroCursoIndex.js" />
+    <Content Include="Content\js\FluxoStatus\CadastroFluxoStatusForm.js" />
+    <Content Include="Content\js\FluxoStatus\CadastroFluxoStatusIndex.js" />
     <Content Include="Content\js\pt-BR.js" />
     <Content Include="Content\js\StatusRequerimento\CadastroStatusRequerimentoForm.js" />
     <Content Include="Content\js\StatusRequerimento\CadastroStatusRequerimentoIndex.js" />
@@ -1550,6 +1563,7 @@
     <Content Include="Content\js\Usuario\CadastroUsuarioForm.js" />
     <Content Include="Content\js\Usuario\CadastroUsuarioIndex.js" />
     <Content Include="Content\js\Utils\GridInit.js" />
+    <Content Include="Content\js\Utils\ModalGeneric.js" />
     <Content Include="Content\js\Utils\NotificationAlert.js" />
     <Content Include="Content\login.css" />
     <Content Include="Content\menu.css" />
@@ -1612,6 +1626,9 @@
     <Content Include="Views\StatusRequerimento\Form.cshtml" />
     <Content Include="Views\Usuario\Index.cshtml" />
     <Content Include="Views\Usuario\Form.cshtml" />
+    <Content Include="Views\FluxoStatus\Index.cshtml" />
+    <Content Include="Views\FluxoStatus\Form.cshtml" />
+    <Content Include="Views\FluxoStatus\AdicionarProximoStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

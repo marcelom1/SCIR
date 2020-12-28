@@ -1,0 +1,122 @@
+﻿@using SCIR.Models.ViewModels
+
+@model FluxoStatusVM
+
+
+
+
+@{
+    ViewBag.Title = "Fluxo Status";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section css{
+    <link href="~/Content/css/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/css/FluxoStatus/CadastroFluxoStatusForm.css" rel="stylesheet" />
+}
+<div id="alert">
+
+</div>
+<hr>
+<h3 class="pb-3">Cadastro Fluxo Status</h3>
+
+<input onclick="location.href='/FluxoStatus/Form'" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Novo">
+
+@using (Html.BeginForm("Salvar", "Fluxo", FormMethod.Post, new { @id = "CadastroFluxoStatus", @name = "CadastroFluxoStatus" }))
+{
+    <div class="form-row pb-1 pt-4 ">
+        <div class="form-group col-md-2">
+            <label for="Codigo">Status</label>
+            <div class="input-group mb-1">
+                <select class="js-example-basic-single select2" id="Select2_StatusAtual" name="fluxoStatus.StatusAtualId">
+                    @{ if (Model.FluxoStatus.StatusAtualId != 0)
+                        {
+                            <option value="@Model.FluxoStatus.StatusAtualId">@Model.FluxoStatus.StatusAtual.Nome</option>
+                        }
+                    }
+
+                </select>
+                @*<div class="input-group-append">
+                        <button class="btn btn-outline-secondary blockConfirmation" onclick="location.href='@Url.Action("Index", "FluxoStatus")';" type="button" id="button-addon2">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                            </svg>
+                        </button>
+                    </div>*@
+            </div>
+        </div>
+
+        <div class="form-group col-md-3">
+                <label for="TipoRequerimento">Tipo Requerimento</label>
+                <select class="js-example-basic-single select2" id="Select2_TipoRequerimento" name="fluxoStatus.TipoRequerimentoId">
+                    @{ if (Model.FluxoStatus.TipoRequerimentoId != 0)
+                        {
+                            <option value="@Model.FluxoStatus.TipoRequerimentoId">@Model.FluxoStatus.TipoRequerimento.Nome</option>
+                        }
+                    }
+                </select>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <table id="grid-basic" class="table table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th data-column-id="StatusAtualNome" data-order="asc">Status</th>
+                <th data-column-id="TipoRequerimentoNome">Tipo Requerimento</th>
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ação</th>
+            </tr>
+        </thead>
+    </table>
+
+
+    @*<input type="button" id="Botao_Salvar" class="btn botao_cor_verde btn-lg blockConfirmation" value="Salvar">*@
+    <div class="form-row float-right">
+        <div class="form-group col-md-1">
+            <input type="button" id="Botao_Excluir_Cadastro" value="Excluir" class="btn botao_cor btn-lg blockConfirmation">
+        </div>
+    </div>
+}
+
+<!-- Modal -->
+<div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="TituloModalLongoExemplo" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content" id="ModalProximoStatus">
+            @*<img id="spninner" src="~/Content/img/spinner.gif" class="Oculto" width="20" height="20" />*@
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/js/select2.min.js"></script>
+    <script src="~/Content/js/pt-BR.js"></script>
+    <script src="~/Content/js/Utils/GridInit.js"></script>
+    <script src="~/Content/js/FluxoStatus/CadastroFluxoStatusForm.js"></script>
+    <script>
+        var listaGrid = "@Url.Action("Listar")";
+        var consistencia = "";
+        var consistenciaTipo = 1;
+
+        if (JSON.parse("@Model.Consistencia.Inconsistencias.Any()".toLowerCase()))
+        {
+            consistencia = "@Model.Consistencia.InconsistenciasToString";
+            consistenciaTipo = 1;
+
+        }else if (JSON.parse("@Model.Consistencia.Advertencias.Any()".toLowerCase()))
+        {
+           consistencia  = "@Model.Consistencia.AdvertenciasToString";
+           consistenciaTipo = 2;
+        } else if (JSON.parse("@Model.Consistencia.Sucesso.Any()".toLowerCase()))
+        {
+           consistencia  = "@Model.Consistencia.SucessoToString";
+           consistenciaTipo = 3;
+        }
+
+        VerificarConsistencia(consistencia, consistenciaTipo);
+    </script>
+}
+

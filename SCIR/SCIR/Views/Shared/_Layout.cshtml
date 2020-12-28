@@ -60,7 +60,7 @@
                     <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
                         <a class="dropdown-item" href="@Url.Action("Index", "Cursos")">Curso</a>
-                        <a class="dropdown-item" href="#">Fluxo de Status</a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "FluxoStatus")">Fluxo de Status</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "StatusRequerimento")">Status</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "TipoRequerimento")">Tipo de Requerimento</a>
                         <a class="dropdown-item" href="@Url.Action("Index", "UnidadeCurricular")">Unidade Curricular</a>
@@ -81,13 +81,36 @@
     <main>
 
         <!-- AQUI VAI O CONTEUDO DA PAGINA -->
-       
+
         <div class="pt-5 form-signin ">
             <div class="FundoEmpresa mt-3  centro">
                 @RenderBody()
             </div>
         </div>
         <!-- AQUI VAI O CONTEUDO DA PAGINA -->
+
+        <!-- Modal Genérico-->
+        <div class="modal fade" id="ModalAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLabel">Título do modal</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="conteudoModal">
+                            @*<img id="spninner" src="~/Content/img/spinner.gif" class="Oculto" width="20" height="20" />*@
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn botao_cor_verde btn-sm" id="Botao1" data-dismiss="modal" value="Fechar" />
+                        <button class="btn botao_padrao btn-sm" id="Botao2" data-dismiss="modal" value="Salvar mudanças"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
     <script src="~/Scripts/jquery-3.5.1.min.js"></script>
     <script src="~/Scripts/jquery.js"></script>

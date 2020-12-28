@@ -39,7 +39,21 @@ namespace SCIR.DAO.Cadastros
 
         public IList<StatusRequerimento> FiltroPorColuna(string coluna, string searchPhrase)
         {
-            throw new NotImplementedException();
+            var where = "";
+            if (!string.IsNullOrWhiteSpace(searchPhrase))
+            {
+                where += string.Format(coluna + ".Contains(\"{0}\")", searchPhrase);
+            }
+            else
+            {
+                where = "1=1";
+            }
+
+            using (var contexto = new ScirContext())
+            {
+                var ordenacao = coluna + " ASC";
+                return contexto.StatusRequerimento.Where(where).OrderBy(ordenacao).ToList();
+            }
         }
 
         public void Insert(StatusRequerimento entidade)
