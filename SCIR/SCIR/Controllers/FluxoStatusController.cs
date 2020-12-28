@@ -22,8 +22,7 @@ namespace SCIR.Controllers
         {
             return View();
         }
-
-
+        
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10)
         {
             var request = FormatGridUtils.Format(Request, searchPhrase, current, rowCount);
@@ -39,13 +38,34 @@ namespace SCIR.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Form(int id = 0)
+        public JsonResult ListarProximos(string searchPhrase, int current = 1, int rowCount = 10, int statusAtualId = 0, int tipoRequerimentoId = 0)
+        {
+            var request = FormatGridUtils.Format(Request, searchPhrase, current, rowCount);
+
+            var response = FluxoStatusServer.ListarProximos(request, statusAtualId, tipoRequerimentoId);
+
+            return Json(new
+            {
+                rows = response.Entidades,
+                current,
+                rowCount,
+                total = response.QuantidadeRegistros
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Form(int statusAtual = 0, int tipoRequerimento = 0)
         {
             var model = new FluxoStatusVM();
 
-            if (id != 0)
-                model.FluxoStatus = FluxoStatusServer.GetEntidade(id);
+            if (statusAtual != 0 && tipoRequerimento != 0)
+            {
+                model.FluxoStatus.StatusAtualId = statusAtual;
+                model.FluxoStatus.StatusAtual = StatusRequerimentoServer.GetEntidade(statusAtual);
 
+                model.FluxoStatus.TipoRequerimentoId = tipoRequerimento;
+                model.FluxoStatus.TipoRequerimento = TipoRequerimentoServer.GetEntidade(tipoRequerimento);
+
+            }
             return View(model);
         }
 
@@ -87,8 +107,9 @@ namespace SCIR.Controllers
             var model = new FluxoStatusVM();
             try
             {
-                FluxoStatusServer.Excluir(fluxoStatus);
-                model.Consistencia.Add("Registro excluído com sucesso!", ConsisteUtils.Tipo.Sucesso);
+                
+                FluxoStatusServer.ExcluirAll(fluxoStatus);
+                model.Consistencia.Add("Registros excluídos com sucesso!", ConsisteUtils.Tipo.Sucesso);
             }
             catch (Exception e)
             {
@@ -104,6 +125,7 @@ namespace SCIR.Controllers
             return RedirectToAction("Index", "FluxoStatus");
         }
 
+
         [HttpPost]
         public JsonResult ExcluirAjax(FluxoStatus fluxoStatus)
         {
@@ -111,6 +133,23 @@ namespace SCIR.Controllers
             try
             {
                 FluxoStatusServer.Excluir(fluxoStatus);
+                consistencia.Add("Registro excluído com sucesso!", ConsisteUtils.Tipo.Sucesso);
+            }
+            catch (Exception e)
+            {
+                consistencia.Add(e.Message, ConsisteUtils.Tipo.Inconsistencia);
+            }
+
+            return Json(consistencia, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult ExcluirAjaxTodosProximos(FluxoStatus fluxoStatus)
+        {
+            var consistencia = new ConsisteUtils();
+            try
+            {
+                FluxoStatusServer.ExcluirAll(fluxoStatus);
                 consistencia.Add("Registro excluído com sucesso!", ConsisteUtils.Tipo.Sucesso);
             }
             catch (Exception e)
@@ -143,7 +182,18 @@ namespace SCIR.Controllers
 
             return Json(consistencia, JsonRequestBehavior.AllowGet);
         }
-        
+
+        [HttpPost]
+        public JsonResult ConsisteExcluirTodosProximos(FluxoStatus fluxoStatus)
+        {
+            var consistencia = new ConsisteUtils();
+
+            consistencia = FluxoStatusServer.ConsisteExcluirTodosProximos(fluxoStatus);
+
+            return Json(consistencia, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         public ActionResult AdicionarProximoStatus(FluxoStatus fluxoStatus)
         {

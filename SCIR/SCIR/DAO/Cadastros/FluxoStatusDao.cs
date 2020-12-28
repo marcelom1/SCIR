@@ -15,9 +15,26 @@ namespace SCIR.DAO.Cadastros
     {
         public FluxoStatus BuscarPorId(int id)
         {
+            throw new NotImplementedException();
+        }
+
+        public FluxoStatus GetEntidade(FluxoStatus entidade)
+        {
             using (var contexto = new ScirContext())
             {
-                return contexto.FluxoStatus.Include(e => e.StatusAtual).Include(e=>e.StatusProximo).Include(e=>e.TipoRequerimento).FirstOrDefault();
+                return contexto.FluxoStatus
+                               .Where(e => e.StatusAtualId == entidade.StatusAtualId && e.TipoRequerimentoId == entidade.TipoRequerimentoId && e.StatusProximoId == entidade.StatusProximoId)
+                               .Include(e => e.StatusAtual)
+                               .Include(e => e.StatusProximo)
+                               .Include(e => e.TipoRequerimento).FirstOrDefault();
+            }
+        }
+
+        public IList<FluxoStatus> BuscarPorId(int statusAtual, int tipoRequerimento)
+        {
+            using (var contexto = new ScirContext())
+            {
+                return contexto.FluxoStatus.Where(e=>e.StatusAtualId == statusAtual && e.TipoRequerimentoId == tipoRequerimento).Include(e => e.StatusAtual).Include(e => e.StatusProximo).Include(e => e.TipoRequerimento).AsTracking().ToList();
             }
         }
 
@@ -25,7 +42,20 @@ namespace SCIR.DAO.Cadastros
         {
             using (var contexto = new ScirContext())
             {
-                contexto.FluxoStatus.Remove(entidade);
+                contexto.FluxoStatus.Remove(contexto.FluxoStatus
+                               .Where(e => e.StatusAtualId == entidade.StatusAtualId && e.TipoRequerimentoId == entidade.TipoRequerimentoId && e.StatusProximoId == entidade.StatusProximoId)
+                               .Include(e => e.StatusAtual)
+                               .Include(e => e.StatusProximo)
+                               .Include(e => e.TipoRequerimento).FirstOrDefault());
+                contexto.SaveChanges();
+            }
+        }
+
+        public void DeleteAll(FluxoStatus entidades)
+        {
+            using (var contexto = new ScirContext())
+            {
+                contexto.FluxoStatus.RemoveRange(contexto.FluxoStatus.Where(e => e.StatusAtualId == entidades.StatusAtualId && e.TipoRequerimentoId == entidades.TipoRequerimentoId).Include(e => e.StatusAtual).Include(e => e.StatusProximo).Include(e => e.TipoRequerimento));
                 contexto.SaveChanges();
             }
         }
@@ -55,7 +85,7 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public IPagedList<FluxoStatusGridDC> ListGrid(FormatGridUtils request)
+        public IPagedList<FluxoStatusGridDC> ListProximosGrid(FormatGridUtils request, int statusAtualId, int tipoRequerimentoId)
         {
             using (var contexto = new ScirContext())
             {
@@ -63,7 +93,7 @@ namespace SCIR.DAO.Cadastros
                                 join b in contexto.StatusRequerimento on a.StatusAtualId equals b.Id
                                 join c in contexto.StatusRequerimento on a.StatusProximoId equals c.Id
                                 join d in contexto.TipoRequerimento on a.TipoRequerimentoId equals d.Id
-                                where (!string.IsNullOrWhiteSpace(request.SearchPhrase)? EF.Functions.Like(b.Nome, "%"+request.SearchPhrase+"%") || EF.Functions.Like(d.Nome, "%" + request.SearchPhrase + "%") : a.StatusAtualId == a.StatusAtualId)
+                                where (a.StatusAtualId == statusAtualId && a.TipoRequerimentoId == tipoRequerimentoId) && (!string.IsNullOrWhiteSpace(request.SearchPhrase) ? (EF.Functions.Like(c.Nome, "%" + request.SearchPhrase + "%") || EF.Functions.Like(d.Nome, "%" + request.SearchPhrase + "%")) : (true))
                                 select new
                                 {
                                     a.StatusAtualId,
@@ -74,11 +104,11 @@ namespace SCIR.DAO.Cadastros
                                     TipoRequerimentoNome = d.Nome
                                 };
 
-                
+
                 if (string.IsNullOrWhiteSpace(request.CampoOrdenacao))
                     request.CampoOrdenacao = "Id asc";
 
-                
+
                 var listFluxoStatus = innerJoin.OrderBy(request.CampoOrdenacao).ToPagedList(request.Current, request.RowCount);
                 var lista = new List<FluxoStatusGridDC>();
                 foreach (var item in listFluxoStatus)
@@ -88,7 +118,62 @@ namespace SCIR.DAO.Cadastros
                         StatusAtualId = item.StatusAtualId,
                         StatusAtualNome = item.StatusAtualNome,
                         StatusProximoId = item.StatusProximoId,
-                        StatuProximoNome = item.StatusProximoNome,
+                        StatusProximoNome = item.StatusProximoNome,
+                        TipoRequerimentoId = item.TipoRequerimentoId,
+                        TipoRequerimentoNome = item.TipoRequerimentoNome
+                    });
+                }
+                return lista.ToPagedList(request.Current, request.RowCount);
+            }
+        }
+
+        public IPagedList<FluxoStatusGridDC> ListGrid(FormatGridUtils request)
+        {
+            using (var contexto = new ScirContext())
+            {
+                //var innerJoin = from a in contexto.FluxoStatus
+                //                join b in contexto.StatusRequerimento on a.StatusAtualId equals b.Id
+                //                join c in contexto.StatusRequerimento on a.StatusProximoId equals c.Id
+                //                join d in contexto.TipoRequerimento on a.TipoRequerimentoId equals d.Id
+                //                where (!string.IsNullOrWhiteSpace(request.SearchPhrase)? EF.Functions.Like(b.Nome, "%"+request.SearchPhrase+"%") || EF.Functions.Like(d.Nome, "%" + request.SearchPhrase + "%") : a.StatusAtualId == a.StatusAtualId)
+                //                select new
+                //                {
+                //                    a.StatusAtualId,
+                //                    StatusAtualNome = b.Nome,
+                //                    a.StatusProximoId,
+                //                    StatusProximoNome = c.Nome,
+                //                    a.TipoRequerimentoId,
+                //                    TipoRequerimentoNome = d.Nome
+                //                };
+
+                var innerJoin = from a in contexto.FluxoStatus
+                                join b in contexto.StatusRequerimento on a.StatusAtualId equals b.Id
+                                join c in contexto.StatusRequerimento on a.StatusProximoId equals c.Id
+                                join d in contexto.TipoRequerimento on a.TipoRequerimentoId equals d.Id
+                                where (!string.IsNullOrWhiteSpace(request.SearchPhrase) ? EF.Functions.Like(b.Nome, "%" + request.SearchPhrase + "%") || EF.Functions.Like(d.Nome, "%" + request.SearchPhrase + "%") : a.StatusAtualId == a.StatusAtualId)
+                                select new
+                                {
+                                    a.StatusAtualId,
+                                    StatusAtualNome = b.Nome,
+                                    a.StatusProximoId,
+                                    StatusProximoNome = c.Nome,
+                                    a.TipoRequerimentoId,
+                                    TipoRequerimentoNome = d.Nome
+                                };
+
+
+                if (string.IsNullOrWhiteSpace(request.CampoOrdenacao))
+                    request.CampoOrdenacao = "Id asc";
+
+                
+                var listFluxoStatus = innerJoin.GroupBy(g=>new {g.StatusAtualId, g.StatusAtualNome, g.TipoRequerimentoId, g.TipoRequerimentoNome }).Select(s=> new {s.Key.StatusAtualId, s.Key.StatusAtualNome,s.Key.TipoRequerimentoId,s.Key.TipoRequerimentoNome }).OrderBy(request.CampoOrdenacao).ToPagedList(request.Current, request.RowCount);
+                var lista = new List<FluxoStatusGridDC>();
+                foreach (var item in listFluxoStatus)
+                {
+                    lista.Add(new FluxoStatusGridDC
+                    {
+                        StatusAtualId = item.StatusAtualId,
+                        StatusAtualNome = item.StatusAtualNome,
                         TipoRequerimentoId = item.TipoRequerimentoId,
                         TipoRequerimentoNome = item.TipoRequerimentoNome
                     });

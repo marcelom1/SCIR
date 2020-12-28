@@ -13,7 +13,7 @@ namespace SCIR.Datacontract.Grid
         public string StatusAtualNome { get; set; }
 
         public int StatusProximoId { get; set; }
-        public string StatuProximoNome { get; set; }
+        public string StatusProximoNome { get; set; }
 
         public int TipoRequerimentoId { get; set; }
         public string TipoRequerimentoNome { get; set; }

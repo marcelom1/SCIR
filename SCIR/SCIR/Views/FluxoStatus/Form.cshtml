@@ -23,13 +23,13 @@
 
 <input onclick="location.href='/FluxoStatus/Form'" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Novo">
 
-@using (Html.BeginForm("Salvar", "Fluxo", FormMethod.Post, new { @id = "CadastroFluxoStatus", @name = "CadastroFluxoStatus" }))
+@using (Html.BeginForm("Salvar", "FluxoStatus", FormMethod.Post, new { @id = "CadastroFluxoStatus", @name = "CadastroFluxoStatus" }))
 {
-    <div class="form-row pb-1 pt-4 ">
+    <div class="form-row pb-1 pt-4 blockConfirmation">
         <div class="form-group col-md-2">
             <label for="Codigo">Status</label>
             <div class="input-group mb-1">
-                <select class="js-example-basic-single select2" id="Select2_StatusAtual" name="fluxoStatus.StatusAtualId">
+                <select class="js-example-basic-single select2 blockConfirmation" id="Select2_StatusAtual" name="fluxoStatus.StatusAtualId">
                     @{ if (Model.FluxoStatus.StatusAtualId != 0)
                         {
                             <option value="@Model.FluxoStatus.StatusAtualId">@Model.FluxoStatus.StatusAtual.Nome</option>
@@ -49,38 +49,39 @@
         </div>
 
         <div class="form-group col-md-3">
-                <label for="TipoRequerimento">Tipo Requerimento</label>
-                <select class="js-example-basic-single select2" id="Select2_TipoRequerimento" name="fluxoStatus.TipoRequerimentoId">
-                    @{ if (Model.FluxoStatus.TipoRequerimentoId != 0)
-                        {
-                            <option value="@Model.FluxoStatus.TipoRequerimentoId">@Model.FluxoStatus.TipoRequerimento.Nome</option>
-                        }
+            <label for="TipoRequerimento">Tipo Requerimento</label>
+            <select class="js-example-basic-single select2 blockConfirmation" id="Select2_TipoRequerimento" name="fluxoStatus.TipoRequerimentoId">
+                @{ if (Model.FluxoStatus.TipoRequerimentoId != 0)
+                    {
+                        <option value="@Model.FluxoStatus.TipoRequerimentoId">@Model.FluxoStatus.TipoRequerimento.Nome</option>
                     }
-                </select>
+                }
+            </select>
         </div>
 
     </div>
 
     <hr>
 
-    <table id="grid-basic" class="table table-condensed table-hover table-striped">
+    <table id="grid-basic" class="table table-condensed table-hover table-striped blockConfirmationGrid">
         <thead>
             <tr>
-                <th data-column-id="StatusAtualNome" data-order="asc">Status</th>
+                <th data-column-id="StatusProximoId">Proximo Status Id</th>
+                <th data-column-id="StatusProximoNome" data-order="asc">Proximo Status</th>
                 <th data-column-id="TipoRequerimentoNome">Tipo Requerimento</th>
                 <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ação</th>
             </tr>
         </thead>
     </table>
-
-
-    @*<input type="button" id="Botao_Salvar" class="btn botao_cor_verde btn-lg blockConfirmation" value="Salvar">*@
-    <div class="form-row float-right">
-        <div class="form-group col-md-1">
-            <input type="button" id="Botao_Excluir_Cadastro" value="Excluir" class="btn botao_cor btn-lg blockConfirmation">
-        </div>
-    </div>
 }
+
+@*<input type="button" id="Botao_Salvar" class="btn botao_cor_verde btn-lg blockConfirmation" value="Salvar">*@
+<div class="form-row float-right">
+    <div class="form-group col-md-1">
+        <input type="button" id="Botao_Excluir_Cadastro" value="Excluir" class="btn botao_cor btn-lg blockConfirmation">
+    </div>
+</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="ModalEditar" tabindex="-1" role="dialog" aria-labelledby="TituloModalLongoExemplo" aria-hidden="true">
@@ -94,10 +95,17 @@
 @section scripts{
     <script src="~/Content/js/select2.min.js"></script>
     <script src="~/Content/js/pt-BR.js"></script>
+    <script>
+        function CarregarParametrosAdicionaisGrid(request) {
+            request.statusAtualId = $("#Select2_StatusAtual").val();
+            request.tipoRequerimentoId = $("#Select2_TipoRequerimento").val();
+        };
+
+        var listaGrid = "@Url.Action("ListarProximos")";
+    </script>
     <script src="~/Content/js/Utils/GridInit.js"></script>
     <script src="~/Content/js/FluxoStatus/CadastroFluxoStatusForm.js"></script>
     <script>
-        var listaGrid = "@Url.Action("Listar")";
         var consistencia = "";
         var consistenciaTipo = 1;
 
@@ -117,6 +125,8 @@
         }
 
         VerificarConsistencia(consistencia, consistenciaTipo);
+
+
     </script>
 }
 

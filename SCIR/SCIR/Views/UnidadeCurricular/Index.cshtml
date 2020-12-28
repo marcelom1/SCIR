@@ -28,10 +28,15 @@
 </table>
 
 @section scripts{
-    <script src="~/Content/js/Utils/GridInit.js"></script>
-    <script src="~/Content/js/UnidadeCurricular/CadastroUnidadeCurricularIndex.js"></script>
     <script>
+        function CarregarParametrosAdicionaisGrid(request) {
+            //Sem parametros
+        }
+
         var listaGrid = "@Url.Action("Listar")";
     </script>
+    <script src="~/Content/js/Utils/GridInit.js"></script>
+    <script src="~/Content/js/UnidadeCurricular/CadastroUnidadeCurricularIndex.js"></script>
+   
 
 }

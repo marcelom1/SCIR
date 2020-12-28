@@ -23,16 +23,20 @@ namespace SCIR.Business.Cadastros
             return consiste;
         }
 
-        public ConsisteUtils ConsisteExcluir(FluxoStatus fluxoStatus)
+        public ConsisteUtils ConsisteExcluirTodosProximos(FluxoStatus fluxoStatus)
         {
             var consiste = new ConsisteUtils();
 
-            var pesquisa = dbFluxoStatus.BuscarPorId(1);
-            fluxoStatus = pesquisa;
+            var pesquisa = dbFluxoStatus.BuscarPorId(fluxoStatus.StatusAtualId,fluxoStatus.TipoRequerimentoId);
 
-            if (fluxoStatus == null)
+            if (pesquisa == null)
                 consiste.Add("Não foi encontrado o registro para exclusão", ConsisteUtils.Tipo.Inconsistencia);
 
+            //foreach (var item in pesquisa)
+            //{
+                
+            //}
+           
             return consiste;
         }
 
@@ -47,6 +51,15 @@ namespace SCIR.Business.Cadastros
                 consiste.Add("Não foi encontrado o registro para atualização", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
+        }
+
+        public ResponseGrid<FluxoStatusGridDC> ListarProximos(FormatGridUtils request, int statusAtualId, int tipoRequerimentoId)
+        {
+            var response = new ResponseGrid<FluxoStatusGridDC>();
+            response.Entidades = dbFluxoStatus.ListProximosGrid(request, statusAtualId, tipoRequerimentoId);
+            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+
+            return response;
         }
 
         public FluxoStatus Novo(FluxoStatus fluxoStatus)
@@ -74,6 +87,36 @@ namespace SCIR.Business.Cadastros
             return fluxoStatus;
         }
 
+        public ConsisteUtils ConsisteExcluir(FluxoStatus fluxoStatus)
+        {
+            var consiste = new ConsisteUtils();
+
+            var pesquisa = dbFluxoStatus.GetEntidade(fluxoStatus);
+
+            if (pesquisa == null)
+                consiste.Add("Não foi encontrado o registro para exclusão", ConsisteUtils.Tipo.Inconsistencia);
+
+            //foreach (var item in pesquisa)
+            //{
+
+            //}
+
+            return consiste;
+        }
+
+        public FluxoStatus ExcluirAll(FluxoStatus fluxoStatus)
+        {
+           var consiste = ConsisteExcluirTodosProximos(fluxoStatus);
+
+            if (consiste.Inconsistencias.Any())
+                throw new ArgumentException(consiste.Inconsistencias.ToString());
+
+            //var pesquisa = dbFluxoStatus.BuscarPorId(fluxoStatus.StatusAtualId, fluxoStatus.TipoRequerimentoId);
+            dbFluxoStatus.DeleteAll(fluxoStatus);
+
+            return fluxoStatus;
+        }
+
         public FluxoStatus Atualizar(FluxoStatus fluxoStatus)
         {
             var consiste = ConsisteAtualizar(fluxoStatus);
@@ -96,9 +139,9 @@ namespace SCIR.Business.Cadastros
             return response;
         }
 
-        public FluxoStatus GetEntidade(int id)
+        public FluxoStatus GetEntidade(FluxoStatus fluxoStatus)
         {
-            return dbFluxoStatus.BuscarPorId(id);
+            return dbFluxoStatus.GetEntidade(fluxoStatus);
         }
 
         public IList<FluxoStatus> GetFiltroEntidadeString(string coluna, string searchTerm)
