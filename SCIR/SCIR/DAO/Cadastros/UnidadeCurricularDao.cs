@@ -40,7 +40,25 @@ namespace SCIR.DAO.Cadastros
 
         public IList<UnidadeCurricular> FiltroPorColuna(string coluna, string searchPhrase)
         {
-            throw new NotImplementedException();
+            var where = "";
+            if (!string.IsNullOrWhiteSpace(searchPhrase))
+            {
+                int id = 0;
+                if (coluna.ToUpper() == "CURSO" && int.TryParse(searchPhrase, out id))
+                    where += string.Format("CURSOID = {0}", id);
+                else
+                    where += string.Format(coluna + ".Contains(\"{0}\")", searchPhrase);
+            }
+            else
+            {
+                where = "1=1";
+            }
+
+            using (var contexto = new ScirContext())
+            {
+                var ordenacao = coluna + " ASC";
+                return contexto.UnidadeCurricular.AsNoTracking().Where(where).OrderBy(ordenacao).ToList();
+            }
         }
 
         public void Insert(UnidadeCurricular entidade)
@@ -118,5 +136,6 @@ namespace SCIR.DAO.Cadastros
                 contexto.SaveChanges();
             }
         }
+
     }
 }

@@ -13,6 +13,7 @@ namespace SCIR.Business.Cadastros
     {
         private TipoRequerimentoDao dbTipoRequerimento = new TipoRequerimentoDao();
         private TipoFormularioDao dbTipoFormulario = new TipoFormularioDao();
+        private FluxoStatusDao dbFluxoStatus = new FluxoStatusDao();
 
         public ConsisteUtils ConsisteNovo(TipoRequerimento tipoRequerimento)
         {
@@ -20,6 +21,9 @@ namespace SCIR.Business.Cadastros
 
             if (string.IsNullOrWhiteSpace(tipoRequerimento.Nome))
                 consiste.Add("O campo Nome não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (tipoRequerimento.TipoFormularioId == 0)
+                consiste.Add("O campo Formulario não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }
@@ -30,6 +34,11 @@ namespace SCIR.Business.Cadastros
 
             if (tipoRequerimento == null)
                 consiste.Add("Não foi encontrado o registro para exclusão", ConsisteUtils.Tipo.Inconsistencia);
+
+            var fluxoStatusAtrelado = dbFluxoStatus.FiltroPorColuna("TIPOREQUERIMENTO", tipoRequerimento.Id.ToString());
+            if (fluxoStatusAtrelado.Any())
+                consiste.Add("Não foi possivel excluir o Tipo de Requerimento, pois o mesmo já se encontra atrelado a um fluxo de status (Fluxos de Status: " + string.Join(" - ", fluxoStatusAtrelado) + ")", ConsisteUtils.Tipo.Inconsistencia);
+
 
             return consiste;
         }
@@ -43,6 +52,9 @@ namespace SCIR.Business.Cadastros
 
             if (pesquisa == null)
                 consiste.Add("Não foi encontrado o registro para atualização", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (tipoRequerimento.TipoFormularioId == 0)
+                consiste.Add("O campo Formulario não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }

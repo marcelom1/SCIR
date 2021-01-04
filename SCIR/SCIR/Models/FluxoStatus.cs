@@ -22,5 +22,10 @@ namespace SCIR.Models
             StatusProximo = new StatusRequerimento();
             TipoRequerimento = new TipoRequerimento();
         }
+
+        public override string ToString()
+        {
+            return "StatusAtual: " + StatusAtualId + " ProximoStatus: " + StatusProximoId + " TipoRequerimento: " + TipoRequerimentoId +"|";
+        }
     }
 }

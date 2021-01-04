@@ -13,6 +13,7 @@ namespace SCIR.Business.Cadastros
     public class CursosServer 
     {
         private CursosDao dbCursos = new CursosDao();
+        private UnidadeCurricularDao dbUnidadeCurricular = new UnidadeCurricularDao();
 
         public ConsisteUtils ConsisteNovo(Cursos curso)
         {
@@ -34,6 +35,10 @@ namespace SCIR.Business.Cadastros
             if (curso == null)
                 consiste.Add("Não foi encontrado o registro para exclusão", ConsisteUtils.Tipo.Inconsistencia);
 
+            var unidadesCurricularesAtreladas = dbUnidadeCurricular.FiltroPorColuna("CURSO", curso.Id.ToString());
+            if (unidadesCurricularesAtreladas.Any())
+                consiste.Add("Não foi possivel excluir o curso, pois o mesmo já se encontra atrelado a uma unidade curricular (Unidades Curriculares: "+string.Join(" - ", unidadesCurricularesAtreladas.Select(x=>x.Id)) +")", ConsisteUtils.Tipo.Inconsistencia);
+
             return consiste;
         }
 
@@ -46,6 +51,9 @@ namespace SCIR.Business.Cadastros
 
             if (pesquisa == null)
                 consiste.Add("Não foi encontrado o registro para atualização", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (string.IsNullOrWhiteSpace(curso.Nome))
+                consiste.Add("O campo Nome não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }

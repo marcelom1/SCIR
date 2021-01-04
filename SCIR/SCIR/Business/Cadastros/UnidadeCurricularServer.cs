@@ -20,6 +20,9 @@ namespace SCIR.Business.Cadastros
             if (string.IsNullOrWhiteSpace(unidadeCurricular.Nome))
                 consiste.Add("O campo Nome não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
+            if (unidadeCurricular.CursoId == 0)
+                consiste.Add("O campo Curso não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
             return consiste;
         }
 
@@ -29,6 +32,8 @@ namespace SCIR.Business.Cadastros
 
             if (unidadeCurricular == null)
                 consiste.Add("Não foi encontrado o registro para exclusão", ConsisteUtils.Tipo.Inconsistencia);
+
+            //FAZER NO FUTURO VALIDAÇÃO NA EXCLUSÃO CASO A UNIDADE CURRICULAR ESTIVER ATRELADO A UM FORMULÁRIO NÃO DEIXAR EXCLUIR
 
             return consiste;
         }
@@ -42,6 +47,9 @@ namespace SCIR.Business.Cadastros
 
             if (pesquisa == null)
                 consiste.Add("Não foi encontrado o registro para atualização", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (unidadeCurricular.CursoId == 0)
+                consiste.Add("O campo Curso não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }

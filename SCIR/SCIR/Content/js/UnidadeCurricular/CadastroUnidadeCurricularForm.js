@@ -8,7 +8,7 @@
         LimparAlertas();
         var id = $("#UnidadeCurricular_id").val();
         var nome = $("#Nome").val();
-        var curso = $("#Curso").val();
+        var curso = $("#Select2_Curso").val();
         var ativo = $("#Ativo").is(':checked');
         var msg = "";
         var entidade = {
@@ -48,13 +48,13 @@
         e.preventDefault();
         var id = $("#UnidadeCurricular_id").val();
         var nome = $("#Nome").val();
-        var curso = $("#Curso").val();
+        var curso = $("#Select2_Curso").val();
         var ativo = $("#Ativo").is(':checked');
         var msg = "";
         var entidade = {
             Id: id,
             Nome: nome,
-            Curso: curso,
+            CursoId: curso,
             Ativo: ativo
         };
         $.ajax({

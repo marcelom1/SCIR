@@ -17,8 +17,18 @@ namespace SCIR.Business.Cadastros
         {
             var consiste = new ConsisteUtils();
 
-            //if (string.IsNullOrWhiteSpace(fluxoStatus.Nome))
-            //    consiste.Add("O campo Nome não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+            var fluxoStatusBusca = dbFluxoStatus.GetEntidade(fluxoStatus);
+            if (fluxoStatusBusca != null)
+                consiste.Add("Já existe um fluxo cadastrado igual no sistema", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (fluxoStatus.StatusAtualId == 0)
+                consiste.Add("Status Atual não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (fluxoStatus.StatusProximoId == 0)
+                consiste.Add("Proximo Status não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (fluxoStatus.TipoRequerimentoId == 0)
+                consiste.Add("O Tipo de Requerimento não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }
@@ -49,6 +59,19 @@ namespace SCIR.Business.Cadastros
 
             if (pesquisa == null)
                 consiste.Add("Não foi encontrado o registro para atualização", ConsisteUtils.Tipo.Inconsistencia);
+
+            var fluxoStatusBusca = dbFluxoStatus.GetEntidade(fluxoStatus);
+            if (fluxoStatusBusca != null)
+                consiste.Add("Já existe um fluxo cadastrado igual no sistema", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (fluxoStatus.StatusAtualId == 0)
+                consiste.Add("Status Atual não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (fluxoStatus.StatusProximoId == 0)
+                consiste.Add("Proximo Status não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (fluxoStatus.TipoRequerimentoId == 0)
+                consiste.Add("O Tipo de Requerimento não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }
