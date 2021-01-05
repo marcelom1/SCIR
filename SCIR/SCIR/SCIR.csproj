@@ -347,10 +347,21 @@
     <Compile Include="Migrations\20201227190928_fluxoStatus.designer.cs">
       <DependentUpon>20201227190928_fluxoStatus.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20210105233449_FormularioValidacao.cs" />
+    <Compile Include="Migrations\20210105233449_FormularioValidacao.designer.cs">
+      <DependentUpon>20210105233449_FormularioValidacao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20210105234425_HistoricoRequerimento.cs" />
+    <Compile Include="Migrations\20210105234425_HistoricoRequerimento.designer.cs">
+      <DependentUpon>20210105234425_HistoricoRequerimento.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\Cursos.cs" />
     <Compile Include="Models\FluxoStatus.cs" />
+    <Compile Include="Models\FormularioValidacaoUC.cs" />
+    <Compile Include="Models\HistoricoRequerimento.cs" />
     <Compile Include="Models\Papel.cs" />
+    <Compile Include="Models\Requerimento.cs" />
     <Compile Include="Models\StatusRequerimento.cs" />
     <Compile Include="Models\TipoFormulario.cs" />
     <Compile Include="Models\TipoRequerimento.cs" />

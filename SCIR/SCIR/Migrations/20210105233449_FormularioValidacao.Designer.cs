@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SCIR.DAO;
 
 namespace SCIR.Migrations
 {
     [DbContext(typeof(ScirContext))]
-    partial class ScirContextModelSnapshot : ModelSnapshot
+    [Migration("20210105233449_FormularioValidacao")]
+    partial class FormularioValidacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,31 +55,6 @@ namespace SCIR.Migrations
                     b.HasIndex("TipoRequerimentoId");
 
                     b.ToTable("FluxoStatus");
-                });
-
-            modelBuilder.Entity("SCIR.Models.HistoricoRequerimento", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Antes")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Depois")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<DateTime>("Modificado")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("RequerimentoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RequerimentoId");
-
-                    b.ToTable("HistoricoRequerimento");
                 });
 
             modelBuilder.Entity("SCIR.Models.Papel", b =>
@@ -362,15 +339,6 @@ namespace SCIR.Migrations
                     b.HasOne("SCIR.Models.TipoRequerimento", "TipoRequerimento")
                         .WithMany()
                         .HasForeignKey("TipoRequerimentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("SCIR.Models.HistoricoRequerimento", b =>
-                {
-                    b.HasOne("SCIR.Models.Requerimento", "Requerimento")
-                        .WithMany()
-                        .HasForeignKey("RequerimentoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

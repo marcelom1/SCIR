@@ -74,10 +74,25 @@ namespace SCIR.DAO.Cadastros
             if (!string.IsNullOrWhiteSpace(searchPhrase))
             {
                 int id = 0;
-                if (coluna.ToUpper() == "TIPOREQUERIMENTO" && int.TryParse(searchPhrase, out id))
-                    where += string.Format("TIPOREQUERIMENTOID = {0}", id);
+                if (int.TryParse(searchPhrase, out id))
+                {
+                    switch (coluna.ToUpper())
+                    {
+                        case "TIPOREQUERIMENTO":
+                            where += string.Format("TIPOREQUERIMENTOID = {0}", id);
+                            break;
+                        case "STATUSATUALID":
+                            where += string.Format("StatusAtualId = {0}", id);
+                            break;
+                        case "STATUSPROXIMOID":
+                            where += string.Format("StatusProximoId = {0}", id);
+                            break;
+                    }
+                }
                 else
+                {
                     where += string.Format(coluna + ".Contains(\"{0}\")", searchPhrase);
+                }
             }
             else
             {

@@ -12,6 +12,7 @@ namespace SCIR.Business.Cadastros
     public class StatusRequerimentoServer
     {
         private StatusRequerimentoDao dbStatusRequerimento = new StatusRequerimentoDao();
+        private FluxoStatusDao dbFluxoStatus = new FluxoStatusDao();
 
         public ConsisteUtils ConsisteNovo(StatusRequerimento statusRequerimento)
         {
@@ -32,6 +33,15 @@ namespace SCIR.Business.Cadastros
 
             if (statusRequerimento == null)
                 consiste.Add("Não foi encontrado o registro para exclusão", ConsisteUtils.Tipo.Inconsistencia);
+
+            var fluxoStatus = dbFluxoStatus.FiltroPorColuna(nameof(FluxoStatus.StatusAtualId), statusRequerimento.Id.ToString());
+            if (fluxoStatus.Any())
+                consiste.Add("Não foi possivel excluir o Status, pois o mesmo já se encontra atrelado a um fluxo de status (Fluxos de Status: " + string.Join(" - ", fluxoStatus) + ")", ConsisteUtils.Tipo.Inconsistencia);
+
+            fluxoStatus = dbFluxoStatus.FiltroPorColuna(nameof(FluxoStatus.StatusProximoId), statusRequerimento.Id.ToString());
+            if (fluxoStatus.Any())
+                consiste.Add("Não foi possivel excluir o Status, pois o mesmo já se encontra atrelado a um fluxo de status (Fluxos de Status: " + string.Join(" - ", fluxoStatus) + ")", ConsisteUtils.Tipo.Inconsistencia);
+
 
             return consiste;
         }

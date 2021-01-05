@@ -25,7 +25,7 @@ namespace SCIR.Models
 
         public override string ToString()
         {
-            return "StatusAtual: " + StatusAtualId + " ProximoStatus: " + StatusProximoId + " TipoRequerimento: " + TipoRequerimentoId +"|";
+            return "StatusAtual: " + StatusAtualId + " ProximoStatus: " + StatusProximoId + " TipoRequerimento: " + TipoRequerimentoId;
         }
     }
 }

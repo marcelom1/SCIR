@@ -21,6 +21,15 @@ namespace SCIR.Business.Cadastros
             if (string.IsNullOrWhiteSpace(usuario.Nome))
                 consiste.Add("O campo Nome não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
+            if (string.IsNullOrWhiteSpace(usuario.Email))
+                consiste.Add("O campo e-mail não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (string.IsNullOrWhiteSpace(usuario.Senha))
+                consiste.Add("O campo Senha não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (usuario.PapelId == 0)
+                consiste.Add("O campo Papel não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
             return consiste;
         }
 
@@ -31,6 +40,7 @@ namespace SCIR.Business.Cadastros
             if (usuario == null)
                 consiste.Add("Não foi encontrado o registro para exclusão", ConsisteUtils.Tipo.Inconsistencia);
 
+            //FUTURAMENTE COLOCAR UMA INCONSISTENCIA NA EXCLUSÃO CASO O USUÁRIO POSSUIR ALGUM REQUERIMENTO REGISTRADO
             return consiste;
         }
 
@@ -43,6 +53,12 @@ namespace SCIR.Business.Cadastros
 
             if (pesquisa == null)
                 consiste.Add("Não foi encontrado o registro para atualização", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (string.IsNullOrWhiteSpace(usuario.Email))
+                consiste.Add("O campo e-mail não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (usuario.PapelId == 0)
+                consiste.Add("O campo Papel não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }
@@ -82,8 +98,12 @@ namespace SCIR.Business.Cadastros
             if (consiste.Inconsistencias.Any())
                 throw new ArgumentException(consiste.Inconsistencias.ToString());
             else
-                dbUsuario.Update(usuario);
+            {
+                if (string.IsNullOrWhiteSpace(usuario.Senha))
+                    usuario.Senha = dbUsuario.BuscarPorId(usuario.Id).Senha;
 
+                dbUsuario.Update(usuario);
+            }
 
             return usuario;
         }
