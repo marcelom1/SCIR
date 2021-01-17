@@ -32,7 +32,7 @@ namespace SCIR.DAO
             modelBuilder.Entity<TipoValidacaoCurricular>().HasData(new TipoValidacaoCurricular { Id = 1, Ativo = true, Nome = "Reconhecimento de Estudos" },
                                                                    new TipoValidacaoCurricular { Id = 2, Ativo = true, Nome = "Reconhecimento de Saberes" });
 
-            modelBuilder.Entity<TipoFormulario>().HasData(new TipoFormulario { Id = 1, Nome = "Formulário Validação Unidade Curricular" });
+            modelBuilder.Entity<TipoFormulario>().HasData(new TipoFormulario { Id = 1, Nome = "Formulário Validação Unidade Curricular", Codigo = 1 });
 
             modelBuilder.Entity<Papel>().HasData(new Papel { Id = 1, Ativo = true, Nome = "Administrador" },
                                                  new Papel { Id = 2, Ativo = true, Nome = "Servidor" },

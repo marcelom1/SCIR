@@ -152,3 +152,62 @@ function DesabilitarId() {
     $("#UnidadeCurricular_id").prop('disabled', true);
 }
 
+
+function addComandosTabela() {
+
+    var headerTabela = $(".bootgrid-header");
+
+    //headerTabela.removeClass("row");
+    headerTabela.addClass("row justify-content-between")
+
+    headerTabela.prepend('<div id="Comandos" class="actions btn-group"><div class="row container-fluid"></div></div>')
+
+    //var select2ProximoStatus = '<div class="form-group col-md-3"> ' +
+    //                            '  <div class="form-group col-md-12"> ' +
+    //                            '      <label for="ProximoStatus">Proximo Status</label> ' +
+    //                            '      <select class="js-example-basic-single select2" id="Select2_ProximoStatus" name="fluxoStatus.StatusProximoId"> ' +
+    //                            '       </select> ' +
+    //                            '  </div> ' +
+    //    '</div> ';
+
+    var select2ProximoStatus = '<div class="form-group col-md-12"><select class="js-example-basic-single select2 blockConfirmationGrid" id="Select2_ProximoStatus" name="fluxoStatus.StatusProximoId"></select>';
+
+
+    var comandos = $("#Comandos")
+    comandos.html(select2ProximoStatus +
+        '<input style="margin: 8px 8px 8px 8px;" id="AdicionarStatusProximo" class="btn bg-success botao_cor btn-sm blockConfirmation blockConfirmationGrid" type="button" value="Adicionar Próximo"></div>');
+
+
+
+    $('#Select2_ProximoStatus').select2({
+
+        language: "pt-BR",
+        id: function (e) { return e.Id; },
+        placeholder: "",
+        allowClear: true,
+
+        ajax: {
+            url: "/FluxoStatus/GetStatusAtual",
+            datatype: 'json',
+            type: 'POST',
+
+            params: {
+                contentType: 'application/json; charset=utf-8'
+            },
+            quietMillis: 100,
+            data: function (params) {
+                return {
+                    searchTerm: params.term
+                };
+            },
+
+            processResults: function (data, params) {
+                return {
+                    results: data
+                }
+            }
+        },
+
+
+    });
+}

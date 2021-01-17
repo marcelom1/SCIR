@@ -1,0 +1,16 @@
+﻿
+.Oculto {
+    display: none;
+}
+
+[aria-disabled^="false"] {
+    cursor: Pointer;
+}
+
+.ponteiro {
+    cursor: pointer;
+}
+
+.ButtonRoxo {
+    background: #68228B;
+}

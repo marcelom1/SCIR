@@ -157,5 +157,22 @@ namespace SCIR.Controllers
 
 
         }
+
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult GetTipoRequerimento(string searchTerm)
+        {
+            var cursos = TipoRequerimentoServer.GetFiltroEntidadeString("Nome", searchTerm);
+
+            var modifica = cursos.Select(x => new
+            {
+                id = x.Id,
+                text = x.Id + " - " + x.Nome
+            });
+
+            return Json(modifica, JsonRequestBehavior.AllowGet);
+
+
+        }
     }
 }

@@ -91,7 +91,6 @@
         id: function (e) { return e.Id; },
         placeholder: "",
         allowClear: true,
-        minimumInputLength: 2,
 
         ajax: {
             url: "/TipoRequerimento/GetTipoFormulario",

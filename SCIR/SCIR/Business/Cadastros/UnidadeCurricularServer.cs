@@ -109,5 +109,15 @@ namespace SCIR.Business.Cadastros
             return response;
         }
 
+        public IList<UnidadeCurricular> GetFiltroEntidadeString(string coluna, string searchTerm)
+        {
+            return dbUnidadeCurricular.FiltroPorColuna(coluna, searchTerm);
+        }
+
+        public IList<UnidadeCurricular> GetFiltroEntidadeString(string coluna, string searchTerm, int cursoId)
+        {
+            return dbUnidadeCurricular.FiltroPorColuna(coluna, searchTerm, cursoId);
+        }
+
     }
 }

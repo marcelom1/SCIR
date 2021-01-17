@@ -158,5 +158,39 @@ namespace SCIR.Controllers
 
 
         }
+
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult GetUnidadeCurricular(string searchTerm)
+        {
+            var cursos = UnidadeCurricularServer.GetFiltroEntidadeString("Nome", searchTerm);
+
+            var modifica = cursos.Select(x => new
+            {
+                id = x.Id,
+                text = x.Id + " - " + x.Nome
+            });
+
+            return Json(modifica, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult GetUnidadeCurricularFilterCurso(string searchTerm, int cursoId)
+        {
+            var unidadeCurricular = UnidadeCurricularServer.GetFiltroEntidadeString("Nome", searchTerm, cursoId);
+
+            var modifica = unidadeCurricular.Select(x => new
+            {
+                id = x.Id,
+                text = x.Id + " - " + x.Nome
+            });
+
+            return Json(modifica, JsonRequestBehavior.AllowGet);
+
+
+        }
     }
 }

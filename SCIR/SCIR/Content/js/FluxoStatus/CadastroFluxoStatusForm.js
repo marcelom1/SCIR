@@ -51,7 +51,6 @@
         id: function (e) { return e.Id; },
         placeholder: "",
         allowClear: true,
-        minimumInputLength: 2,
 
         ajax: {
             url: "/FluxoStatus/GetStatusAtual",
@@ -84,7 +83,6 @@
         id: function (e) { return e.Id; },
         placeholder: "",
         allowClear: true,
-        minimumInputLength: 2,
 
         ajax: {
             url: "/FluxoStatus/GetTipoRequerimento",
@@ -241,7 +239,6 @@ function addComandosTabela() {
         id: function (e) { return e.Id; },
         placeholder: "",
         allowClear: true,
-        minimumInputLength: 2,
 
         ajax: {
             url: "/FluxoStatus/GetStatusAtual",

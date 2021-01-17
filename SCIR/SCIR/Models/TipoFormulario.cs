@@ -11,5 +11,6 @@ namespace SCIR.Models
         public int Id { get; set; }
         [Required(ErrorMessage = "Nome é um campo obrigatório.")]
         public string Nome { get; set; }
+        public int Codigo { get; set; }
     }
 }

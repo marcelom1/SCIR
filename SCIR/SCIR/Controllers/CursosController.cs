@@ -8,6 +8,8 @@ using System.Linq;
 using System.Linq.Dynamic;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Services;
+using System.Web.Services;
 
 namespace SCIR.Controllers
 {
@@ -137,6 +139,23 @@ namespace SCIR.Controllers
                               rowCount,
                               total = response.QuantidadeRegistros
             }, JsonRequestBehavior.AllowGet );
+        }
+
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult GetCursos(string searchTerm)
+        {
+            var cursos = cursoServer.GetFiltroEntidadeString("Nome", searchTerm);
+
+            var modifica = cursos.Select(x => new
+            {
+                id = x.Id,
+                text = x.Id + " - " + x.Nome
+            });
+
+            return Json(modifica, JsonRequestBehavior.AllowGet);
+
+
         }
 
     }

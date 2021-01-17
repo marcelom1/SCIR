@@ -1,0 +1,95 @@
+﻿@using SCIR.Models.ViewModels
+
+@model FormularioValidacaoUCVM
+
+
+@{
+    ViewBag.Title = "FormEncaminhamento";
+    Layout = "";
+}
+
+
+
+    <link href="~/Content/css/FormularioValidacaoUC/CadastroFormularioValidacaoUCForm.css" rel="stylesheet" />
+
+
+@*<input onclick="location.href='#'" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Novo">*@
+
+
+@using (Html.BeginForm("Salvar", "FormularioValidacaoUC", FormMethod.Post, new { @id = "CadastroFormularioValidacaoUC", @name = "CadastroFormularioValidacaoUC" }))
+{
+<div class="form-row pt-3 ">
+    <div class="form-group col-md-3">
+        <label for="TipoValidacao">Tipo Validação</label><br />
+        <select class="js-example-basic-single select2 blockConfirmation" id="Select2_TipoValidacao" name="formularioValidacaoUC.TipoValidacaoCurricularId">
+            <option value=""></option>
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="formularioValidacaoUC.Curso">Curso</label><br />
+        <select class="js-example-basic-single select2 blockConfirmation" id="Select2_Curso" name="formularioValidacaoUC.Curso">
+            <option value=""></option>
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="UnidadeCurricular">Unidade Curricular</label><br />
+        <select class="js-example-basic-single select2 blockConfirmation" id="Select2_UnidadeCurricular" name="formularioValidacaoUC.UnidadeCurricularId">
+            <option value=""></option>
+        </select>
+    </div>
+</div>
+    <div class="form-row pb-1 pt-4 ">
+        <div class="form-group col-md-12">
+            <label for="Motivo">Motivo</label>
+            <textarea class="form-control blockConfirmation" id="Motivo" style="height:auto!important"></textarea>
+        </div>
+    </div>
+
+    <table id="grid-basic" class="table table-condensed table-hover table-striped">
+        <thead>
+            <tr>
+                <th data-column-id="Id" data-order="asc" data-type="numeric">Id</th>
+                <th data-column-id="Nome">Nome</th>
+                <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ação</th>
+            </tr>
+        </thead>
+    </table>
+
+    <input type="button" id="Botao_Salvar" class="btn botao_cor_verde btn-lg blockConfirmation" value="Enviar">
+}
+
+
+    <script src="~/Content/js/select2.min.js"></script>
+    <script src="~/Content/js/pt-BR.js"></script>
+    <script>
+        function CarregarParametrosAdicionaisGrid(request) {
+            //Sem parametros
+        }
+
+        var listaGrid = "";
+    </script>
+    <script src="~/Content/js/Utils/GridInit.js"></script>
+    <script src="~/Content/js/FormularioValidacaoUC/CadastroFormularioValidacaoUCForm.js"></script>
+    <script>
+    var consistencia = "";
+    var consistenciaTipo = 1;
+
+    if (JSON.parse("@Model.Consistencia.Inconsistencias.Any()".toLowerCase()))
+    {
+        consistencia = "@Model.Consistencia.InconsistenciasToString";
+        consistenciaTipo = 1;
+
+    }else if (JSON.parse("@Model.Consistencia.Advertencias.Any()".toLowerCase()))
+    {
+        consistencia  = "@Model.Consistencia.AdvertenciasToString";
+        consistenciaTipo = 2;
+    } else if (JSON.parse("@Model.Consistencia.Sucesso.Any()".toLowerCase()))
+    {
+        consistencia  = "@Model.Consistencia.SucessoToString";
+        consistenciaTipo = 3;
+    }
+
+    VerificarConsistencia(consistencia, consistenciaTipo);
+    </script>
+
+
