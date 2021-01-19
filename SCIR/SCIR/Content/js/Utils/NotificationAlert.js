@@ -12,6 +12,7 @@
     } else if (tipo == 3) {
         $("#alert").append('<div class="form-control-feedback glyphicon alert alert-success" role="alert" id="alertConfirmation">' + mensagem + '</div>');
     }
+    $('html, body').animate({ scrollTop: 0 }, 300);
 }
 
 function LimparAlertas() {

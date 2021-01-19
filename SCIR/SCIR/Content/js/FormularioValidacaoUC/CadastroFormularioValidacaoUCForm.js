@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿var formData = new FormData();
+$(document).ready(function () {
 
     $("#Botao_Excluir_Cadastro").click(function () {
         LimparAlertas();
@@ -140,6 +141,17 @@
 
     IniciarGridAnexo();
 
+    $("#fileUpload").on("change", function () {
+        var files = $(this).get(0).files;
+        for (var i = 0; i < files.length; i++) {
+            formData.append(files[i].name, files[i]);
+        }
+
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+    })
+
 });
 
 
@@ -259,8 +271,15 @@ function addComandosTabela() {
                '</svg> ';
 
     var comandos = $("#Comandos")
-    comandos.html('<button style="margin: 8px 8px 8px 8px;" id="AdicionarStatusProximo" class="btn bg-success botao_cor btn-sm blockConfirmation blockConfirmationGrid" type="button" >Anexar Arquivo ' + icon +'</button</div>');
 
+    
+    var inputButton = '<input type="file" multiple id="fileUpload" />'
+    var inputfile = '<label style="margin: 8px 8px 8px 8px;" for="fileUpload" id="AnexarArquivos" class="btn bg-success botao_cor btn-sm blockConfirmation blockConfirmationGrid">Anexar Arquivo ' + icon + '</label>';
+
+
+    var divFileContainer = '<div class="file-upload-container">' + inputfile + inputButton + '</div></div>'
+
+    comandos.html(divFileContainer);
 }
 
 function IniciarGridAnexo() {
@@ -308,3 +327,4 @@ function IniciarGridAnexo() {
 function GridDelete(id) {
     console.log(id);
 }
+

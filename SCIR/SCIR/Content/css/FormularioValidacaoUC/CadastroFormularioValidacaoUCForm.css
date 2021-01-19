@@ -14,3 +14,11 @@
 .ButtonRoxo {
     background: #68228B;
 }
+
+
+#fileUpload {
+    display: none;
+    overflow: hidden;
+    height: 0;
+    width: 0;
+}
