@@ -138,6 +138,8 @@
 
     });
 
+    IniciarGridAnexo();
+
 });
 
 
@@ -248,57 +250,61 @@ function addComandosTabela() {
 
     var headerTabela = $(".bootgrid-header");
 
-    //headerTabela.removeClass("row");
     headerTabela.addClass("row justify-content-between")
 
     headerTabela.prepend('<div id="Comandos" class="actions btn-group"><div class="row container-fluid"></div></div>')
 
-    //var select2ProximoStatus = '<div class="form-group col-md-3"> ' +
-    //                            '  <div class="form-group col-md-12"> ' +
-    //                            '      <label for="ProximoStatus">Proximo Status</label> ' +
-    //                            '      <select class="js-example-basic-single select2" id="Select2_ProximoStatus" name="fluxoStatus.StatusProximoId"> ' +
-    //                            '       </select> ' +
-    //                            '  </div> ' +
-    //    '</div> ';
-
-    var select2ProximoStatus = '<div class="form-group col-md-12"><select class="js-example-basic-single select2 blockConfirmationGrid" id="Select2_ProximoStatus" name="fluxoStatus.StatusProximoId"></select>';
-
+    var icon = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files" viewBox="0 0 16 16"> ' +
+                    '<path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" /> ' +
+               '</svg> ';
 
     var comandos = $("#Comandos")
-    comandos.html(select2ProximoStatus +
-        '<input style="margin: 8px 8px 8px 8px;" id="AdicionarStatusProximo" class="btn bg-success botao_cor btn-sm blockConfirmation blockConfirmationGrid" type="button" value="Adicionar Próximo"></div>');
+    comandos.html('<button style="margin: 8px 8px 8px 8px;" id="AdicionarStatusProximo" class="btn bg-success botao_cor btn-sm blockConfirmation blockConfirmationGrid" type="button" >Anexar Arquivo ' + icon +'</button</div>');
 
+}
 
-
-    $('#Select2_ProximoStatus').select2({
-
-        language: "pt-BR",
-        id: function (e) { return e.Id; },
-        placeholder: "",
-        allowClear: true,
-
-        ajax: {
-            url: "/FluxoStatus/GetStatusAtual",
-            datatype: 'json',
-            type: 'POST',
-
-            params: {
-                contentType: 'application/json; charset=utf-8'
+function IniciarGridAnexo() {
+    $("#grid-basic").bootgrid(
+        {
+            ajax: false,
+            labels:
+            {
+                search: "Pesquisar",
+                infos: "Mostrando {{ctx.start}} a {{ctx.end}} de {{ctx.total}} resultados",
+                all: "Tudo",
+                loading: "Carregando...",
+                noResults: "Nenhum resultado encontrado!",
+                refresh: "Atualizar"
             },
-            quietMillis: 100,
-            data: function (params) {
-                return {
-                    searchTerm: params.term
-                };
-            },
+            formatters: {
+                "commands": function (column, row) {
 
-            processResults: function (data, params) {
-                return {
-                    results: data
+
+                    var divInicio = ' <div>';
+
+                    var iconDelete = ' <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">' +
+                        '    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />' +
+                        '</svg>';
+
+                   
+
+                    var buttonDelete = '<span style="margin: 0px 0px 0px 8px;" class="text-danger ponteiro" id="Botao_Excluir" onclick="GridDelete(' + row.Sequencia + ')">' + iconDelete + '</span>';
+
+                    var divFinal = '</div>';
+
+                    return divInicio + buttonDelete +divFinal
+
                 }
             }
-        },
 
+        });
 
-    });
+    $("#grid-basic-header").removeClass("container-fluid");
+    $("#grid-basic").addClass("table-responsive-md");
+
+    addComandosTabela();
+}
+
+function GridDelete(id) {
+    console.log(id);
 }

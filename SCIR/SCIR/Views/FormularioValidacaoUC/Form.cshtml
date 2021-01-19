@@ -10,7 +10,7 @@
 
 
 
-    <link href="~/Content/css/FormularioValidacaoUC/CadastroFormularioValidacaoUCForm.css" rel="stylesheet" />
+<link href="~/Content/css/FormularioValidacaoUC/CadastroFormularioValidacaoUCForm.css" rel="stylesheet" />
 
 
 @*<input onclick="location.href='#'" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Novo">*@
@@ -18,26 +18,26 @@
 
 @using (Html.BeginForm("Salvar", "FormularioValidacaoUC", FormMethod.Post, new { @id = "CadastroFormularioValidacaoUC", @name = "CadastroFormularioValidacaoUC" }))
 {
-<div class="form-row pt-3 ">
-    <div class="form-group col-md-3">
-        <label for="TipoValidacao">Tipo Validação</label><br />
-        <select class="js-example-basic-single select2 blockConfirmation" id="Select2_TipoValidacao" name="formularioValidacaoUC.TipoValidacaoCurricularId">
-            <option value=""></option>
-        </select>
+    <div class="form-row pt-3 ">
+        <div class="form-group col-md-3">
+            <label for="TipoValidacao">Tipo Validação</label><br />
+            <select class="js-example-basic-single select2 blockConfirmation" id="Select2_TipoValidacao" name="formularioValidacaoUC.TipoValidacaoCurricularId">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="formularioValidacaoUC.Curso">Curso</label><br />
+            <select class="js-example-basic-single select2 blockConfirmation" id="Select2_Curso" name="formularioValidacaoUC.Curso">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label for="UnidadeCurricular">Unidade Curricular</label><br />
+            <select class="js-example-basic-single select2 blockConfirmation" id="Select2_UnidadeCurricular" name="formularioValidacaoUC.UnidadeCurricularId">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
-    <div class="form-group col-md-3">
-        <label for="formularioValidacaoUC.Curso">Curso</label><br />
-        <select class="js-example-basic-single select2 blockConfirmation" id="Select2_Curso" name="formularioValidacaoUC.Curso">
-            <option value=""></option>
-        </select>
-    </div>
-    <div class="form-group col-md-3">
-        <label for="UnidadeCurricular">Unidade Curricular</label><br />
-        <select class="js-example-basic-single select2 blockConfirmation" id="Select2_UnidadeCurricular" name="formularioValidacaoUC.UnidadeCurricularId">
-            <option value=""></option>
-        </select>
-    </div>
-</div>
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-12">
             <label for="Motivo">Motivo</label>
@@ -48,29 +48,110 @@
     <table id="grid-basic" class="table table-condensed table-hover table-striped">
         <thead>
             <tr>
-                <th data-column-id="Id" data-order="asc" data-type="numeric">Id</th>
-                <th data-column-id="Nome">Nome</th>
+                <th data-column-id="Sequencia" data-order="asc" data-type="numeric" data-identifier="true">Sequência</th>
+                <th data-column-id="Nome">Arquivo</th>
                 <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ação</th>
             </tr>
         </thead>
+        <tbody>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>888</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>marcelo</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>10238</td>
+                <td>eduardo@pingpong.com</td>
+                <td></td>
+            </tr>
+        </tbody>
     </table>
 
     <input type="button" id="Botao_Salvar" class="btn botao_cor_verde btn-lg blockConfirmation" value="Enviar">
 }
 
 
-    <script src="~/Content/js/select2.min.js"></script>
-    <script src="~/Content/js/pt-BR.js"></script>
-    <script>
-        function CarregarParametrosAdicionaisGrid(request) {
-            //Sem parametros
-        }
+<script src="~/Content/js/select2.min.js"></script>
+<script src="~/Content/js/pt-BR.js"></script>
 
-        var listaGrid = "";
-    </script>
-    <script src="~/Content/js/Utils/GridInit.js"></script>
-    <script src="~/Content/js/FormularioValidacaoUC/CadastroFormularioValidacaoUCForm.js"></script>
-    <script>
+
+<script src="~/Content/js/FormularioValidacaoUC/CadastroFormularioValidacaoUCForm.js"></script>
+<script>
     var consistencia = "";
     var consistenciaTipo = 1;
 
@@ -90,6 +171,8 @@
     }
 
     VerificarConsistencia(consistencia, consistenciaTipo);
-    </script>
+</script>
+
+
 
 
