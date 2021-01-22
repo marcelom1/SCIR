@@ -140,19 +140,46 @@ $(document).ready(function () {
     });
 
     IniciarGridAnexo();
-
+    var keyArquivo = 0;
     $("#fileUpload").on("change", function () {
+        var formDataTemp = new FormData();
+        var j = 0;
+        for (var pair of formData.entries()) {
+            j++;
+            formDataTemp.append(j, pair[1])
+        }
+
         var files = $(this).get(0).files;
         for (var i = 0; i < files.length; i++) {
-            formData.append(files[i].name, files[i]);
+            j++;
+            formDataTemp.append(j, files[i]);
         }
-
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
+        formData = formDataTemp;
+        AtualizarGridArquivo();
+       
     })
 
 });
+
+function AtualizarGridArquivo() {
+    for (var pair of formData.entries()) {
+        var JSONINFO = { "rows": [{ "Sequencia": pair[0], "Nome": pair[1].name }] };   
+        $("#grid-basic").bootgrid("append", JSONINFO.rows);
+    }   
+}
+
+function RemoverArquivo(posicao) {
+    formData.delete(posicao)
+    var formDataTemp = new FormData();
+    var j = 0;
+    for (var pair of formData.entries()) {
+        j++;
+        formDataTemp.append(j, pair[1])
+    }
+    formData = formDataTemp;
+    $("#grid-basic").bootgrid("clear");
+    AtualizarGridArquivo()
+}
 
 
 $(document).on('click', '#Botao_Salvar', function () {
@@ -228,14 +255,21 @@ function ConfirmarSalvar() {
         TipoRequerimentoId: tipoRequerimento,
         TipoValidacaoCurricularId: tipoValidacao,
         UnidadeCurricularId: unidadeCurricular,
-        Motivo: motivo
+        Motivo: motivo,
+        Arquivo: formData
     };
+
+    formData.append("TipoRequerimentoId", tipoRequerimento)
+    formData.append("TipoValidacaoCurricularId", tipoValidacao)
+    formData.append("UnidadeCurricularId", unidadeCurricular)
+    formData.append("Motivo", motivo)
+  
     $.ajax({
         type: "POST",
         url: "/FormularioValidacaoUC/Salvar/",
-        data: JSON.stringify(entidade),
-        contentType: "application/json; charset=utf-8",
-        dataType: "html",
+        data: formData,
+        processData: false,
+        contentType: false,
         success: function (resposta) {
             $("#Formulario").html(resposta);
         },
@@ -292,7 +326,7 @@ function IniciarGridAnexo() {
                 infos: "Mostrando {{ctx.start}} a {{ctx.end}} de {{ctx.total}} resultados",
                 all: "Tudo",
                 loading: "Carregando...",
-                noResults: "Nenhum resultado encontrado!",
+                noResults: "Nenhum arquivo carregado!",
                 refresh: "Atualizar"
             },
             formatters: {
@@ -307,14 +341,18 @@ function IniciarGridAnexo() {
 
                    
 
-                    var buttonDelete = '<span style="margin: 0px 0px 0px 8px;" class="text-danger ponteiro" id="Botao_Excluir" onclick="GridDelete(' + row.Sequencia + ')">' + iconDelete + '</span>';
+                    var buttonDelete = '<span style="margin: 0px 0px 0px 8px;" class="text-danger ponteiro" id="Botao_Excluir" onclick="RemoverArquivo(' + row.Sequencia + ')">' + iconDelete + '</span>';
 
                     var divFinal = '</div>';
 
                     return divInicio + buttonDelete +divFinal
 
                 }
-            }
+            },
+            searchSettings: {
+                delay: 100,
+                characters: 3
+            },
 
         });
 

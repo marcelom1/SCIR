@@ -6,7 +6,6 @@ using SCIR.Models.ViewModels;
 using SCIR.Utils;
 using SCIR.Utils.TipoFormularioUtils;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,7 +14,7 @@ using System.Web.Services;
 
 namespace SCIR.Controllers
 {
-    public class FormularioValidacaoUCController : Controller, IFormulario
+    public class FormularioValidacaoUCController : Controller, IFormulario 
     {
         private FormularioValidacaoUCServer FormularioValidacaoUCServer = new FormularioValidacaoUCServer();
         private TipoValidacaoCurricularServer TipoValidacaoCurricularServer = new TipoValidacaoCurricularServer();
@@ -62,6 +61,17 @@ namespace SCIR.Controllers
         [HttpPost]
         public ActionResult Salvar(FormularioValidacaoUC formularioValidacaoUC)
         {
+            var files = Request.Files;
+            string[] path = new string[files.Count];
+            for (int i = 0; i < files.Count; i++)
+            {
+                var file = files[i];
+                var rootpatch = "~/ArquivosRequerimento/"+file.FileName;
+                path[i] = rootpatch.Substring(1);
+                file.SaveAs(Server.MapPath(rootpatch));
+
+            }
+
             formularioValidacaoUC.TipoFormularioId = 1;
             formularioValidacaoUC.UsuarioAtendenteId = 7;
             formularioValidacaoUC.UsuarioRequerenteId = 7;
