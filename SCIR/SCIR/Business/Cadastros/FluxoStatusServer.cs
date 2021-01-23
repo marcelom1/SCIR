@@ -76,7 +76,7 @@ namespace SCIR.Business.Cadastros
             return consiste;
         }
 
-        public ResponseGrid<FluxoStatusGridDC> ListarProximos(FormatGridUtils request, int statusAtualId, int tipoRequerimentoId)
+        public ResponseGrid<FluxoStatusGridDC> ListarProximos(FormatGridUtils<FluxoStatus> request, int statusAtualId, int tipoRequerimentoId)
         {
             var response = new ResponseGrid<FluxoStatusGridDC>();
             response.Entidades = dbFluxoStatus.ListProximosGrid(request, statusAtualId, tipoRequerimentoId);
@@ -153,7 +153,7 @@ namespace SCIR.Business.Cadastros
             return fluxoStatus;
         }
 
-        public ResponseGrid<FluxoStatusGridDC> Listar(FormatGridUtils request)
+        public ResponseGrid<FluxoStatusGridDC> Listar(FormatGridUtils<FluxoStatus> request)
         {
             var response = new ResponseGrid<FluxoStatusGridDC>();
             response.Entidades = dbFluxoStatus.ListGrid(request);

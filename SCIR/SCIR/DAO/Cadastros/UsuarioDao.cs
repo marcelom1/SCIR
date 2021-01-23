@@ -53,7 +53,7 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public IPagedList<UsuarioGridDC> ListGrid(FormatGridUtils request)
+        public IPagedList<UsuarioGridDC> ListGrid(FormatGridUtils<Usuario> request)
         {
             var where = "";
             if (!string.IsNullOrWhiteSpace(request.SearchPhrase))

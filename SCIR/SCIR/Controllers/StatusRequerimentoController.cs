@@ -23,7 +23,7 @@ namespace SCIR.Controllers
 
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10)
         {
-            var request = FormatGridUtils.Format(Request, searchPhrase, current, rowCount);
+            var request = FormatGridUtils<StatusRequerimento>.Format(Request, searchPhrase, new StatusRequerimento() , current, rowCount);
 
             var response = StatusRequerimentoServer.Listar(request);
 

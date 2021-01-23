@@ -96,7 +96,7 @@ namespace SCIR.Business.Cadastros
             return curso;
         }
 
-        public ResponseGrid<Cursos> Listar(FormatGridUtils request)
+        public ResponseGrid<Cursos> Listar(FormatGridUtils<Cursos> request)
         {
             var response = new ResponseGrid<Cursos>();
             response.Entidades = dbCursos.ListGrid(request);

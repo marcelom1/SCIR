@@ -5,14 +5,15 @@ using System.Web;
 
 namespace SCIR.Utils
 {
-    public class FormatGridUtils
+    public class FormatGridUtils<T>
     {
         public int Current { get; set; }
         public int RowCount { get; set; }
         public string CampoOrdenacao { get; set; }
         public string SearchPhrase { get; set; }
+        public T Entidade {get; set;}
 
-        public static FormatGridUtils Format(HttpRequestBase Request, string searchPhrase, int current = 1, int rowCount = 10)
+        public static FormatGridUtils<T> Format(HttpRequestBase Request, string searchPhrase, T Entidade, int current = 1, int rowCount = 10)
         {
             var chave = Request.Form.AllKeys.Where(k => k.StartsWith("sort")).First();
             var ordenacao = Request[chave];
@@ -20,11 +21,12 @@ namespace SCIR.Utils
 
             var campoOrdenacao = String.Format("{0} {1}", campo, ordenacao);
 
-            return new FormatGridUtils {
+            return new FormatGridUtils<T> {
                 Current = current,
                 RowCount = rowCount,
                 CampoOrdenacao = campoOrdenacao,
-                SearchPhrase = searchPhrase
+                SearchPhrase = searchPhrase,
+                Entidade = Entidade
             };
         }
     }

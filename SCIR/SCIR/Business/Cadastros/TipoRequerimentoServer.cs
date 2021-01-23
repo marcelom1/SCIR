@@ -105,7 +105,7 @@ namespace SCIR.Business.Cadastros
             return dbTipoRequerimento.BuscarPorId(id);
         }
 
-        public ResponseGrid<TipoRequerimentoGridDC> Listar(FormatGridUtils request)
+        public ResponseGrid<TipoRequerimentoGridDC> Listar(FormatGridUtils<TipoRequerimento> request)
         {
             var response = new ResponseGrid<TipoRequerimentoGridDC>();
             response.Entidades = dbTipoRequerimento.ListGrid(request);

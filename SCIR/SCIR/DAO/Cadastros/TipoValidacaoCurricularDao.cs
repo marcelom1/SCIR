@@ -51,7 +51,7 @@ namespace SCIR.DAO.Cadastros
             throw new NotImplementedException();
         }
 
-        public IPagedList<TipoValidacaoCurricular> ListGrid(FormatGridUtils request)
+        public IPagedList<TipoValidacaoCurricular> ListGrid(FormatGridUtils<TipoValidacaoCurricular> request)
         {
             throw new NotImplementedException();
         }

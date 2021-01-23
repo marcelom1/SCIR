@@ -93,7 +93,7 @@ namespace SCIR.DAO.Formularios
             }
         }
 
-        public IPagedList<FormularioValidacaoUC> ListGrid(FormatGridUtils request)
+        public IPagedList<FormularioValidacaoUC> ListGrid(Utils.FormatGridUtils<FormularioValidacaoUC> request)
         {
             throw new NotImplementedException();
         }

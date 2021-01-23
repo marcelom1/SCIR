@@ -86,7 +86,7 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public IPagedList<UnidadeCurricularGridDC> ListGrid(FormatGridUtils request)
+        public IPagedList<UnidadeCurricularGridDC> ListGrid(FormatGridUtils<UnidadeCurricular> request)
         {
             var where = "";
             if (!string.IsNullOrWhiteSpace(request.SearchPhrase))

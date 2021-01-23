@@ -11,7 +11,7 @@ namespace SCIR.DAO
     public interface ICadastrosDao<T,T2>
     {
         void Insert(T entidade);
-        IPagedList<T2> ListGrid(FormatGridUtils request);
+        IPagedList<T2> ListGrid(FormatGridUtils<T> request);
         int TotalRegistros();
         T BuscarPorId(int id);
         void Update(T entidade);

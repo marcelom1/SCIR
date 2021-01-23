@@ -100,7 +100,7 @@ namespace SCIR.Business.Cadastros
             return dbUnidadeCurricular.BuscarPorId(id);
         }
 
-        public ResponseGrid<UnidadeCurricularGridDC> Listar(FormatGridUtils request)
+        public ResponseGrid<UnidadeCurricularGridDC> Listar(FormatGridUtils<UnidadeCurricular> request)
         {
             var response = new ResponseGrid<UnidadeCurricularGridDC>();
             response.Entidades = dbUnidadeCurricular.ListGrid(request);

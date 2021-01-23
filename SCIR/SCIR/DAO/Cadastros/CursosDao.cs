@@ -21,7 +21,7 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public IPagedList<Cursos> ListGrid(FormatGridUtils request)
+        public IPagedList<Cursos> ListGrid(FormatGridUtils<Cursos> request)
         {
             var where = "";
             if (!string.IsNullOrWhiteSpace(request.SearchPhrase))

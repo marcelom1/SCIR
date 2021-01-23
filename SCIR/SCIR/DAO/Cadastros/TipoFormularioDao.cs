@@ -50,7 +50,7 @@ namespace SCIR.DAO.Cadastros
             throw new NotImplementedException();
         }
 
-        public IPagedList<TipoFormulario> ListGrid(FormatGridUtils request)
+        public IPagedList<TipoFormulario> ListGrid(FormatGridUtils<TipoFormulario> request)
         {
             throw new NotImplementedException();
         }

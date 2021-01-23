@@ -65,7 +65,7 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public IPagedList<StatusRequerimento> ListGrid(FormatGridUtils request)
+        public IPagedList<StatusRequerimento> ListGrid(FormatGridUtils<StatusRequerimento> request)
         {
             var where = "";
             if (!string.IsNullOrWhiteSpace(request.SearchPhrase))

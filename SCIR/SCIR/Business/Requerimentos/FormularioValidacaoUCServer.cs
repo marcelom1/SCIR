@@ -88,7 +88,7 @@ namespace SCIR.Business.Requerimentos
             return formularioValidacaoUC;
         }
 
-        public ResponseGrid<FormularioValidacaoUC> Listar(FormatGridUtils request)
+        public ResponseGrid<FormularioValidacaoUC> Listar(FormatGridUtils<FormularioValidacaoUC> request)
         {
             var response = new ResponseGrid<FormularioValidacaoUC>();
             response.Entidades = dbFormularioValidacaoUC.ListGrid(request);

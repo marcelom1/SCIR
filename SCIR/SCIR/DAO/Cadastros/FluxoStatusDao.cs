@@ -118,7 +118,7 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public IPagedList<FluxoStatusGridDC> ListProximosGrid(FormatGridUtils request, int statusAtualId, int tipoRequerimentoId)
+        public IPagedList<FluxoStatusGridDC> ListProximosGrid(FormatGridUtils<FluxoStatus> request, int statusAtualId, int tipoRequerimentoId)
         {
             using (var contexto = new ScirContext())
             {
@@ -160,7 +160,7 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public IPagedList<FluxoStatusGridDC> ListGrid(FormatGridUtils request)
+        public IPagedList<FluxoStatusGridDC> ListGrid(FormatGridUtils<FluxoStatus> request)
         {
             using (var contexto = new ScirContext())
             {

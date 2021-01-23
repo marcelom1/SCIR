@@ -294,6 +294,7 @@
     <Compile Include="Controllers\TipoRequerimentoController.cs" />
     <Compile Include="Controllers\UnidadeCurricularController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
+    <Compile Include="DAO\Cadastros\ArquivoRequerimentoDao.cs" />
     <Compile Include="DAO\Cadastros\CursosDao.cs" />
     <Compile Include="DAO\Cadastros\FluxoStatusDao.cs" />
     <Compile Include="DAO\Cadastros\PapelDao.cs" />
@@ -368,7 +369,12 @@
     <Compile Include="Migrations\20210117173447_CodigoFormulario.designer.cs">
       <DependentUpon>20210117173447_CodigoFormulario.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20210123173840_Arquivos.cs" />
+    <Compile Include="Migrations\20210123173840_Arquivos.designer.cs">
+      <DependentUpon>20210123173840_Arquivos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
+    <Compile Include="Models\ArquivoRequerimento.cs" />
     <Compile Include="Models\Cursos.cs" />
     <Compile Include="Models\FluxoStatus.cs" />
     <Compile Include="Models\FormularioValidacaoUC.cs" />

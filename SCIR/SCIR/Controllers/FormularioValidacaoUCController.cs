@@ -47,7 +47,7 @@ namespace SCIR.Controllers
 
         public JsonResult ListarAnexos(string searchPhrase, int current = 1, int rowCount = 10, int statusAtualId = 0, int tipoRequerimentoId = 0)
         {
-            var request = FormatGridUtils.Format(Request, searchPhrase, current, rowCount);
+            var request = FormatGridUtils<FormularioValidacaoUC>.Format(Request, searchPhrase, new FormularioValidacaoUC() , current, rowCount);
 
             return Json(new
             {

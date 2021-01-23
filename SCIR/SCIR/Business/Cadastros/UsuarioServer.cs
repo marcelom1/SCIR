@@ -113,7 +113,7 @@ namespace SCIR.Business.Cadastros
             return dbUsuario.BuscarPorId(id);
         }
 
-        public ResponseGrid<UsuarioGridDC> Listar(FormatGridUtils request)
+        public ResponseGrid<UsuarioGridDC> Listar(FormatGridUtils<Usuario> request)
         {
             var response = new ResponseGrid<UsuarioGridDC>();
             response.Entidades = dbUsuario.ListGrid(request);

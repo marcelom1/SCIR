@@ -25,7 +25,7 @@ namespace SCIR.Controllers
         
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10)
         {
-            var request = FormatGridUtils.Format(Request, searchPhrase, current, rowCount);
+            var request = FormatGridUtils<FluxoStatus>.Format(Request, searchPhrase, new FluxoStatus(), current, rowCount);
 
             var response = FluxoStatusServer.Listar(request);
 
@@ -40,7 +40,7 @@ namespace SCIR.Controllers
 
         public JsonResult ListarProximos(string searchPhrase, int current = 1, int rowCount = 10, int statusAtualId = 0, int tipoRequerimentoId = 0)
         {
-            var request = FormatGridUtils.Format(Request, searchPhrase, current, rowCount);
+            var request = FormatGridUtils<FluxoStatus>.Format(Request, searchPhrase, new FluxoStatus(), current, rowCount);
 
             var response = FluxoStatusServer.ListarProximos(request, statusAtualId, tipoRequerimentoId);
 

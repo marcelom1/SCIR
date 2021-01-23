@@ -97,7 +97,7 @@ namespace SCIR.Business.Cadastros
             return statusRequerimento;
         }
 
-        public ResponseGrid<StatusRequerimento> Listar(FormatGridUtils request)
+        public ResponseGrid<StatusRequerimento> Listar(FormatGridUtils<StatusRequerimento> request)
         {
             var response = new ResponseGrid<StatusRequerimento>();
             response.Entidades = dbStatusRequerimento.ListGrid(request);
