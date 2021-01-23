@@ -46,6 +46,7 @@ namespace SCIR.DAO.Cadastros
         {
             using (var context = new ScirContext())
             {
+                entidade.Requerimento = context.Requerimento.Find(entidade.RequerimentoId);
                 context.ArquivoRequerimento.Add(entidade);
                 context.SaveChanges();
             }

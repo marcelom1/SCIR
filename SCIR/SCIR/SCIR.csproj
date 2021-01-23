@@ -276,6 +276,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Business\Cadastros\ArquivoRequerimentoServer.cs" />
     <Compile Include="Business\Cadastros\CursosServer.cs" />
     <Compile Include="Business\Cadastros\FluxoStatusServer.cs" />
     <Compile Include="Business\Cadastros\StatusRequerimentoServer.cs" />
@@ -284,6 +285,7 @@
     <Compile Include="Business\Cadastros\UnidadeCurricularServer.cs" />
     <Compile Include="Business\Cadastros\UsuarioServer.cs" />
     <Compile Include="Business\Requerimentos\FormularioValidacaoUCServer.cs" />
+    <Compile Include="Business\Requerimentos\RequerimentoServer.cs" />
     <Compile Include="Controllers\CursosController.cs" />
     <Compile Include="Controllers\FluxoStatusController.cs" />
     <Compile Include="Controllers\FormularioValidacaoUCController.cs" />
@@ -372,6 +374,10 @@
     <Compile Include="Migrations\20210123173840_Arquivos.cs" />
     <Compile Include="Migrations\20210123173840_Arquivos.designer.cs">
       <DependentUpon>20210123173840_Arquivos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20210123195845_ArquivosNomeProtocolo.cs" />
+    <Compile Include="Migrations\20210123195845_ArquivosNomeProtocolo.designer.cs">
+      <DependentUpon>20210123195845_ArquivosNomeProtocolo.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\ArquivoRequerimento.cs" />

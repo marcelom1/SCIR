@@ -1,7 +1,10 @@
-﻿using SCIR.DAO.Formularios;
+﻿using SCIR.Business.Cadastros;
+using SCIR.DAO.Cadastros;
+using SCIR.DAO.Formularios;
 using SCIR.Datacontract.Grid;
 using SCIR.Models;
 using SCIR.Utils;
+using SCIR.Utils.TipoFormularioUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +15,7 @@ namespace SCIR.Business.Requerimentos
     public class FormularioValidacaoUCServer
     {
         private FormularioValidacaoUCDao dbFormularioValidacaoUC = new FormularioValidacaoUCDao();
-       
+        private ArquivoRequerimentoServer ArquivosRequerimentoServer = new ArquivoRequerimentoServer();
 
         public ConsisteUtils ConsisteNovo(FormularioValidacaoUC formularioValidacaoUC)
         {
@@ -50,15 +53,21 @@ namespace SCIR.Business.Requerimentos
             return consiste;
         }
 
-        public FormularioValidacaoUC Novo(FormularioValidacaoUC formularioValidacaoUC)
+        public FormularioValidacaoUC Novo(FormularioValidacaoUC formularioValidacaoUC, HttpFileCollectionBase files, HttpServerUtilityBase server)
         {
             var consiste = ConsisteNovo(formularioValidacaoUC);
 
             if (consiste.Inconsistencias.Any())
                 throw new ArgumentException(consiste.Inconsistencias.ToString());
             else
+            {
+                formularioValidacaoUC.Abertura = DateTime.Now;
+                formularioValidacaoUC.Protocolo = RequerimentoServer.GerarNovoProtocolo(formularioValidacaoUC);
+                formularioValidacaoUC.TipoFormularioId = TipoFormularioUtils.FormlarioEnum.ValidacaoUC.GetHashCode();
                 dbFormularioValidacaoUC.Insert(formularioValidacaoUC);
+                ArquivosRequerimentoServer.Novo(formularioValidacaoUC, files, server);
 
+            }
 
             return formularioValidacaoUC;
         }
@@ -75,7 +84,7 @@ namespace SCIR.Business.Requerimentos
             return formularioValidacaoUC;
         }
 
-        public FormularioValidacaoUC Atualizar(FormularioValidacaoUC formularioValidacaoUC)
+        public FormularioValidacaoUC Atualizar(FormularioValidacaoUC formularioValidacaoUC, HttpFileCollectionBase files)
         {
             var consiste = ConsisteAtualizar(formularioValidacaoUC);
 
@@ -106,5 +115,7 @@ namespace SCIR.Business.Requerimentos
         {
             return dbFormularioValidacaoUC.FiltroPorColuna(coluna, searchTerm);
         }
+
+        
     }
 }

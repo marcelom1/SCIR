@@ -7,11 +7,6 @@ using System.Web;
 
 namespace SCIR.Utils.TipoFormularioUtils
 {
-    public enum FormlarioEnum
-    {
-        ValidacaoUC = 1
-    }
-
     public class TipoFormularioUtils
     {
         public string Action { get; set; }
@@ -26,6 +21,11 @@ namespace SCIR.Utils.TipoFormularioUtils
                 default:
                     throw new ArgumentException("Não foi encontrado o layout do formulário desejado");
             }
+        }
+
+        public enum FormlarioEnum
+        {
+            ValidacaoUC = 1
         }
     }
 }

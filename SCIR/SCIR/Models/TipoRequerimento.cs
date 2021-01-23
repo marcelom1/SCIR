@@ -14,6 +14,8 @@ namespace SCIR.Models
         public bool Ativo { get; set; }
         public int TipoFormularioId { get; set; }
         public TipoFormulario TipoFormulario { get; set; }
+        public string Sigla { get; set; }
+        public string SequenciaProtocolo { get; set; }
 
         public TipoRequerimento()
         {

@@ -1,47 +1,6 @@
 ﻿var formData = new FormData();
 $(document).ready(function () {
-
-    $("#Botao_Excluir_Cadastro").click(function () {
-        LimparAlertas();
-        var id = $("#UnidadeCurricular_id").val();
-        var nome = $("#Nome").val();
-        var curso = $("#Select2_Curso").val();
-        var ativo = $("#Ativo").is(':checked');
-        var msg = "";
-        var entidade = {
-            Id: id,
-            Nome: nome,
-            Curso: curso,
-            Ativo: ativo
-        };
-        $.ajax({
-            type: "POST",
-            url: "/UnidadeCurricular/ConsisteExcluir/",
-            data: JSON.stringify(entidade),
-            contentType: "application/json; charset=utf-8",
-            dataType: "html",
-            success: function (resposta) {
-                var consistencia = JSON.parse(resposta);
-                if (consistencia.InconsistenciasToString != "") {
-                    msg += consistencia.InconsistenciasToString.replaceAll("|", "<br>")
-                    addNotification(msg, 1);
-                } else {
-                    msg += consistencia.AdvertenciasToString.replaceAll("|", "<br>")
-                    msg += ("Confirma Exclusão do Registro " + $("#UnidadeCurricular_id").val() + "?");
-                    addNotification(msg, 2, "ConfirmarExclusao", "buttonCancelar");
-                    $(".blockConfirmation").prop('disabled', true);
-                }
-            },
-            error: function (json) {
-                alert("Erro de conexão com o servidor!");
-                Console.log(json);
-            }
-        });
-
-    });
-
     
-
     $('#Select2_TipoValidacao').select2({
 
         language: "pt-BR",
@@ -212,7 +171,7 @@ $(document).on('click', '#Botao_Salvar', function () {
                 console.log("RespostaIf1" + msg);
             } else if (consistencia.AdvertenciasToString != "") {
                 msg += consistencia.AdvertenciasToString.replaceAll("|", "<br>")
-                msg += ("Confirma Inclusão/Alteração do Registro " + $("#UnidadeCurricular_id").val() + "?");
+                msg += ("Confirma registro do protocolo?");
                 addNotification(msg, 2, "ConfirmarSalvar", "buttonCancelar");
                 $(".blockConfirmation").prop('disabled', true);
                 console.log("RespostaIf2");
@@ -250,14 +209,7 @@ function ConfirmarSalvar() {
     var tipoValidacao = $("#Select2_TipoValidacao").val();
     var unidadeCurricular = $("#Select2_UnidadeCurricular").val();
     var motivo = $("#Motivo").val();
-
-    var entidade = {
-        TipoRequerimentoId: tipoRequerimento,
-        TipoValidacaoCurricularId: tipoValidacao,
-        UnidadeCurricularId: unidadeCurricular,
-        Motivo: motivo,
-        Arquivo: formData
-    };
+    var msg = ""; 
 
     formData.append("TipoRequerimentoId", tipoRequerimento)
     formData.append("TipoValidacaoCurricularId", tipoValidacao)
@@ -271,7 +223,23 @@ function ConfirmarSalvar() {
         processData: false,
         contentType: false,
         success: function (resposta) {
-            $("#Formulario").html(resposta);
+            
+            if (resposta["InconsistenciasToString"] != "") {
+                msg += resposta["InconsistenciasToString"].replaceAll("|", "<br>")
+                addNotification(msg, 1);
+                console.log("RespostaIf1" + msg);
+            } else if (resposta["AdvertenciasToString"] != "") {
+                msg += resposta["AdvertenciasToString"].replaceAll("|", "<br>")
+                msg += ("Confirma registro do protocolo? ");
+                addNotification(msg, 2, "ConfirmarSalvar", "buttonCancelar");
+                $(".blockConfirmation").prop('disabled', true);
+                console.log("RespostaIf2");
+            } else {
+                msg += resposta["SucessoToString"].replaceAll("|", "<br>")
+                addNotification(msg, 3);
+                $("#Formulario").html("");
+                $('#Select2_TipoRequerimento').val(null).trigger('change');
+            }
         },
         error: function (json) {
             alert("Erro de conexão com o servidor!");

@@ -58,38 +58,26 @@ namespace SCIR.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        public ActionResult Salvar(FormularioValidacaoUC formularioValidacaoUC)
+        public JsonResult Salvar(FormularioValidacaoUC formularioValidacaoUC)
         {
             var files = Request.Files;
-            string[] path = new string[files.Count];
-            for (int i = 0; i < files.Count; i++)
-            {
-                var file = files[i];
-                var rootpatch = "~/ArquivosRequerimento/"+file.FileName;
-                path[i] = rootpatch.Substring(1);
-                file.SaveAs(Server.MapPath(rootpatch));
-
-            }
-
-            formularioValidacaoUC.TipoFormularioId = 1;
             formularioValidacaoUC.UsuarioAtendenteId = 7;
             formularioValidacaoUC.UsuarioRequerenteId = 7;
             formularioValidacaoUC.StatusRequerimentoId = 3;
-            formularioValidacaoUC.Abertura = DateTime.Now;
+            
 
             var model = new FormularioValidacaoUCVM();
             try
             {
                 if (formularioValidacaoUC.Id != 0)
                 {
-                    FormularioValidacaoUCServer.Atualizar(formularioValidacaoUC);
+                    FormularioValidacaoUCServer.Atualizar(formularioValidacaoUC, files);
                     model.FormularioValidacaoUC = formularioValidacaoUC;
                     model.Consistencia.Add("Alterado com sucesso!", ConsisteUtils.Tipo.Sucesso);
                 }
                 else
                 {
-                    FormularioValidacaoUCServer.Novo(formularioValidacaoUC);
+                    FormularioValidacaoUCServer.Novo(formularioValidacaoUC, files, Server);
                     model.Consistencia.Add("Incluido com sucesso! Protocolo: " + formularioValidacaoUC.Protocolo, ConsisteUtils.Tipo.Sucesso);
                     model.FormularioValidacaoUC = new FormularioValidacaoUC();
                     
@@ -104,9 +92,10 @@ namespace SCIR.Controllers
                 model.Consistencia = consistencia;
             }
 
-
-            return PartialView("Form", model);
+            return Json(model.Consistencia, JsonRequestBehavior.AllowGet);
         }
+
+       
 
         [HttpPost]
         public JsonResult ConsisteNovoAtualiza(FormularioValidacaoUC formularioValidacaoUC)
