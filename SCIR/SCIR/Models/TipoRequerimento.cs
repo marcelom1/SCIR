@@ -17,9 +17,13 @@ namespace SCIR.Models
         public string Sigla { get; set; }
         public string SequenciaProtocolo { get; set; }
 
+        public int PrimeiroAtendimentoId { get; set; }
+        public Usuario PrimeiroAtendimento { get; set; }
+
         public TipoRequerimento()
         {
             TipoFormulario = new TipoFormulario();
+            PrimeiroAtendimento = new Usuario();
         }
     }
 }

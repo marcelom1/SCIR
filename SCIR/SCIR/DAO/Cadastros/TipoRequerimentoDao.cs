@@ -62,6 +62,7 @@ namespace SCIR.DAO.Cadastros
             using (var context = new ScirContext())
             {
                 entidade.TipoFormulario = context.TipoFormulario.Find(entidade.TipoFormularioId);
+                entidade.PrimeiroAtendimento = context.Usuario.Find(entidade.PrimeiroAtendimentoId);
                 context.TipoRequerimento.Add(entidade);
                 context.SaveChanges();
             }
@@ -129,6 +130,7 @@ namespace SCIR.DAO.Cadastros
             using (var contexto = new ScirContext())
             {
                 entidade.TipoFormulario = contexto.TipoFormulario.Find(entidade.TipoFormularioId);
+                entidade.PrimeiroAtendimento = contexto.Usuario.Find(entidade.PrimeiroAtendimentoId);
                 contexto.TipoRequerimento.Update(entidade);
                 contexto.SaveChanges();
             }

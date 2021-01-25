@@ -61,11 +61,8 @@ namespace SCIR.Controllers
         public JsonResult Salvar(FormularioValidacaoUC formularioValidacaoUC)
         {
             var files = Request.Files;
-            formularioValidacaoUC.UsuarioAtendenteId = 7;
             formularioValidacaoUC.UsuarioRequerenteId = 7;
-            formularioValidacaoUC.StatusRequerimentoId = 3;
-            
-
+           
             var model = new FormularioValidacaoUCVM();
             try
             {

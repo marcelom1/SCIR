@@ -13,5 +13,6 @@ namespace SCIR.Models
         public string Nome { get; set; }
         public bool Ativo { get; set; }
         public bool Cancelamento { get; set; }
+        public int CodigoInterno { get; set; }
     }
 }

@@ -10,12 +10,14 @@
         var nome = $("#Nome").val();
         var ativo = $("#Ativo").is(':checked');
         var cancelamento = $("#Cancelamento").is(':checked');
+        var codigoInterno = $("#CodigoInterno").val();
         var msg = "";
         var entidade = {
             Id: id,
             Nome: nome,
             Ativo: ativo,
-            Cancelamento: cancelamento
+            Cancelamento: cancelamento,
+            CodigoInterno: codigoInterno
         };
         $.ajax({
             type: "POST",
@@ -50,12 +52,14 @@
         var nome = $("#Nome").val();
         var ativo = $("#Ativo").is(':checked');
         var cancelamento = $("#Cancelamento").is(':checked');
+        var codigoInterno = $("#CodigoInterno").val();
         var msg = "";
         var entidade = {
             Id: id,
             Nome: nome,
             Ativo: ativo,
-            Cancelamento: cancelamento
+            Cancelamento: cancelamento,
+            CodigoInterno: codigoInterno
         };
         $.ajax({
             type: "POST",

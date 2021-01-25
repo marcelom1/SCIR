@@ -312,6 +312,7 @@
     <Compile Include="DAO\IFormulariosDao.cs" />
     <Compile Include="DAO\ScirContext.cs" />
     <Compile Include="Datacontract\Grid\FluxoStatusGridDC.cs" />
+    <Compile Include="Datacontract\Grid\RequerimentoGridDC.cs" />
     <Compile Include="Datacontract\Grid\ResponseGrid.cs" />
     <Compile Include="Datacontract\Grid\TipoRequerimentoGridDC.cs" />
     <Compile Include="Datacontract\Grid\UnidadeCurricularGridDC.cs" />
@@ -378,6 +379,18 @@
     <Compile Include="Migrations\20210123195845_ArquivosNomeProtocolo.cs" />
     <Compile Include="Migrations\20210123195845_ArquivosNomeProtocolo.designer.cs">
       <DependentUpon>20210123195845_ArquivosNomeProtocolo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20210124000243_CodigoInternoStatus.cs" />
+    <Compile Include="Migrations\20210124000243_CodigoInternoStatus.designer.cs">
+      <DependentUpon>20210124000243_CodigoInternoStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20210124001330_CadastroStatusRequerimentoPadrao.cs" />
+    <Compile Include="Migrations\20210124001330_CadastroStatusRequerimentoPadrao.designer.cs">
+      <DependentUpon>20210124001330_CadastroStatusRequerimentoPadrao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20210124135055_UsuarioPrimeiroAtendimento.cs" />
+    <Compile Include="Migrations\20210124135055_UsuarioPrimeiroAtendimento.designer.cs">
+      <DependentUpon>20210124135055_UsuarioPrimeiroAtendimento.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\ArquivoRequerimento.cs" />
@@ -1681,6 +1694,7 @@
     <Content Include="Views\FormularioValidacaoUC\Form.cshtml" />
     <Content Include="Views\FormularioValidacaoUC\FormEncaminhamento.cshtml" />
     <Content Include="Views\Requerimento\Form.cshtml" />
+    <Content Include="Views\Requerimento\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

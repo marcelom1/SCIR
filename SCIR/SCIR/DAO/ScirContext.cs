@@ -39,6 +39,11 @@ namespace SCIR.DAO
                                                  new Papel { Id = 2, Ativo = true, Nome = "Servidor" },
                                                  new Papel { Id = 3, Ativo = true, Nome = "Discente" });
 
+            modelBuilder.Entity<StatusRequerimento>().HasData(new StatusRequerimento    {Id = 96, Ativo = true, Nome = "Deferido", Cancelamento = false, CodigoInterno = 1 },
+                                                                 new StatusRequerimento {Id = 97, Ativo = true, Nome = "Indeferido", Cancelamento = false, CodigoInterno = 2 },
+                                                                 new StatusRequerimento {Id = 98, Ativo = true, Nome = "Protocolado", Cancelamento = true, CodigoInterno = 3 },
+                                                                 new StatusRequerimento {Id = 99, Ativo = true, Nome = "Aguardando Esclarecimento", Cancelamento = true, CodigoInterno = 4 });
+
             modelBuilder.Entity<FluxoStatus>()
                         .HasKey(c => new { c.StatusAtualId, c.StatusProximoId, c.TipoRequerimentoId });
 

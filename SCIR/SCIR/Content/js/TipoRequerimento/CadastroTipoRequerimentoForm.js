@@ -49,13 +49,17 @@
         var id = $("#TipoRequerimento_id").val();
         var nome = $("#Nome").val();
         var tipoFormulario = $("#Select2_TipoFormulario").val();
+        var usuarioPrimeiroAtendimento = $("#Select2_PrimeiroAtendimento").val();
         var ativo = $("#Ativo").is(':checked');
+        var sigla = $("#Sigla").val();
         var msg = "";
         var entidade = {
             Id: id,
             Nome: nome,
-            TipoFormulario: tipoFormulario,
-            Ativo: ativo
+            TipoFormularioId: tipoFormulario,
+            Ativo: ativo,
+            Sigla: sigla,
+            PrimeiroAtendimentoId: usuarioPrimeiroAtendimento
         };
         $.ajax({
             type: "POST",
@@ -94,6 +98,38 @@
 
         ajax: {
             url: "/TipoRequerimento/GetTipoFormulario",
+            datatype: 'json',
+            type: 'POST',
+
+            params: {
+                contentType: 'application/json; charset=utf-8'
+            },
+            quietMillis: 100,
+            data: function (params) {
+                return {
+                    searchTerm: params.term
+                };
+            },
+
+            processResults: function (data, params) {
+                return {
+                    results: data
+                }
+            }
+        },
+
+
+    });
+
+    $('#Select2_PrimeiroAtendimento').select2({
+
+        language: "pt-BR",
+        id: function (e) { return e.Id; },
+        placeholder: "",
+        allowClear: true,
+
+        ajax: {
+            url: "/Usuario/GetUsuariosAdmServidores",
             datatype: 'json',
             type: 'POST',
 

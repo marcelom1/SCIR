@@ -20,6 +20,14 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
+        public StatusRequerimento BuscarPorCodigoInterno(int id)
+        {
+            using (var contexto = new ScirContext())
+            {
+                return contexto.StatusRequerimento.Where(e => e.CodigoInterno == id).FirstOrDefault();
+            }
+        }
+
         public void Delete(StatusRequerimento entidade)
         {
             using (var contexto = new ScirContext())

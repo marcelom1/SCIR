@@ -23,55 +23,76 @@
 
 @using (Html.BeginForm("Salvar", "TipoRequerimento", FormMethod.Post, new { @id = "CadastroTipoRequerimento", @name = "CadastroTipoRequerimento" }))
 {
-<div class="form-row pb-1 pt-4 ">
-    <div class="form-group col-md-2">
-        <label for="Codigo">Código</label>
-        <div class="input-group mb-1">
-            <input type="text" class="form-control blockConfirmation" id="TipoRequerimento_id" placeholder="Código" disabled name="tipoRequerimento.Id" value="@Model.TipoRequerimento.Id">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary blockConfirmation" onclick="location.href='@Url.Action("Index", "TipoRequerimento")';" type="button" id="button-addon2">
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
-                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-                    </svg>
-                </button>
+    <div class="form-row pb-1 pt-4 ">
+        <div class="form-group col-md-2">
+            <label for="Codigo">Código</label>
+            <div class="input-group mb-1">
+                <input type="text" class="form-control blockConfirmation" id="TipoRequerimento_id" placeholder="Código" disabled name="tipoRequerimento.Id" value="@Model.TipoRequerimento.Id">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary blockConfirmation" onclick="location.href='@Url.Action("Index", "TipoRequerimento")';" type="button" id="button-addon2">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+                            <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="form-group col-md-6">
-        <label for="Nome">Nome</label>
-        <input type="text" class="form-control blockConfirmation" id="Nome" placeholder="Nome" name="tipoRequerimento.Nome" value="@Model.TipoRequerimento.Nome">
-    </div>
-    <div class="form-group col-md-3">
-        <div class="form-group col-md-12">
-            <label for="TipoFormulario">Tipo Formulario</label>
-            <select class="js-example-basic-single select2" id="Select2_TipoFormulario" name="tipoRequerimento.TipoFormularioId">
-                <option value="@Model.TipoRequerimento.TipoFormularioId">@Model.TipoRequerimento.TipoFormulario.Nome</option>
-            </select>
+        <div class="form-group col-md-6">
+            <label for="Nome">Nome</label>
+            <input type="text" class="form-control blockConfirmation" id="Nome" placeholder="Nome" name="tipoRequerimento.Nome" value="@Model.TipoRequerimento.Nome">
         </div>
-    </div>
-      
-  
-
-</div>
-
-<div class="form-row pb-5 ">
-    <div class="form-group col-md-1">
-        <label for="Sigla">Sigla</label>
-        <input type="text" style="text-transform:uppercase" maxlength="3" class="form-control blockConfirmation" id="Sigla" placeholder="Sigla" name="tipoRequerimento.Sigla" value="@Model.TipoRequerimento.Sigla">
-    </div>
-    <div class="col-auto">
-        <div class="form-check mb-2">
-            <input class="form-check-input blockConfirmation" type="checkbox" name="tipoRequerimento.Ativo" value="true" checked="@Model.TipoRequerimento.Ativo" id="Ativo">
-            <label class="form-check-label" for="Ativo">
-                Ativo
-            </label>
+        <div class="form-group col-md-3">
+            <div class="form-group col-md-12">
+                <label for="TipoFormulario">Tipo Formulario</label>
+                <select class="js-example-basic-single select2" id="Select2_TipoFormulario" name="tipoRequerimento.TipoFormularioId">
+                    <option value="@Model.TipoRequerimento.TipoFormularioId">@Model.TipoRequerimento.TipoFormulario.Nome</option>
+                </select>
+            </div>
         </div>
+
+
+
     </div>
 
+    @*<div class="form-row pb-1 pt-4 ">
+        <div class="form-group col-md-3">
+            <div class="form-group col-md-12">
+                <label for="PrimeiroAtendimento">Usuário para o Primeiro Atendimento</label>
+                <select class="js-example-basic-single select2" id="Select2_PrimeiroAtendimento" name="tipoRequerimento.PrimeiroAtendimentoId">
+                    <option value="@Model.TipoRequerimento.PrimeiroAtendimentoId">@Model.TipoRequerimento.PrimeiroAtendimento.Nome</option>
+                </select>
+            </div>
+        </div>
+    </div>*@
+
+    <div class="form-row pb-5 ">
+
+        <div class="form-group col-md-1">
+            <label for="Sigla">Sigla</label><br />
+            <input type="text" style="text-transform:uppercase" maxlength="3" class="form-control blockConfirmation" id="Sigla" placeholder="Sigla" name="tipoRequerimento.Sigla" value="@Model.TipoRequerimento.Sigla">
+        </div>
+
+        <div class="form-group col-md-3">
+            <div class="form-group col-md-12">
+                <label for="Select2_PrimeiroAtendimento">Primeiro Atendimento</label><br />
+                <select class="js-example-basic-single select2" id="Select2_PrimeiroAtendimento" name="tipoRequerimento.PrimeiroAtendimentoId">
+                    <option value="@Model.TipoRequerimento.PrimeiroAtendimentoId">@Model.TipoRequerimento.PrimeiroAtendimento.Nome</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-check mb-2">
+                <input class="form-check-input blockConfirmation" type="checkbox" name="tipoRequerimento.Ativo" value="true" checked="@Model.TipoRequerimento.Ativo" id="Ativo">
+                <label class="form-check-label" for="Ativo">
+                    Ativo
+                </label>
+            </div>
+        </div>
 
 
-</div>
+
+    </div>
 
     <input type="button" id="Botao_Salvar" class="btn botao_cor_verde btn-lg blockConfirmation" value="Salvar">
     <div class="form-row float-right">

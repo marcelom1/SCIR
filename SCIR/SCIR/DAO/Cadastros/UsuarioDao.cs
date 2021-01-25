@@ -38,6 +38,25 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
+        public IList<Usuario> FiltroPorColuna(string coluna, string searchPhrase, bool FiltrarPorAdmServidores)
+        {
+            var where = "";
+            if (!string.IsNullOrWhiteSpace(searchPhrase))
+                where += "("+string.Format(coluna + ".Contains(\"{0}\")", searchPhrase)+")";
+            else
+                where += "(1=1)";
+
+            if (FiltrarPorAdmServidores)
+                where += " AND (PAPELID = 1 OR PAPELID = 2)";
+           
+
+            using (var contexto = new ScirContext())
+            {
+                var ordenacao = coluna + " ASC";
+                return contexto.Usuario.Where(where).OrderBy(ordenacao).ToList();
+            }
+        }
+
         public IList<Usuario> FiltroPorColuna(string coluna, string searchPhrase)
         {
             throw new NotImplementedException();

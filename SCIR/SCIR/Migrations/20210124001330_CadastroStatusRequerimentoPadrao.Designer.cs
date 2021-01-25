@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SCIR.DAO;
 
 namespace SCIR.Migrations
 {
     [DbContext(typeof(ScirContext))]
-    partial class ScirContextModelSnapshot : ModelSnapshot
+    [Migration("20210124001330_CadastroStatusRequerimentoPadrao")]
+    partial class CadastroStatusRequerimentoPadrao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -291,9 +293,6 @@ namespace SCIR.Migrations
                         .IsRequired()
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int>("PrimeiroAtendimentoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SequenciaProtocolo")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -304,8 +303,6 @@ namespace SCIR.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PrimeiroAtendimentoId");
 
                     b.HasIndex("TipoFormularioId");
 
@@ -493,12 +490,6 @@ namespace SCIR.Migrations
 
             modelBuilder.Entity("SCIR.Models.TipoRequerimento", b =>
                 {
-                    b.HasOne("SCIR.Models.Usuario", "PrimeiroAtendimento")
-                        .WithMany()
-                        .HasForeignKey("PrimeiroAtendimentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SCIR.Models.TipoFormulario", "TipoFormulario")
                         .WithMany()
                         .HasForeignKey("TipoFormularioId")

@@ -16,6 +16,7 @@ namespace SCIR.Business.Requerimentos
     {
         private FormularioValidacaoUCDao dbFormularioValidacaoUC = new FormularioValidacaoUCDao();
         private ArquivoRequerimentoServer ArquivosRequerimentoServer = new ArquivoRequerimentoServer();
+        private StatusRequerimentoServer StatusRequerimentoServer = new StatusRequerimentoServer();
 
         public ConsisteUtils ConsisteNovo(FormularioValidacaoUC formularioValidacaoUC)
         {
@@ -23,6 +24,12 @@ namespace SCIR.Business.Requerimentos
 
             if (string.IsNullOrWhiteSpace(formularioValidacaoUC.Motivo))
                 consiste.Add("O campo Motivo não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (formularioValidacaoUC.TipoValidacaoCurricularId == 0)
+                consiste.Add("O campo Tipo Validação não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (formularioValidacaoUC.UnidadeCurricularId == 0)
+                consiste.Add("O campo Unidade Curricular não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }
@@ -50,6 +57,15 @@ namespace SCIR.Business.Requerimentos
             if (pesquisa == null)
                 consiste.Add("Não foi encontrado o registro para atualização", ConsisteUtils.Tipo.Inconsistencia);
 
+            if (string.IsNullOrWhiteSpace(formularioValidacaoUC.Motivo))
+                consiste.Add("O campo Motivo não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (formularioValidacaoUC.TipoValidacaoCurricularId == 0)
+                consiste.Add("O campo Tipo Validação não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (formularioValidacaoUC.UnidadeCurricularId == 0)
+                consiste.Add("O campo Unidade Curricular não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
             return consiste;
         }
 
@@ -64,6 +80,8 @@ namespace SCIR.Business.Requerimentos
                 formularioValidacaoUC.Abertura = DateTime.Now;
                 formularioValidacaoUC.Protocolo = RequerimentoServer.GerarNovoProtocolo(formularioValidacaoUC);
                 formularioValidacaoUC.TipoFormularioId = TipoFormularioUtils.FormlarioEnum.ValidacaoUC.GetHashCode();
+                formularioValidacaoUC.StatusRequerimentoId = StatusRequerimentoServer.GetEntidadeCodigoInterno(3).Id;
+                formularioValidacaoUC.UsuarioAtendenteId = RequerimentoServer.PrimeiroAtendimento(formularioValidacaoUC);
                 dbFormularioValidacaoUC.Insert(formularioValidacaoUC);
                 ArquivosRequerimentoServer.Novo(formularioValidacaoUC, files, server);
 

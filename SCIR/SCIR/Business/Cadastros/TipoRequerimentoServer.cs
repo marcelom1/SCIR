@@ -25,6 +25,12 @@ namespace SCIR.Business.Cadastros
             if (tipoRequerimento.TipoFormularioId == 0)
                 consiste.Add("O campo Formulario não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
+            if (tipoRequerimento.PrimeiroAtendimentoId == 0)
+                consiste.Add("O campo do Usuário do Primeiro Atendimento não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (string.IsNullOrWhiteSpace(tipoRequerimento.Sigla))
+                consiste.Add("O campo Sigla não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
             return consiste;
         }
 
@@ -55,6 +61,12 @@ namespace SCIR.Business.Cadastros
 
             if (tipoRequerimento.TipoFormularioId == 0)
                 consiste.Add("O campo Formulario não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (string.IsNullOrWhiteSpace(tipoRequerimento.Sigla))
+                consiste.Add("O campo Sigla não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (tipoRequerimento.PrimeiroAtendimentoId == 0)
+                consiste.Add("O campo do Usuário do Primeiro Atendimento não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }
@@ -123,5 +135,6 @@ namespace SCIR.Business.Cadastros
         {
             return dbTipoRequerimento.FiltroPorColuna(coluna, searchTerm);
         }
+
     }
 }

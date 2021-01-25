@@ -1,4 +1,5 @@
 ﻿using SCIR.DAO.Cadastros;
+using SCIR.DAO.Formularios;
 using SCIR.Datacontract.Grid;
 using SCIR.Models;
 using SCIR.Utils;
@@ -13,6 +14,7 @@ namespace SCIR.Business.Cadastros
     {
         private StatusRequerimentoDao dbStatusRequerimento = new StatusRequerimentoDao();
         private FluxoStatusDao dbFluxoStatus = new FluxoStatusDao();
+        private RequerimentoDao dbRequerimento = new RequerimentoDao();
 
         public ConsisteUtils ConsisteNovo(StatusRequerimento statusRequerimento)
         {
@@ -42,6 +44,12 @@ namespace SCIR.Business.Cadastros
             if (fluxoStatus.Any())
                 consiste.Add("Não foi possivel excluir o Status, pois o mesmo já se encontra atrelado a um fluxo de status (Fluxos de Status: " + string.Join(" - ", fluxoStatus) + ")", ConsisteUtils.Tipo.Inconsistencia);
 
+            var requerimentos = dbRequerimento.FiltroPorColuna("STATUSREQUERIMENTO", statusRequerimento.Id.ToString());
+            if (requerimentos.Any())
+                consiste.Add("Não foi possivel excluir o Status, pois o mesmo já se encontra atrelado a um requerimento (Requerimento: " + string.Join(" - ", requerimentos) + ")", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (pesquisa.CodigoInterno != 0)
+                consiste.Add("Não foi possivel excluir o Status, pois o mesmo é padrão do sistema", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }
@@ -51,10 +59,12 @@ namespace SCIR.Business.Cadastros
             var consiste = new ConsisteUtils();
 
             var pesquisa = dbStatusRequerimento.BuscarPorId(statusRequerimento.Id);
-            statusRequerimento = pesquisa;
-
+         
             if (pesquisa == null)
                 consiste.Add("Não foi encontrado o registro para atualização", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (pesquisa.CodigoInterno != 0 && (statusRequerimento.Nome != pesquisa.Nome || statusRequerimento.CodigoInterno != pesquisa.CodigoInterno) )
+                consiste.Add("Status Padrão do sistema não podem ser alterados", ConsisteUtils.Tipo.Inconsistencia);
 
             return consiste;
         }
@@ -109,6 +119,11 @@ namespace SCIR.Business.Cadastros
         public StatusRequerimento GetEntidade(int id)
         {
             return dbStatusRequerimento.BuscarPorId(id);
+        }
+
+        public StatusRequerimento GetEntidadeCodigoInterno(int id)
+        {
+            return dbStatusRequerimento.BuscarPorCodigoInterno(id);
         }
 
         public IList<StatusRequerimento> GetFiltroEntidadeString(string coluna, string searchTerm)

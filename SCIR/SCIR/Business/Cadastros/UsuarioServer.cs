@@ -126,5 +126,11 @@ namespace SCIR.Business.Cadastros
         {
             return dbPapel.FiltroPorColuna(coluna, searchTerm);
         }
+
+        public IList<Usuario> GetUsuariosAdmServidores(string coluna, string searchTerm)
+        {
+            var retornarApenasAdmServidores = true;
+            return dbUsuario.FiltroPorColuna(coluna, searchTerm, retornarApenasAdmServidores);
+        }
     }
 }

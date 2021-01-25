@@ -1,6 +1,9 @@
 ﻿using SCIR.Business.Cadastros;
 using SCIR.DAO.Cadastros;
+using SCIR.DAO.Formularios;
+using SCIR.Datacontract.Grid;
 using SCIR.Models;
+using SCIR.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +13,8 @@ namespace SCIR.Business.Requerimentos
 {
     public class RequerimentoServer
     {
+        private RequerimentoDao dbRequerimento = new RequerimentoDao();
+
         public static string GerarNovoProtocolo(Requerimento requerimento)
         {
             var ServerTipoRequerimento = new TipoRequerimentoServer();
@@ -41,6 +46,40 @@ namespace SCIR.Business.Requerimentos
             ServerTipoRequerimento.Atualizar(tipoRequerimento);
             return NovoProtocolo;
 
+        }
+
+        public static int PrimeiroAtendimento(Requerimento requerimento)
+        {
+            var ServerTipoRequerimento = new TipoRequerimentoServer();
+            var tipoRequerimento = ServerTipoRequerimento.GetEntidade(requerimento.TipoRequerimentoId);
+            return tipoRequerimento.PrimeiroAtendimentoId;
+        }
+
+        public ResponseGrid<RequerimentoGridDC> ListarTudo(FormatGridUtils<Requerimento> request)
+        {
+            var response = new ResponseGrid<RequerimentoGridDC>();
+            response.Entidades = dbRequerimento.ListGrid(request,false,false);
+            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+
+            return response;
+        }
+
+        public ResponseGrid<RequerimentoGridDC> ListarPorAtendente(FormatGridUtils<Requerimento> request)
+        {
+            var response = new ResponseGrid<RequerimentoGridDC>();
+            response.Entidades = dbRequerimento.ListGrid(request, true, false);
+            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+
+            return response;
+        }
+
+        public ResponseGrid<RequerimentoGridDC> ListarPorRequerente(FormatGridUtils<Requerimento> request)
+        {
+            var response = new ResponseGrid<RequerimentoGridDC>();
+            response.Entidades = dbRequerimento.ListGrid(request, false, true);
+            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+
+            return response;
         }
     }
 }
