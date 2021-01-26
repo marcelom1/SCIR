@@ -11,6 +11,14 @@ namespace SCIR.DAO.Cadastros
 {
     public class PapelDao : ICadastrosDao<Papel, Papel>
     {
+        public enum PapelUsuario
+        {
+            UsuarioNaoAutenticado = 0,
+            Administrador = 1,
+            Servidor = 2,
+            Discente = 3
+        }
+
         public Papel BuscarPorId(int id)
         {
             throw new NotImplementedException();

@@ -21,6 +21,15 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
+        internal Usuario ConfirmacaoAutenticacao(string login, string senha)
+        {
+            using (var contexto = new ScirContext())
+            {
+                //Encrypt.Encrypt.getMD5Hash(senha)
+                return contexto.Usuario.Include(p=>p.Papel).FirstOrDefault(a => a.Email == login && a.Senha == senha);
+            }
+        }
+
         public void Delete(Usuario entidade)
         {
             using (var contexto = new ScirContext())
@@ -54,6 +63,14 @@ namespace SCIR.DAO.Cadastros
             {
                 var ordenacao = coluna + " ASC";
                 return contexto.Usuario.Where(where).OrderBy(ordenacao).ToList();
+            }
+        }
+
+        internal Usuario BuscarUserName(string username)
+        {
+            using (var contexto = new ScirContext())
+            {
+                return contexto.Usuario.Include(e =>e.Papel).Where(e => e.Email == username).FirstOrDefault();
             }
         }
 

@@ -1,4 +1,6 @@
-﻿<!doctype html>
+﻿@using SCIR.Business.Login
+
+<!doctype html>
 <html lang="pt-br">
 <head>
     <!-- Required meta tags -->
@@ -35,19 +37,62 @@
                 </a>
             </div>
         </div>
-        <div class="form-inline m-5 my-lg-3">
-            <div class=" dropdown">
-                <label class=" dropdown-toggle text-success font-weight-bold text-uppercase " type="text" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Marcelo Miglioli
-                </label>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Alguma ação</a>
-                    <a class="dropdown-item" href="#">Outra ação</a>
-                    <a class="dropdown-item" href="#">Sair</a>
+        @if (Request.IsAuthenticated)
+        {
+            <div class="form-inline m-5 my-lg-3">
+                <div class=" dropdown">
+                    <label class=" dropdown-toggle text-success font-weight-bold text-uppercase " type="text" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div id="UsuarioNome">@LoginServer.RetornarUsuarioLogado(User.Identity.Name).Nome.ToUpper()</div>
+                    </label>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="@Url.Action("Logout", "Login")">Sair</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            using (Html.BeginForm("Autentica", "Login", FormMethod.Post, new { @id = "LoginAutenticacao", @name = "LoginAutenticacao", @class = "form-inline" }))
+            {
+                <div class="form-row align-items-center">
+                    <div class="col-auto">
+                        <label class="sr-only" for="inlineFormInput">E-Mail</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-person-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <input type="email" name="login" class="form-control" id="inlineFormInputGroup" placeholder="e-mail">
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <label class="sr-only" for="inlineFormInputGroup">Senha</label>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-lock-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M2.5 9a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-7a2 2 0 0 1-2-2V9z" />
+                                        <path fill-rule="evenodd" d="M4.5 4a3.5 3.5 0 1 1 7 0v3h-1V4a2.5 2.5 0 0 0-5 0v3h-1V4z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <input type="password" name="senha" class="form-control" id="inlineFormInputGroup" placeholder="Senha">
+                        </div>
+                    </div>
 
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn-primary mb-2 bg-success">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-right" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            }
+        }
     </div>
     <nav class="navbar navbar-expand-md navbar-dark  bg-success">
         <a class="navbar-brand Fonte-Knewave-Red" href="#"> </a>
@@ -55,28 +100,34 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="@Url.Action("Index", "Cursos")">Curso</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", "FluxoStatus")">Fluxo de Status</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", "StatusRequerimento")">Status</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", "TipoRequerimento")">Tipo de Requerimento</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", "UnidadeCurricular")">Unidade Curricular</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", "Usuario")">Usuário</a>
-                    </div>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Requerimento</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown01">
-                        <a class="dropdown-item" href="@Url.Action("Form", "Requerimento")">Novo</a>
-                        <a class="dropdown-item" href="@Url.Action("Index", "Requerimento")">Consultar</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Minha Fila </a>
-                </li>
-            </ul>
+            @if (Request.IsAuthenticated)
+            {<ul class="navbar-nav mr-auto">
+                @if (User.IsInRole("ADMINISTRADOR")) { 
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <a class="dropdown-item" href="@Url.Action("Index", "Cursos")">Curso</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "FluxoStatus")">Fluxo de Status</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "StatusRequerimento")">Status</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "TipoRequerimento")">Tipo de Requerimento</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "UnidadeCurricular")">Unidade Curricular</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Usuario")">Usuário</a>
+                        </div>
+                    </li>
+                 }
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Requerimento</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown01">
+                            <a class="dropdown-item" href="@Url.Action("Form", "Requerimento")">Novo</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Requerimento")">Consultar</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Minha Fila </a>
+                    </li>
+
+                </ul>
+            }
         </div>
     </nav>
     <main>
@@ -89,7 +140,6 @@
             </div>
         </div>
         <!-- AQUI VAI O CONTEUDO DA PAGINA -->
-
         <!-- Modal Genérico-->
         <div class="modal fade" id="ModalAlert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -119,8 +169,13 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.bootgrid.min.js"></script>
     <script src="~/Content/js/Utils/NotificationAlert.js"></script>
+    @if (Request.IsAuthenticated)
+    {
+        <script src="~/Content/js/Login/Login.js"></script>
+    }
+
     @RenderSection("scripts", required: false)
 
 
 </body>
-    </html>
+</html>

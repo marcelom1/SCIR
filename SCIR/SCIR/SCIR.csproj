@@ -284,6 +284,7 @@
     <Compile Include="Business\Cadastros\TipoValidacaoCurricularServer.cs" />
     <Compile Include="Business\Cadastros\UnidadeCurricularServer.cs" />
     <Compile Include="Business\Cadastros\UsuarioServer.cs" />
+    <Compile Include="Business\Login\LoginServer.cs" />
     <Compile Include="Business\Requerimentos\FormularioValidacaoUCServer.cs" />
     <Compile Include="Business\Requerimentos\RequerimentoServer.cs" />
     <Compile Include="Controllers\CursosController.cs" />
@@ -291,6 +292,7 @@
     <Compile Include="Controllers\FormularioValidacaoUCController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Interfaces\IFormulario.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RequerimentoController.cs" />
     <Compile Include="Controllers\StatusRequerimentoController.cs" />
     <Compile Include="Controllers\TipoRequerimentoController.cs" />
@@ -393,6 +395,7 @@
       <DependentUpon>20210124135055_UsuarioPrimeiroAtendimento.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
+    <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\ArquivoRequerimento.cs" />
     <Compile Include="Models\Cursos.cs" />
     <Compile Include="Models\FluxoStatus.cs" />
@@ -1612,6 +1615,7 @@
     <Content Include="Content\js\FormularioValidacaoUC\CadastroFormularioValidacaoUCFormEncaminhamento.js" />
     <Content Include="Content\js\FormularioValidacaoUC\CadastroFormularioValidacaoUCForm.js" />
     <Content Include="Content\js\FormularioValidacaoUC\CadastroFormularioValidacaoUCIndex.js" />
+    <Content Include="Content\js\Login\Login.js" />
     <Content Include="Content\js\pt-BR.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioForm.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioIndex.js" />
@@ -1695,6 +1699,7 @@
     <Content Include="Views\FormularioValidacaoUC\FormEncaminhamento.cshtml" />
     <Content Include="Views\Requerimento\Form.cshtml" />
     <Content Include="Views\Requerimento\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
