@@ -1,4 +1,5 @@
 ﻿using SCIR.Business.Cadastros;
+using SCIR.Business.Login;
 using SCIR.Business.Requerimentos;
 using SCIR.Datacontract.Grid;
 using SCIR.Models;
@@ -60,17 +61,42 @@ namespace SCIR.Controllers
 
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10, bool filtrarPorAtendente = false, bool filtrarPorRequerente = false)
         {
-            var requerimento = new RequerimentoGridDC();
+            var requerimento = new RequerimentoGridDC {};
+
+            if (searchPhrase.ToLower() == "aberturatostring asc")
+                searchPhrase = "ABERTURA ASC";
+            else if (searchPhrase.ToLower() == "aberturatostring desc")
+                searchPhrase = "ABERTURA DESC";
+
+            var request = FormatGridUtils<Requerimento>.Format(Request, searchPhrase, requerimento, current, rowCount);
+
+            var response = new ResponseGrid<RequerimentoGridDC>();
 
             if (filtrarPorAtendente)
             {
-                //Definir regra para filtrar por Atendente pegando o usuário logado
+                request.Entidade = new RequerimentoGridDC { UsuarioAtendenteId = LoginServer.RetornarUsuarioLogado(User.Identity.Name).Id };
+                response = ServerRequerimento.ListarPorAtendente(request);
+                
             }
-
-            if (filtrarPorRequerente)
+            else if (filtrarPorRequerente)
             {
-                //Definir regra para filtrar por Requerente pegando o usuário logado
+                request.Entidade = new RequerimentoGridDC { UsuarioRequerenteId = LoginServer.RetornarUsuarioLogado(User.Identity.Name).Id };
+                response = ServerRequerimento.ListarPorRequerente(request);
             }
+           
+            return Json(new
+            {
+                rows = response.Entidades,
+                current,
+                rowCount,
+                total = response.QuantidadeRegistros
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        [Authorize(Roles = "ADMINISTRADOR")]
+        public JsonResult ListarTodos(string searchPhrase, int current = 1, int rowCount = 10)
+        {
+            var requerimento = new RequerimentoGridDC();
 
             if (searchPhrase.ToLower() == "aberturatostring asc")
                 searchPhrase = "ABERTURA ASC";
