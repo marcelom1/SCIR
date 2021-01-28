@@ -1,4 +1,5 @@
-﻿using SCIR.DAO.Cadastros;
+﻿using SCIR.Business.Login;
+using SCIR.DAO.Cadastros;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,8 +39,7 @@ namespace SCIR.Models
 
         public override string[] GetRolesForUser(string username)
         {
-            UsuarioDao dbUsuarios = new UsuarioDao();
-            var user = dbUsuarios.BuscarUserName(username);
+            var user = LoginServer.RetornarUsuarioLogado(username);
 
             switch (user.PapelId)
             {
@@ -65,8 +65,7 @@ namespace SCIR.Models
 
         public override bool IsUserInRole(string username, string roleName)
         {
-            UsuarioDao dbUsuarios = new UsuarioDao();
-            var user = dbUsuarios.BuscarUserName(username);
+            var user = LoginServer.RetornarUsuarioLogado(username);
 
             switch (user.PapelId)
             {

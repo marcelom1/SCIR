@@ -49,6 +49,7 @@
                     </div>
                 </div>
             </div>
+
         }
         else
         {
@@ -91,7 +92,10 @@
                         </button>
                     </div>
                 </div>
+
+
             }
+
         }
     </div>
     <nav class="navbar navbar-expand-md navbar-dark  bg-success">
@@ -102,19 +106,20 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             @if (Request.IsAuthenticated)
             {<ul class="navbar-nav mr-auto">
-                @if (User.IsInRole("ADMINISTRADOR")) { 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
-                        <div class="dropdown-menu" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="@Url.Action("Index", "Cursos")">Curso</a>
-                            <a class="dropdown-item" href="@Url.Action("Index", "FluxoStatus")">Fluxo de Status</a>
-                            <a class="dropdown-item" href="@Url.Action("Index", "StatusRequerimento")">Status</a>
-                            <a class="dropdown-item" href="@Url.Action("Index", "TipoRequerimento")">Tipo de Requerimento</a>
-                            <a class="dropdown-item" href="@Url.Action("Index", "UnidadeCurricular")">Unidade Curricular</a>
-                            <a class="dropdown-item" href="@Url.Action("Index", "Usuario")">Usuário</a>
-                        </div>
-                    </li>
-                 }
+                    @if (User.IsInRole("ADMINISTRADOR"))
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown01">
+                                <a class="dropdown-item" href="@Url.Action("Index", "Cursos")">Curso</a>
+                                <a class="dropdown-item" href="@Url.Action("Index", "FluxoStatus")">Fluxo de Status</a>
+                                <a class="dropdown-item" href="@Url.Action("Index", "StatusRequerimento")">Status</a>
+                                <a class="dropdown-item" href="@Url.Action("Index", "TipoRequerimento")">Tipo de Requerimento</a>
+                                <a class="dropdown-item" href="@Url.Action("Index", "UnidadeCurricular")">Unidade Curricular</a>
+                                <a class="dropdown-item" href="@Url.Action("Index", "Usuario")">Usuário</a>
+                            </div>
+                        </li>
+                    }
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Requerimento</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
@@ -169,9 +174,20 @@
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.bootgrid.min.js"></script>
     <script src="~/Content/js/Utils/NotificationAlert.js"></script>
-    @if (Request.IsAuthenticated)
+    <script src="~/Content/js/Utils/ModalGeneric.js"></script>
+    <script>
+        
+    </script>
+    @if (!Request.IsAuthenticated)
     {
+
         <script src="~/Content/js/Login/Login.js"></script>
+        if (ViewBag.Erro != "")
+        {
+            
+            <script>ModalAlert("", "", "@ViewBag.Erro", "", "", "Erro")</script>            
+        }
+
     }
 
     @RenderSection("scripts", required: false)

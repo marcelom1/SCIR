@@ -50,7 +50,7 @@ namespace SCIR.DAO.Formularios
                 int id = 0;
                 if (int.TryParse(searchPhrase, out id))
                 {
-                    var filtroFormulario = RequerimentoDao.WhereFiltroPorColuna(coluna, searchPhrase);
+                    where += RequerimentoDao.WhereFiltroPorColuna(coluna, searchPhrase);
                 }
                 else
                 {

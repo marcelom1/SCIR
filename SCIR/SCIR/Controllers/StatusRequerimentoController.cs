@@ -11,6 +11,7 @@ using System.Web.Services;
 
 namespace SCIR.Controllers
 {
+    [Authorize(Roles = "ADMINISTRADOR")]
     public class StatusRequerimentoController : Controller
     {
         private StatusRequerimentoServer StatusRequerimentoServer = new StatusRequerimentoServer();

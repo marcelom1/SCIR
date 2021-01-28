@@ -41,7 +41,7 @@ $(document).ready(function () {
         allowClear: true,
 
         ajax: {
-            url: "/Cursos/GetCursos",
+            url: "/FormularioValidacaoUC/GetCursos",
             datatype: 'json',
             type: 'POST',
 
@@ -73,7 +73,7 @@ $(document).ready(function () {
         allowClear: true,
 
         ajax: {
-            url: "/UnidadeCurricular/GetUnidadeCurricularFilterCurso",
+            url: "/FormularioValidacaoUC/GetUnidadeCurricularFilterCurso",
             datatype: 'json',
             type: 'POST',
 

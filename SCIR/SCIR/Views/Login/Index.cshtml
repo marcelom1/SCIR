@@ -1,7 +1,18 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<span id="ancora"></span>
 
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#ancora").load("/Home/Index/", {}, function () {
+
+            });
+
+            console.log("TESTE");
+        });
+    </script>
+}
 

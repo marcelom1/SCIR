@@ -18,7 +18,7 @@ namespace SCIR.Business.Login
             var autenticado = dbUsuario.ConfirmacaoAutenticacao(login, senha);
             if (autenticado != null)
             {
-                FormsAuthentication.SetAuthCookie(autenticado.Email, false);
+                FormsAuthentication.SetAuthCookie(autenticado.Id.ToString(), false);
 
                 switch (autenticado.PapelId)
                 {
@@ -43,10 +43,15 @@ namespace SCIR.Business.Login
             return PapelDao.PapelUsuario.UsuarioNaoAutenticado;
         }
         
-        public static Usuario RetornarUsuarioLogado(string email)
+        public static Usuario RetornarUsuarioLogado(string idUsuario)
         {
             UsuarioDao dbUsuario = new UsuarioDao();
-            var user = dbUsuario.BuscarUserName(email);
+            var id = 0;
+            int.TryParse(idUsuario, out id);
+            if (id == 0)
+                throw new ArgumentException("Usuário não encontrado.");
+
+            var user = dbUsuario.BuscarPorId(id);
             return user;
         }
 

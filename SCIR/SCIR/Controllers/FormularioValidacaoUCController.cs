@@ -1,4 +1,5 @@
 ﻿using SCIR.Business.Cadastros;
+using SCIR.Business.Login;
 using SCIR.Business.Requerimentos;
 using SCIR.Controllers.Interfaces;
 using SCIR.Models;
@@ -14,10 +15,13 @@ using System.Web.Services;
 
 namespace SCIR.Controllers
 {
+    [Authorize(Roles = "ADMINISTRADOR,SERVIDOR,DISCENTE")]
     public class FormularioValidacaoUCController : Controller, IFormulario 
     {
         private FormularioValidacaoUCServer FormularioValidacaoUCServer = new FormularioValidacaoUCServer();
         private TipoValidacaoCurricularServer TipoValidacaoCurricularServer = new TipoValidacaoCurricularServer();
+        private CursosServer CursosServer = new CursosServer();
+        private UnidadeCurricularServer UnidadeCurricularServer = new UnidadeCurricularServer();
 
         public ActionResult Index()
         {
@@ -31,6 +35,7 @@ namespace SCIR.Controllers
             return PartialView(model);
         }
 
+        [Authorize(Roles = "ADMINISTRADOR,SERVIDOR")]
         public ActionResult FormEncaminhamento(int statusAtual = 0, int tipoRequerimento = 0)
         {
             var model = new FormularioValidacaoUCVM();
@@ -61,11 +66,12 @@ namespace SCIR.Controllers
         public JsonResult Salvar(FormularioValidacaoUC formularioValidacaoUC)
         {
             var files = Request.Files;
-            formularioValidacaoUC.UsuarioRequerenteId = 7;
+            
            
             var model = new FormularioValidacaoUCVM();
             try
             {
+                formularioValidacaoUC.UsuarioRequerenteId = LoginServer.RetornarUsuarioLogado(User.Identity.Name).Id;
                 if (formularioValidacaoUC.Id != 0)
                 {
                     FormularioValidacaoUCServer.Atualizar(formularioValidacaoUC, files);
@@ -114,6 +120,40 @@ namespace SCIR.Controllers
             var cursos = TipoValidacaoCurricularServer.GetFiltroEntidadeString("Nome", searchTerm);
 
             var modifica = cursos.Select(x => new
+            {
+                id = x.Id,
+                text = x.Id + " - " + x.Nome
+            });
+
+            return Json(modifica, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult GetCursos(string searchTerm)
+        {
+            var cursos = CursosServer.GetFiltroEntidadeString("Nome", searchTerm);
+
+            var modifica = cursos.Select(x => new
+            {
+                id = x.Id,
+                text = x.Id + " - " + x.Nome
+            });
+
+            return Json(modifica, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult GetUnidadeCurricularFilterCurso(string searchTerm, int cursoId)
+        {
+            var unidadeCurricular = UnidadeCurricularServer.GetFiltroEntidadeString("Nome", searchTerm, cursoId);
+
+            var modifica = unidadeCurricular.Select(x => new
             {
                 id = x.Id,
                 text = x.Id + " - " + x.Nome

@@ -12,6 +12,7 @@ using System.Web.Services;
 
 namespace SCIR.Controllers
 {
+    [Authorize(Roles = "ADMINISTRADOR")]
     public class UsuarioController : Controller
     {
         private UsuarioServer UsuarioServer = new UsuarioServer();

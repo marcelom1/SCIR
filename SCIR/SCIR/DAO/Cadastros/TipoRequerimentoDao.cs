@@ -17,7 +17,7 @@ namespace SCIR.DAO.Cadastros
         {
             using (var contexto = new ScirContext())
             {
-                return contexto.TipoRequerimento.Include(e => e.TipoFormulario).Where(e => e.Id == id).FirstOrDefault();
+                return contexto.TipoRequerimento.Include(e => e.TipoFormulario).Include(p=>p.PrimeiroAtendimento).Where(e => e.Id == id).FirstOrDefault();
             }
         }
 

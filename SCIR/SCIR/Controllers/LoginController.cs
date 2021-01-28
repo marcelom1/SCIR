@@ -16,7 +16,7 @@ namespace SCIR.Controllers
         public ActionResult Index()
         {
             ViewBag.Erro = "";
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
         public ActionResult Autentica(string login, string senha)
@@ -25,7 +25,7 @@ namespace SCIR.Controllers
             {
 
                 if (Request.QueryString["ReturnUrl"] == null)
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Login");
                 else
                     return RedirectToAction(Request.QueryString["ReturnUrl"].ToString());
             }

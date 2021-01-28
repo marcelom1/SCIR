@@ -12,6 +12,7 @@ using System.Web.Services;
 
 namespace SCIR.Controllers
 {
+    [Authorize(Roles = "ADMINISTRADOR")]
     public class TipoRequerimentoController : Controller
     {
         private TipoRequerimentoServer TipoRequerimentoServer = new TipoRequerimentoServer();

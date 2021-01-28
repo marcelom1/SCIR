@@ -12,6 +12,7 @@ using System.Web.Services;
 
 namespace SCIR.Controllers
 {
+    [Authorize(Roles = "ADMINISTRADOR")]
     public class FluxoStatusController : Controller
     {
         private FluxoStatusServer FluxoStatusServer = new FluxoStatusServer();
