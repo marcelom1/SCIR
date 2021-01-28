@@ -1,4 +1,5 @@
-﻿using SCIR.DAO.Cadastros;
+﻿using SCIR.Business.Requerimentos;
+using SCIR.DAO.Cadastros;
 using SCIR.Datacontract.Grid;
 using SCIR.Models;
 using SCIR.Utils;
@@ -13,6 +14,7 @@ namespace SCIR.Business.Cadastros
     {
         private UsuarioDao dbUsuario = new UsuarioDao();
         private PapelDao dbPapel = new PapelDao();
+        private RequerimentoServer ServerRequerimento = new RequerimentoServer();
 
         public ConsisteUtils ConsisteNovo(Usuario usuario)
         {
@@ -40,7 +42,19 @@ namespace SCIR.Business.Cadastros
             if (usuario == null)
                 consiste.Add("Não foi encontrado o registro para exclusão", ConsisteUtils.Tipo.Inconsistencia);
 
-            //FUTURAMENTE COLOCAR UMA INCONSISTENCIA NA EXCLUSÃO CASO O USUÁRIO POSSUIR ALGUM REQUERIMENTO REGISTRADO
+            var request = new FormatGridUtils<Requerimento>
+            {
+                CampoOrdenacao = "",
+                SearchPhrase = "",
+                Current = 1,
+                RowCount = 10,
+                Entidade = new RequerimentoGridDC { UsuarioAtendenteId = usuario.Id, UsuarioRequerenteId = usuario.Id}
+                
+            };
+            var requerimentos = ServerRequerimento.ListarPorRequerenteOuAtendente(request);
+            if (requerimentos.QuantidadeRegistros > 0)
+                consiste.Add("Não é possivel excluir o usuário pois o mesmo se encontra atrelado nos seguintes requerimentos: " + string.Join(" - ", requerimentos.Entidades.Select(x=>x.Protocolo)), ConsisteUtils.Tipo.Inconsistencia);
+
             return consiste;
         }
 

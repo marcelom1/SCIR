@@ -81,5 +81,16 @@ namespace SCIR.Business.Requerimentos
 
             return response;
         }
+
+        public ResponseGrid<RequerimentoGridDC> ListarPorRequerenteOuAtendente(FormatGridUtils<Requerimento> request)
+        {
+            var response = new ResponseGrid<RequerimentoGridDC>();
+            response.Entidades = dbRequerimento.ListGrid(request, true, true);
+            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+
+            return response;
+        }
+
+
     }
 }

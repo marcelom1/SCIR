@@ -16,7 +16,7 @@ namespace SCIR.Business.Login
         public PapelDao.PapelUsuario Autentica(string login, string senha)
         {
             var autenticado = dbUsuario.ConfirmacaoAutenticacao(login, senha);
-            if (autenticado != null)
+            if (autenticado != null && autenticado.Ativo)
             {
                 FormsAuthentication.SetAuthCookie(autenticado.Id.ToString(), false);
 
