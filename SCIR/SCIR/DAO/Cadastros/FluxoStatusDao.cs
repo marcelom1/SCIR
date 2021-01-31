@@ -160,6 +160,45 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
+        public IList<FluxoStatusGridDC> ListProximos(string searchPhrase, int statusAtualId, int tipoRequerimentoId)
+        {
+            using (var contexto = new ScirContext())
+            {
+                var innerJoin = from a in contexto.FluxoStatus
+                                join b in contexto.StatusRequerimento on a.StatusAtualId equals b.Id
+                                join c in contexto.StatusRequerimento on a.StatusProximoId equals c.Id
+                                join d in contexto.TipoRequerimento on a.TipoRequerimentoId equals d.Id
+                                where (a.StatusAtualId == statusAtualId && a.TipoRequerimentoId == tipoRequerimentoId) && (!string.IsNullOrWhiteSpace(searchPhrase) ? (EF.Functions.Like(c.Nome, "%" + searchPhrase + "%") || EF.Functions.Like(d.Nome, "%" + searchPhrase + "%")) : (true))
+                                select new
+                                {
+                                    a.StatusAtualId,
+                                    StatusAtualNome = b.Nome,
+                                    a.StatusProximoId,
+                                    StatusProximoNome = c.Nome,
+                                    a.TipoRequerimentoId,
+                                    TipoRequerimentoNome = d.Nome
+                                };
+
+
+               
+                var listFluxoStatus = innerJoin.ToList();
+                var lista = new List<FluxoStatusGridDC>();
+                foreach (var item in listFluxoStatus)
+                {
+                    lista.Add(new FluxoStatusGridDC
+                    {
+                        StatusAtualId = item.StatusAtualId,
+                        StatusAtualNome = item.StatusAtualNome,
+                        StatusProximoId = item.StatusProximoId,
+                        StatusProximoNome = item.StatusProximoNome,
+                        TipoRequerimentoId = item.TipoRequerimentoId,
+                        TipoRequerimentoNome = item.TipoRequerimentoNome
+                    });
+                }
+                return lista;
+            }
+        }
+
         public IPagedList<FluxoStatusGridDC> ListGrid(FormatGridUtils<FluxoStatus> request)
         {
             using (var contexto = new ScirContext())

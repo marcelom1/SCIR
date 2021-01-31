@@ -23,6 +23,17 @@ namespace SCIR.Utils.TipoFormularioUtils
             }
         }
 
+        public static TipoFormularioUtils RetornarCamposExtras(int codigo)
+        {
+            switch ((FormlarioEnum)codigo)
+            {
+                case FormlarioEnum.ValidacaoUC:
+                    return new FormularioValidacaoUCController().GetActionVisualizarRequerimento();
+                default:
+                    throw new ArgumentException("Não foi encontrado o layout do formulário desejado");
+            }
+        }
+
         public enum FormlarioEnum
         {
             ValidacaoUC = 1

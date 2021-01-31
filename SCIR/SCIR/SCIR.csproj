@@ -1625,6 +1625,7 @@
     <Content Include="Content\js\pt-BR.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioForm.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioIndex.js" />
+    <Content Include="Content\js\Requerimento\ModalEncaminhar.js" />
     <Content Include="Content\js\Requerimento\VisualizarRequerimento.js" />
     <Content Include="Content\js\StatusRequerimento\CadastroStatusRequerimentoForm.js" />
     <Content Include="Content\js\StatusRequerimento\CadastroStatusRequerimentoIndex.js" />
@@ -1708,6 +1709,8 @@
     <Content Include="Views\Requerimento\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Requerimento\VisualizarRequerimento.cshtml" />
+    <Content Include="Views\FormularioValidacaoUC\VisualizarRequerimento.cshtml" />
+    <Content Include="Views\Requerimento\ModalEncaminhar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

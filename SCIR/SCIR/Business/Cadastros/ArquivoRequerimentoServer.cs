@@ -106,6 +106,7 @@ namespace SCIR.Business.Cadastros
             var requerimentoRequest = new RequerimentoGridDC { Id = request.Entidade.RequerimentoId };
             var entityRequerimento = RequerimentoServer.GetRequerimentoId(requerimentoRequest, usuario); // Caso o usuário não ter permissão de visualizar os Arquivos irá gerar uma inconsistencia 
 
+            request.Entidade.RequerimentoId = entityRequerimento.Id;
             var arquivos = dbArquivoRequerimento.ListGrid(request);
             
             var response = new ResponseGrid<ArquivoRequerimento>();
@@ -115,10 +116,15 @@ namespace SCIR.Business.Cadastros
             return response;
         }
         
-
         public IList<ArquivoRequerimento> GetFiltroEntidadeString(string coluna, string searchTerm)
         {
             return dbArquivoRequerimento.FiltroPorColuna(coluna, searchTerm);
+        }
+
+        public ArquivoRequerimento GetArquivo(int id)
+        {
+            var arquivo = dbArquivoRequerimento.BuscarPorId(id);
+            return arquivo;
         }
     }
 }

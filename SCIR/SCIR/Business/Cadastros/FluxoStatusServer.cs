@@ -171,5 +171,10 @@ namespace SCIR.Business.Cadastros
         {
             return dbFluxoStatus.FiltroPorColuna(coluna, searchTerm);
         }
+
+        public IList<FluxoStatusGridDC> GetProximoStatus(int statusAtualId, string searchTerm, int tipoRequerimentoId)
+        {
+            return dbFluxoStatus.ListProximos(searchTerm, statusAtualId, tipoRequerimentoId );
+        }
     }
 }

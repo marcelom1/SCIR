@@ -19,7 +19,7 @@
 <hr>
 <h3 class="pb-3">Requerimento: @Model.TipoRequerimento.Nome</h3>
 
-@*<input onclick="location.href='#'" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Novo">*@
+<input onclick="location.href='#'" id="Encaminhar" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Encaminhar">
 <input onclick="location.href='#'" class="btn bg-info botao_cor btn-sm blockConfirmation" type="button" value="Histórico">
 
 @using (Html.BeginForm("Salvar", "FormularioValidacaoUC", FormMethod.Post, new { @id = "CadastroFormularioValidacaoUC", @name = "CadastroFormularioValidacaoUC" }))
@@ -70,6 +70,10 @@
             <p type="text" id="RequerenteNome" name="FormularioValidacaoUC.UsuarioRequerenteNome">@Model.UsuarioAtendenteId - @Model.UsuarioAtendente.Nome</p>
             <input type="text" class="form-control Oculto" id="AtendenteAtualId" disabled name="FormularioValidacaoUC.UsuarioAtendenteId" value="@Model.UsuarioAtendenteId">
         </div>
+
+    </div>
+
+    <div id="AncoraCamposExtras">
 
     </div>
 

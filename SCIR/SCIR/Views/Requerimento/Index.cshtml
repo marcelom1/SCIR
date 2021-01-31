@@ -9,9 +9,9 @@
     <link href="~/Content/css/Formulario/CadastroFormularioIndex.css" rel="stylesheet" />
    
 }
-<div id="alert">
+    <div id="alert">
 
-</div>
+    </div>
 <hr>
 <h3 class="pb-3">Requerimentos</h3>
 @Html.ActionLink("Novo", "/Form", null, new { @class = "btn bg-success botao_cor btn-sm" })
@@ -31,8 +31,14 @@
 @section scripts{
     <script>
         function CarregarParametrosAdicionaisGrid(request) {
-            request.filtrarPorAtendente = false;
-            request.filtrarPorRequerente = true;
+           @{ 
+               var filtrarPorAtendente = ViewBag.filtrarPorAtendente == 0? false : true;
+               var filtrarPorRequerente = ViewBag.filtrarPorRequerente == 0? false : true;
+
+           }
+            
+           request.filtrarPorAtendente = "@filtrarPorAtendente" == "True";
+           request.filtrarPorRequerente = "@filtrarPorRequerente" == "True";
         }
 
         var listaGrid = "@Url.Action("Listar")";

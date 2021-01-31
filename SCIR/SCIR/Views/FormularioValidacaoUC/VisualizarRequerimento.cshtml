@@ -1,0 +1,19 @@
+﻿@using SCIR.Models.ViewModels
+
+@model FormularioValidacaoUCVM
+
+<div class="form-row pb-1 pt-4 ">
+    <label for="Moyivo">Motivo:</label><br />
+    <p style="word-wrap: break-word!important" class="text-break">@Model.FormularioValidacaoUC.Motivo</p>
+</div>
+
+<div class="form-row pb-1 pt-4 ">
+    <div class="form-group col-md-3">
+        <label for="UnidadeCurricular">Unidade Curricular:</label><br />
+        <p type="text" id="UnidadeCurricular" name="FormularioValidacaoUC.UnidadeCurricularId">@Model.FormularioValidacaoUC.UnidadeCurricular.Id - @Model.FormularioValidacaoUC.UnidadeCurricular.Nome</p>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="TipoValidacaoCurricular">Tipo Validacao Curricular:</label><br />
+        <p type="text" id="TipoValidacaoCurricular" name="FormularioValidacaoUC.TipoValidacaoCurricularId">@Model.FormularioValidacaoUC.TipoValidacaoCurricular.Id - @Model.FormularioValidacaoUC.TipoValidacaoCurricular.Nome</p>
+    </div>
+</div>

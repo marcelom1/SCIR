@@ -23,12 +23,15 @@ namespace SCIR.Controllers
         private TipoRequerimentoServer TipoRequerimentoServer = new TipoRequerimentoServer();
         private RequerimentoServer ServerRequerimento = new RequerimentoServer();
         private ArquivoRequerimentoServer ArquivoRequerimentoServer = new ArquivoRequerimentoServer();
-        
+        private FluxoStatusServer FluxoStatusServer = new FluxoStatusServer();
+
 
 
         // GET: Requerimento
-        public ActionResult Index()
+        public ActionResult Index(int filtro)
         {
+            ViewBag.filtrarPorAtendente = filtro;
+            ViewBag.filtrarPorRequerente = filtro == 0 ? 1 : 0;
             return View();
         }
 
@@ -44,6 +47,7 @@ namespace SCIR.Controllers
             try
             {
                 model = new RequerimentoVM(ServerRequerimento.GetRequerimentoId(requerimento, usuario));
+                
             }
             catch (Exception e)
             {
@@ -73,23 +77,36 @@ namespace SCIR.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public string Download(string file)
+        public string Download(int file, int requerimentoId)
         {
 
             //string filePath = Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["FileManagementPath"]);
 
-
             //string actualFilePath = System.IO.Path.Combine(filePath, file);
 
-            //actualFilePath = ArquivoRequerimentoServer.ge
+            var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+            var requerimento = new RequerimentoVM { Id = requerimentoId };
+            var req = ServerRequerimento.GetRequerimentoId(requerimento, usuario); // ira verrificar a permissão do download
+            var arquivo = ArquivoRequerimentoServer.GetArquivo(file);
 
-            //HttpContext.Response.ContentType = "APPLICATION/OCTET-STREAM";
-            //string filename = Path.GetFileName(actualFilePath);
-            //String Header = "Attachment; Filename=" + filename;
-            //HttpContext.Response.AppendHeader("Content-Disposition", Header);
-            //HttpContext.Response.WriteFile(actualFilePath);
-            //HttpContext.Response.End();
+            if (req.Id == arquivo.RequerimentoId)
+            {
+                var actualFilePath = arquivo.Caminho;
+
+                HttpContext.Response.ContentType = "APPLICATION/OCTET-STREAM";
+                string filename = Path.GetFileName(actualFilePath);
+                String Header = "Attachment; Filename=" + filename;
+                HttpContext.Response.AppendHeader("Content-Disposition", Header);
+                HttpContext.Response.WriteFile(actualFilePath);
+                HttpContext.Response.End();
+            }
             return "";
+        }
+
+        public PartialViewResult ModalEncaminhar(int requerimentoId)
+        {
+            ViewBag.RequerimentoId = requerimentoId;
+            return PartialView();
         }
 
         [WebMethod()]
@@ -116,6 +133,18 @@ namespace SCIR.Controllers
             var action = TipoFormularioUtils.RetornarFormulario(requerimento.TipoFormulario.Codigo);
 
             return RedirectToAction(action.Action, action.Route);
+        }
+
+        [WebMethod()]
+        public ActionResult CarregarRequerimentoCamposExtras(int requerimentoID = 0)
+        {
+            var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+            var request = new RequerimentoVM { Id = requerimentoID };
+            var requerimento = ServerRequerimento.GetRequerimentoId(request, usuario);
+
+            var action = TipoFormularioUtils.RetornarCamposExtras(requerimento.TipoFormulario.Codigo);
+
+            return RedirectToAction(action.Action, action.Route, new { requerimentoID });
         }
 
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10, bool filtrarPorAtendente = false, bool filtrarPorRequerente = false)
@@ -173,6 +202,27 @@ namespace SCIR.Controllers
                 rowCount,
                 total = response.QuantidadeRegistros
             }, JsonRequestBehavior.AllowGet);
+        }
+
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult GetProximoStatus(string searchTerm, int requerimentoId)
+        {
+            var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+            var request = new RequerimentoVM { Id = requerimentoId };
+            var requerimento = ServerRequerimento.GetRequerimentoId(request, usuario);
+
+            var status = FluxoStatusServer.GetProximoStatus(requerimento.StatusRequerimentoId, searchTerm,requerimento.TipoRequerimentoId);
+
+            var modifica = status.Select(x => new
+            {
+                id = x.StatusProximoId,
+                text = x.StatusProximoId + " - " + x.StatusProximoNome
+            });
+
+            return Json(modifica, JsonRequestBehavior.AllowGet);
+
+
         }
     }
 }

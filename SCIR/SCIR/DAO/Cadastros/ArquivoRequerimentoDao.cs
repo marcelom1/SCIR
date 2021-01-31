@@ -71,11 +71,7 @@ namespace SCIR.DAO.Cadastros
 
                 where += string.Format("Nome.Contains(\"{0}\")", request.SearchPhrase);
             }
-            else
-            {
-                where = "1=1";
-            }
-
+            
             using (var contexto = new ScirContext())
             {
                 if (string.IsNullOrWhiteSpace(request.CampoOrdenacao))

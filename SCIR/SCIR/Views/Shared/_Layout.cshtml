@@ -124,11 +124,11 @@
                         <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Requerimento</a>
                         <div class="dropdown-menu" aria-labelledby="dropdown01">
                             <a class="dropdown-item" href="@Url.Action("Form", "Requerimento")">Novo</a>
-                            <a class="dropdown-item" href="@Url.Action("Index", "Requerimento")">Consultar</a>
+                            <a class="dropdown-item" href="@Url.Action("Index", "Requerimento", new { filtro = 0})">Consultar</a>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Minha Fila </a>
+                        <a class="nav-link" href="@Url.Action("Index", "Requerimento", new {filtro = 1})">Minha Fila </a>
                     </li>
 
                 </ul>

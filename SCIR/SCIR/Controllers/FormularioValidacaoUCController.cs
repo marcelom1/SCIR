@@ -43,9 +43,24 @@ namespace SCIR.Controllers
             return PartialView(model);
         }
 
+        public PartialViewResult VisualizarRequerimento(int requerimentoID)
+        {
+            var entidade = FormularioValidacaoUCServer.GetEntidade(requerimentoID);
+            var model = new FormularioValidacaoUCVM { FormularioValidacaoUC = entidade};
+
+            return PartialView(model);
+        }
+
         public TipoFormularioUtils GetActionForm()
         {
             var formulario = new TipoFormularioUtils { Action = "Form", Route = "FormularioValidacaoUC" };
+
+            return formulario;
+        }
+
+        public TipoFormularioUtils GetActionVisualizarRequerimento()
+        {
+            var formulario = new TipoFormularioUtils { Action = "VisualizarRequerimento", Route = "FormularioValidacaoUC" };
 
             return formulario;
         }

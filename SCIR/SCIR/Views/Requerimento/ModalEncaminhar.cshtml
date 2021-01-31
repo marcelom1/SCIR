@@ -1,0 +1,30 @@
+﻿<div class="form-group col-md-2 Oculto">
+    <label for="Codigo">Código</label>
+    <div class="input-group mb-1">
+        <input type="text" class="form-control blockConfirmation" id="RequerimentoId" placeholder="Código" disabled name="FormularioValidacaoUC.Id" value="@ViewBag.RequerimentoId">
+    </div>
+</div>
+<div class="form-row pb-1 pt-4 ">
+    <div class="form-group col-md-3">
+        <label for="Atendente">Atendente</label>
+        <select class="js-example-basic-single select2" id="Select2_Atendente" name="">
+            <option value=""></option>
+        </select>
+    </div>
+</div>
+    <div class="form-row pb-1 pt-4 ">
+        <div class="form-group col-md-3">
+            <label for="Status">Status</label>
+            <select class="js-example-basic-single select2" id="Select2_Status" name="">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+<div class="form-row pb-1 pt-4 ">
+    <div class="form-group col-md-12">
+        <label for="exampleFormControlTextarea1">Mensagem</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" style="height:auto!important"></textarea>
+    </div>
+</div>
+
+<script src="~/Content/js/Requerimento/ModalEncaminhar.js"></script>
