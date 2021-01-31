@@ -11,9 +11,11 @@ namespace SCIR.Models
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Caminho { get; set; }
-        
+        public DateTime DataEnvio { get; set; }
+
         public int RequerimentoId { get; set; }
         public Requerimento Requerimento { get; set; }
+
 
         
     }

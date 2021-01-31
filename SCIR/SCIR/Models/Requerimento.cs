@@ -39,5 +39,24 @@ namespace SCIR.Models
             TipoFormulario = new TipoFormulario();
 
         }
+
+        protected Requerimento(Requerimento requerimento)
+        {
+            Id = requerimento.Id;
+            Protocolo = requerimento.Protocolo;
+            Abertura = requerimento.Abertura;
+            Encerramento = requerimento.Encerramento;
+            Mensagem = requerimento.Mensagem;
+            UsuarioAtendenteId = requerimento.UsuarioAtendenteId;
+            UsuarioAtendente = requerimento.UsuarioAtendente;
+            UsuarioRequerenteId = requerimento.UsuarioRequerenteId;
+            UsuarioRequerente = requerimento.UsuarioRequerente;
+            StatusRequerimentoId = requerimento.StatusRequerimentoId;
+            StatusRequerimento = requerimento.StatusRequerimento;
+            TipoRequerimentoId = requerimento.TipoRequerimentoId;
+            TipoRequerimento = requerimento.TipoRequerimento;
+            TipoFormularioId = requerimento.TipoFormularioId;
+            TipoFormulario = requerimento.TipoFormulario;
+        }
     }
 }

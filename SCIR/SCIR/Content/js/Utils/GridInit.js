@@ -1,10 +1,16 @@
 ﻿var commandoEspecif = false;
+var rowCountEspecif = false;
 
 function GridInit() {
+    var rowCount = [10, 25, 50, -1];
+    if (rowCountEspecif) {
+        rowCount = SetRowCountEspecifGrid();
+    }
     $("#grid-basic").bootgrid(
         {
             ajax: true,
             url: listaGrid,
+            rowCount: rowCount,
             labels:
             {
                 search: "Pesquisar",

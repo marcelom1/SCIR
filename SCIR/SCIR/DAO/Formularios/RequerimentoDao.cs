@@ -129,6 +129,19 @@ namespace SCIR.DAO.Formularios
             }
         }
 
+        public Requerimento GetRequerimentoId (Requerimento requerimento)
+        {
+            using(var contexto = new ScirContext())
+            {
+                return contexto.Requerimento.Include(p => p.StatusRequerimento)
+                                            .Include(p=> p.TipoFormulario)
+                                            .Include(p=>p.TipoRequerimento)
+                                            .Include(p=>p.UsuarioAtendente)
+                                            .Include(p=>p.UsuarioRequerente)
+                                            .Where(e => e.Id == requerimento.Id).FirstOrDefault();
+            }
+        }
+
 
     }
 }

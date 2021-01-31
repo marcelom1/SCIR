@@ -11,6 +11,7 @@ namespace SCIR.Datacontract.Grid
         public IPagedList<T> Entidades { get; set; }
         public int QuantidadeRegistros { get; set; }
 
+
         public ResponseGrid(){
             QuantidadeRegistros = 0;
         }

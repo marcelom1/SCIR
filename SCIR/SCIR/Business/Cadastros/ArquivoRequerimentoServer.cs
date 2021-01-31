@@ -1,4 +1,5 @@
-﻿using SCIR.DAO.Cadastros;
+﻿using SCIR.Business.Requerimentos;
+using SCIR.DAO.Cadastros;
 using SCIR.Datacontract.Grid;
 using SCIR.Models;
 using SCIR.Utils;
@@ -13,6 +14,7 @@ namespace SCIR.Business.Cadastros
     public class ArquivoRequerimentoServer
     {
         private ArquivoRequerimentoDao dbArquivoRequerimento = new ArquivoRequerimentoDao();
+        private RequerimentoServer RequerimentoServer = new RequerimentoServer();
 
         public ConsisteUtils ConsisteNovo(ArquivoRequerimento arquivoRequerimento)
         {
@@ -99,10 +101,15 @@ namespace SCIR.Business.Cadastros
             return arquivoRequerimento;
         }
 
-        public ResponseGrid<ArquivoRequerimento> Listar(FormatGridUtils<ArquivoRequerimento> request)
+        public ResponseGrid<ArquivoRequerimento> Listar(FormatGridUtils<ArquivoRequerimento> request, Usuario usuario)
         {
+            var requerimentoRequest = new RequerimentoGridDC { Id = request.Entidade.RequerimentoId };
+            var entityRequerimento = RequerimentoServer.GetRequerimentoId(requerimentoRequest, usuario); // Caso o usuário não ter permissão de visualizar os Arquivos irá gerar uma inconsistencia 
+
+            var arquivos = dbArquivoRequerimento.ListGrid(request);
+            
             var response = new ResponseGrid<ArquivoRequerimento>();
-            response.Entidades = dbArquivoRequerimento.ListGrid(request);
+            response.Entidades = arquivos;
             response.QuantidadeRegistros = response.Entidades.TotalItemCount;
 
             return response;

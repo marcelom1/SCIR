@@ -3,10 +3,12 @@ using SCIR.Business.Login;
 using SCIR.Business.Requerimentos;
 using SCIR.Datacontract.Grid;
 using SCIR.Models;
+using SCIR.Models.ViewModels;
 using SCIR.Utils;
 using SCIR.Utils.TipoFormularioUtils;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,6 +22,8 @@ namespace SCIR.Controllers
     {
         private TipoRequerimentoServer TipoRequerimentoServer = new TipoRequerimentoServer();
         private RequerimentoServer ServerRequerimento = new RequerimentoServer();
+        private ArquivoRequerimentoServer ArquivoRequerimentoServer = new ArquivoRequerimentoServer();
+        
 
 
         // GET: Requerimento
@@ -31,6 +35,61 @@ namespace SCIR.Controllers
         public ActionResult Form()
         {
             return View();
+        }
+
+        public ActionResult VisualizarRequerimento(RequerimentoVM requerimento)
+        {
+            var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+            var model = new RequerimentoVM();
+            try
+            {
+                model = new RequerimentoVM(ServerRequerimento.GetRequerimentoId(requerimento, usuario));
+            }
+            catch (Exception e)
+            {
+                var consistencia = new ConsisteUtils();
+                consistencia.Add(e.Message, ConsisteUtils.Tipo.Inconsistencia);
+                model.Consistencia = consistencia;
+            }
+          
+            return View(model);
+        }
+
+        public JsonResult GetAnexosRequerimento(string searchPhrase, int current = 1, int rowCount = 5, int requerimentoId = 0)
+        {
+            var arquivoRequerimento = new ArquivoRequerimento {RequerimentoId = requerimentoId };
+            var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+            var request = FormatGridUtils<ArquivoRequerimento>.Format(Request, searchPhrase, arquivoRequerimento, current, rowCount);
+            var response = new ResponseGrid<ArquivoRequerimento>();
+           
+            response = ArquivoRequerimentoServer.Listar(request, usuario);
+            
+            return Json(new
+            {
+                rows = response.Entidades,
+                current,
+                rowCount,
+                total = response.QuantidadeRegistros
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public string Download(string file)
+        {
+
+            //string filePath = Server.MapPath(System.Configuration.ConfigurationManager.AppSettings["FileManagementPath"]);
+
+
+            //string actualFilePath = System.IO.Path.Combine(filePath, file);
+
+            //actualFilePath = ArquivoRequerimentoServer.ge
+
+            //HttpContext.Response.ContentType = "APPLICATION/OCTET-STREAM";
+            //string filename = Path.GetFileName(actualFilePath);
+            //String Header = "Attachment; Filename=" + filename;
+            //HttpContext.Response.AppendHeader("Content-Disposition", Header);
+            //HttpContext.Response.WriteFile(actualFilePath);
+            //HttpContext.Response.End();
+            return "";
         }
 
         [WebMethod()]

@@ -394,6 +394,10 @@
     <Compile Include="Migrations\20210124135055_UsuarioPrimeiroAtendimento.designer.cs">
       <DependentUpon>20210124135055_UsuarioPrimeiroAtendimento.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20210131165515_CampoDataEnvioArquivo.cs" />
+    <Compile Include="Migrations\20210131165515_CampoDataEnvioArquivo.designer.cs">
+      <DependentUpon>20210131165515_CampoDataEnvioArquivo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\ArquivoRequerimento.cs" />
@@ -412,6 +416,7 @@
     <Compile Include="Models\ViewModels\CursoVM.cs" />
     <Compile Include="Models\ViewModels\FluxoStatusVM.cs" />
     <Compile Include="Models\ViewModels\FormularioValidacaoUCVM.cs" />
+    <Compile Include="Models\ViewModels\RequerimentoVM.cs" />
     <Compile Include="Models\ViewModels\StatusRequerimentoVM.cs" />
     <Compile Include="Models\ViewModels\TipoRequerimentoVM.cs" />
     <Compile Include="Models\ViewModels\UnidadeCurricularVM.cs" />
@@ -439,6 +444,7 @@
     <Content Include="Content\css\FormularioValidacaoUC\CadastroFormularioValidacaoUCIndex.css" />
     <Content Include="Content\css\Formulario\CadastroFormularioForm.css" />
     <Content Include="Content\css\Formulario\CadastroFormularioIndex.css" />
+    <Content Include="Content\css\Formulario\VisualizarFormulario.css" />
     <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\css\StatusRequerimento\CadastroStatusRequerimentoForm.css" />
     <Content Include="Content\css\StatusRequerimento\CadastroStatusRequerimentoIndex.css" />
@@ -1619,6 +1625,7 @@
     <Content Include="Content\js\pt-BR.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioForm.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioIndex.js" />
+    <Content Include="Content\js\Requerimento\VisualizarRequerimento.js" />
     <Content Include="Content\js\StatusRequerimento\CadastroStatusRequerimentoForm.js" />
     <Content Include="Content\js\StatusRequerimento\CadastroStatusRequerimentoIndex.js" />
     <Content Include="Content\js\TipoRequerimento\CadastroTipoRequerimentoForm.js" />
@@ -1700,6 +1707,7 @@
     <Content Include="Views\Requerimento\Form.cshtml" />
     <Content Include="Views\Requerimento\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Requerimento\VisualizarRequerimento.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
