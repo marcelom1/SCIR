@@ -150,17 +150,19 @@ namespace SCIR.DAO.Formularios
             }
         }
 
-        public void Update(Requerimento entidade)
+        public void UpdateEncaminhamento(Requerimento entidade)
         {
             using (var context = new ScirContext())
             {
-                entidade.StatusRequerimento = context.StatusRequerimento.Find(entidade.StatusRequerimentoId);
-                entidade.TipoFormulario = context.TipoFormulario.Find(entidade.TipoFormularioId);
-                entidade.TipoRequerimento = context.TipoRequerimento.Find(entidade.TipoRequerimentoId);               
-                entidade.UsuarioAtendente = context.Usuario.Find(entidade.UsuarioAtendenteId);
-                entidade.UsuarioRequerente = context.Usuario.Find(entidade.UsuarioRequerenteId);
+                var requerimento = context.Requerimento.Find(entidade.Id);
+                requerimento.StatusRequerimentoId = entidade.StatusRequerimentoId;
+                requerimento.UsuarioAtendenteId = entidade.UsuarioAtendenteId;
+                requerimento.Mensagem = entidade.Mensagem;
 
-                context.Requerimento.Update(entidade);
+                requerimento.StatusRequerimento = context.StatusRequerimento.Find(entidade.StatusRequerimentoId);
+                requerimento.UsuarioAtendente  = context.Usuario.Find(entidade.UsuarioAtendenteId);
+
+                context.Requerimento.Update(requerimento);
                 context.SaveChanges();
             }
         }

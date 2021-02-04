@@ -81,7 +81,8 @@ function EncaminharRequerimento() {
     var entidade = {
         Id: $("#RequerimentoId").val(),
         UsuarioAtendenteId: $("#Select2_Atendente").val(),
-        StatusRequerimentoId: $("#Select2_Status").val()
+        StatusRequerimentoId: $("#Select2_Status").val(),
+        Mensagem: $("#Mensagem").val()
     };
     $.ajax({
         type: "POST",

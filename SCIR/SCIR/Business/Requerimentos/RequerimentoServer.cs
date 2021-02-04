@@ -105,11 +105,12 @@ namespace SCIR.Business.Requerimentos
         public Requerimento EncaminharRequerimento(Requerimento requerimento, Usuario usuario)
         {
             var consiste = ConsisteEncaminhar(requerimento, usuario);
+            
 
             if (consiste.Inconsistencias.Any())
                 throw new ArgumentException(consiste.Inconsistencias.ToString());
             else
-                dbRequerimento.Update(requerimento);
+                dbRequerimento.UpdateEncaminhamento(requerimento);
 
             return requerimento;
         }

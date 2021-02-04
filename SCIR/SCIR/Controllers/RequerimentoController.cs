@@ -155,6 +155,7 @@ namespace SCIR.Controllers
             {
                 var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
                 encaminhar = new RequerimentoVM(ServerRequerimento.EncaminharRequerimento(encaminhar, usuario));
+                encaminhar.Consistencia.Add("Encaminhado com sucesso", ConsisteUtils.Tipo.Sucesso);
             }
             catch (Exception e)
             {
