@@ -16,6 +16,7 @@ namespace SCIR.Business.Cadastros
         private PapelDao dbPapel = new PapelDao();
         private RequerimentoServer ServerRequerimento = new RequerimentoServer();
 
+
         public ConsisteUtils ConsisteNovo(Usuario usuario)
         {
             var consiste = new ConsisteUtils();
@@ -145,6 +146,11 @@ namespace SCIR.Business.Cadastros
         {
             var retornarApenasAdmServidores = true;
             return dbUsuario.FiltroPorColuna(coluna, searchTerm, retornarApenasAdmServidores);
+        }
+
+        public IList<Usuario> GetProximoAtendente(Requerimento requerimento, string searchTerm)
+        {
+            return dbUsuario.ListProximos(requerimento, searchTerm);
         }
     }
 }

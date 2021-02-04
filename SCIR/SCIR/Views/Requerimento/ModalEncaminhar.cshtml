@@ -1,4 +1,5 @@
-﻿<div class="form-group col-md-2 Oculto">
+﻿<span class="Oculto" id="parFiltro">@ViewBag.Filtro</span>
+<div class="form-group col-md-2 Oculto">
     <label for="Codigo">Código</label>
     <div class="input-group mb-1">
         <input type="text" class="form-control blockConfirmation" id="RequerimentoId" placeholder="Código" disabled name="FormularioValidacaoUC.Id" value="@ViewBag.RequerimentoId">
@@ -26,5 +27,8 @@
         <textarea class="form-control" id="exampleFormControlTextarea1" style="height:auto!important"></textarea>
     </div>
 </div>
+
+<hr>
+<input onclick="location.href='#'" id="EncaminharRequerimentoModal" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Encaminhar">
 
 <script src="~/Content/js/Requerimento/ModalEncaminhar.js"></script>

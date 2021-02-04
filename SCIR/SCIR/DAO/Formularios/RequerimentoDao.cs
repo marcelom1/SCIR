@@ -129,6 +129,14 @@ namespace SCIR.DAO.Formularios
             }
         }
 
+        //internal Requerimento BuscarPorId(int id)
+        //{
+        //    using (var contexto = new ScirContext())
+        //    {
+        //        return contexto.Requerimento.Include(p=>p.StatusRequerimento).Include(p=>p.UsuarioAtendente).Include(p=>p.UsuarioRequerente).Where(e => e.Id == id).FirstOrDefault();
+        //    }
+        //}
+
         public Requerimento GetRequerimentoId (Requerimento requerimento)
         {
             using(var contexto = new ScirContext())
@@ -142,6 +150,20 @@ namespace SCIR.DAO.Formularios
             }
         }
 
+        public void Update(Requerimento entidade)
+        {
+            using (var context = new ScirContext())
+            {
+                entidade.StatusRequerimento = context.StatusRequerimento.Find(entidade.StatusRequerimentoId);
+                entidade.TipoFormulario = context.TipoFormulario.Find(entidade.TipoFormularioId);
+                entidade.TipoRequerimento = context.TipoRequerimento.Find(entidade.TipoRequerimentoId);               
+                entidade.UsuarioAtendente = context.Usuario.Find(entidade.UsuarioAtendenteId);
+                entidade.UsuarioRequerente = context.Usuario.Find(entidade.UsuarioRequerenteId);
+
+                context.Requerimento.Update(entidade);
+                context.SaveChanges();
+            }
+        }
 
     }
 }

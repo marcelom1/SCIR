@@ -30,6 +30,7 @@
 
 @section scripts{
     <script>
+         var origem = @ViewBag.filtro;
         function CarregarParametrosAdicionaisGrid(request) {
            @{ 
                var filtrarPorAtendente = ViewBag.filtrarPorAtendente == 0? false : true;
@@ -39,6 +40,8 @@
             
            request.filtrarPorAtendente = "@filtrarPorAtendente" == "True";
            request.filtrarPorRequerente = "@filtrarPorRequerente" == "True";
+           
+
         }
 
         var listaGrid = "@Url.Action("Listar")";

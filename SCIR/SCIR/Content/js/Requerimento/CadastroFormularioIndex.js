@@ -89,5 +89,5 @@ function SetCommandoEspecifGrid(column, row) {
 
 
 function GridVisualizar(id) {
-    window.location.href = "/Requerimento/VisualizarRequerimento?Id=" + id
+    window.location.href = "/Requerimento/VisualizarRequerimento?Id=" + id + "&origem=" + origem;
 };

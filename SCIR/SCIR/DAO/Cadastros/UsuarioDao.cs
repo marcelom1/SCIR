@@ -155,5 +155,23 @@ namespace SCIR.DAO.Cadastros
                 contexto.SaveChanges();
             }
         }
+
+        public IList<Usuario> ListProximos(Requerimento requerimento, string searchTerm)
+        {
+            using (var contexto = new ScirContext())
+            {
+                
+                var entidade =  contexto.Usuario.Where(a=> (a.Id == requerimento.UsuarioRequerenteId ||
+                                                            a.PapelId == (int)PapelDao.PapelUsuario.Servidor || 
+                                                            a.PapelId == (int)PapelDao.PapelUsuario.Administrador) && 
+                                                            (a.Ativo == true))
+                                                .AsTracking()
+                                                .ToList();
+ 
+               
+                return entidade;
+            }
+        }
+
     }
 }

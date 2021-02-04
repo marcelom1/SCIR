@@ -24,12 +24,11 @@ namespace SCIR.Controllers
         private RequerimentoServer ServerRequerimento = new RequerimentoServer();
         private ArquivoRequerimentoServer ArquivoRequerimentoServer = new ArquivoRequerimentoServer();
         private FluxoStatusServer FluxoStatusServer = new FluxoStatusServer();
+        private UsuarioServer UsuarioServer = new UsuarioServer();
 
-
-
-        // GET: Requerimento
         public ActionResult Index(int filtro)
         {
+            ViewBag.filtro = filtro;
             ViewBag.filtrarPorAtendente = filtro;
             ViewBag.filtrarPorRequerente = filtro == 0 ? 1 : 0;
             return View();
@@ -40,7 +39,7 @@ namespace SCIR.Controllers
             return View();
         }
 
-        public ActionResult VisualizarRequerimento(RequerimentoVM requerimento)
+        public ActionResult VisualizarRequerimento(RequerimentoVM requerimento, int origem)
         {
             var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
             var model = new RequerimentoVM();
@@ -55,7 +54,7 @@ namespace SCIR.Controllers
                 consistencia.Add(e.Message, ConsisteUtils.Tipo.Inconsistencia);
                 model.Consistencia = consistencia;
             }
-          
+            ViewBag.origem = origem;
             return View(model);
         }
 
@@ -103,9 +102,10 @@ namespace SCIR.Controllers
             return "";
         }
 
-        public PartialViewResult ModalEncaminhar(int requerimentoId)
+        public PartialViewResult ModalEncaminhar(int requerimentoId, int chamadoOrigem)
         {
             ViewBag.RequerimentoId = requerimentoId;
+            ViewBag.Filtro = chamadoOrigem;
             return PartialView();
         }
 
@@ -145,6 +145,25 @@ namespace SCIR.Controllers
             var action = TipoFormularioUtils.RetornarCamposExtras(requerimento.TipoFormulario.Codigo);
 
             return RedirectToAction(action.Action, action.Route, new { requerimentoID });
+        }
+
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult EncaminharRequerimento(RequerimentoVM encaminhar)
+        {
+            try
+            {
+                var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+                encaminhar = new RequerimentoVM(ServerRequerimento.EncaminharRequerimento(encaminhar, usuario));
+            }
+            catch (Exception e)
+            {
+                var consistencia = new ConsisteUtils();
+                consistencia.Add(e.Message, ConsisteUtils.Tipo.Inconsistencia);
+                encaminhar.Consistencia = consistencia;
+            }
+            
+            return Json(encaminhar, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10, bool filtrarPorAtendente = false, bool filtrarPorRequerente = false)
@@ -218,6 +237,27 @@ namespace SCIR.Controllers
             {
                 id = x.StatusProximoId,
                 text = x.StatusProximoId + " - " + x.StatusProximoNome
+            });
+
+            return Json(modifica, JsonRequestBehavior.AllowGet);
+
+
+        }
+
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult GetProximoAtendente(string searchTerm, int requerimentoId)
+        {
+            var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+            var request = new RequerimentoVM { Id = requerimentoId };
+            var requerimento = ServerRequerimento.GetRequerimentoId(request, usuario);
+
+            var status = UsuarioServer.GetProximoAtendente(requerimento, searchTerm);
+
+            var modifica = status.Select(x => new
+            {
+                id = x.Id,
+                text = x.Id + " - " + x.Nome
             });
 
             return Json(modifica, JsonRequestBehavior.AllowGet);

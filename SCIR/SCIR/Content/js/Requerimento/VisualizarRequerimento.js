@@ -9,7 +9,8 @@
     $("#Encaminhar").click(function (e) {
         e.preventDefault();
         var entidade = {
-            requerimentoId: $("#Id").val()
+            requerimentoId: $("#Id").val(),
+            chamadoOrigem: $("#Origem").text()
         };
         console.log(entidade);
         $.ajax({

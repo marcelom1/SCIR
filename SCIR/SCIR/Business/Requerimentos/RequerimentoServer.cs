@@ -14,6 +14,8 @@ namespace SCIR.Business.Requerimentos
     public class RequerimentoServer
     {
         private RequerimentoDao dbRequerimento = new RequerimentoDao();
+        
+
 
         public static string GerarNovoProtocolo(Requerimento requerimento)
         {
@@ -98,6 +100,44 @@ namespace SCIR.Business.Requerimentos
                 return entityRequerimento;
 
             throw new Exception("Usuário não tem permissão de visualizar o requerimento, Protocolo: " + entityRequerimento.Protocolo);
+        }
+
+        public Requerimento EncaminharRequerimento(Requerimento requerimento, Usuario usuario)
+        {
+            var consiste = ConsisteEncaminhar(requerimento, usuario);
+
+            if (consiste.Inconsistencias.Any())
+                throw new ArgumentException(consiste.Inconsistencias.ToString());
+            else
+                dbRequerimento.Update(requerimento);
+
+            return requerimento;
+        }
+
+        public ConsisteUtils ConsisteEncaminhar(Requerimento requerimento, Usuario usuario)
+        {
+            var UsuarioServer = new UsuarioServer();
+            var consiste = new ConsisteUtils();
+
+            var pesquisa = dbRequerimento.GetRequerimentoId(requerimento);
+            var usuarioDestino = UsuarioServer.GetEntidade(requerimento.UsuarioAtendenteId);
+
+            if (pesquisa == null)
+            {
+                consiste.Add("Não foi encontrado o registro para atualização", ConsisteUtils.Tipo.Inconsistencia);
+                return consiste;
+            }
+
+            if (pesquisa.UsuarioAtendenteId != usuario.Id && usuario.PapelId != (int)PapelDao.PapelUsuario.Administrador)
+                consiste.Add("Usuário não tem permissão de efetuar o encaminhamento do requerimento", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (!usuarioDestino.Ativo)
+                consiste.Add("Usuário de destino não está ativo para receber o requerimento", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (usuarioDestino.PapelId == (int)PapelDao.PapelUsuario.Discente && usuarioDestino.Id != pesquisa.UsuarioRequerenteId)
+                consiste.Add("Não é permitido encaminhar o requerimento para outro discente que não seja o requerente", ConsisteUtils.Tipo.Inconsistencia);
+
+            return consiste;
         }
 
 
