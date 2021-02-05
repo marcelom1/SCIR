@@ -103,7 +103,6 @@ function GridVisualizar(id) {
 };
 
 function GridEncaminhar(id) {
-    var origem = 0;
     var entidade = {
         requerimentoId: id.toString(),
         chamadoOrigem: origem.toString()

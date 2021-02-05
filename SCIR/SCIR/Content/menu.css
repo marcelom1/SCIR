@@ -34,8 +34,10 @@
 }
 
 .centro {
-    position: absolute;
-    left: 2.5%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 25px;
 }
 
 .botao_cor {

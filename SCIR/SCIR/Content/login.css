@@ -15,8 +15,8 @@
     
 }
 .centro{
-    position:absolute;
-    left:2.5%;
+    /*position:absolute;
+    left:2.5%;*/
     
 }
 
@@ -33,4 +33,39 @@
 .botao_cor_verde{
     background-color: green;
     color: white;
+}
+
+main > .container {
+    padding: 60px 15px 0;
+}
+
+.footer {
+    background-color: #D9D9D9;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    height: 100%;
+}
+
+.content {
+    flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    min-height: 200px;
 }
