@@ -1,10 +1,11 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(function () {  
     var requerimentoID = $("#Id").val();
     $("#AncoraCamposExtras").load("/Requerimento/CarregarRequerimentoCamposExtras/", { requerimentoID }, function () {
 
     });
     commandoEspecif = true;
     rowCountEspecif = true;
+    headerPadrao = "<div><div>"
     GridInit();
     $("#Encaminhar").click(function (e) {
         e.preventDefault();
@@ -112,7 +113,7 @@ function SetCommandoEspecifGrid(column, row) {
 
     var buttonDownload = '<span style="margin: 0px 0px 0px 8px;" class="text-primary ponteiro" id="Botao_Visualizar" onclick="GridDownload(' + row.Id + ')">' + iconDownload + '</span>';
 
-
+    
     var divFinal = '</div>';
 
     return divInicio + buttonDownload + divFinal

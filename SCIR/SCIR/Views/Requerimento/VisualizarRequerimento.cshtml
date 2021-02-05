@@ -27,21 +27,21 @@
 {
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-2 Oculto">
-            <label for="Codigo">Código</label>
+            <b><label for="Codigo">Código</label></b>
             <div class="input-group mb-1">
                 <input type="text" class="form-control blockConfirmation" id="Id" placeholder="Código" disabled name="FormularioValidacaoUC.Id" value="@Model.Id">
             </div>
         </div>
         <div class="form-group col-md-3">
-            <label for="Protocolo">Protocolo:</label>
+            <b><label for="Protocolo">Protocolo:</label></b>
             <p type="text" id="Protocolo" name="FormularioValidacaoUC.Protocolo">@Model.Protocolo</p>
         </div>
         <div class="form-group col-md-3">
-            <label for="Abertura">Abertura:</label>
+            <b><label for="Abertura">Abertura:</label></b>
             <p type="text" id="Abertura" name="FormularioValidacaoUC.Abertura">@Model.Abertura.ToShortDateString()</p>
         </div>
         <div class="form-group col-md-3">
-            <label for="Encerramento">Encerramento:</label>
+            <b><label for="Encerramento">Encerramento:</label></b>
             <p type="text" id="Encerramento" name="FormularioValidacaoUC.Encerramento">
                 @if (Model.Encerramento != null)
                 {
@@ -52,7 +52,7 @@
         </div>
 
         <div class="form-group col-md-3">
-            <label for="StatusAtual">Status Atual: </label>
+            <b><label for="StatusAtual">Status Atual: </label></b>
             <p type="text" id="StatusNome" name="FormularioValidacaoUC.StatusRequerimento.Nome">@Model.StatusRequerimento.Nome</p>
             <input type="text" class="form-control Oculto" id="StatusRequerimentoAtualId" disabled name="FormularioValidacaoUC.StatusRequerimentoId" value="@Model.StatusRequerimentoId">
 
@@ -62,12 +62,12 @@
 
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-3">
-            <label for="Requerente">Requerente:</label>
+            <b><label for="Requerente">Requerente:</label></b>
             <p type="text" id="RequerenteNome" name="FormularioValidacaoUC.UsuarioRequerenteNome">@Model.UsuarioRequerenteId - @Model.UsuarioRequerente.Nome</p>
             <input type="text" class="form-control Oculto" id="RequerenteId" disabled name="FormularioValidacaoUC.UsuarioRequerenteId" value="@Model.UsuarioRequerenteId">
         </div>
         <div class="form-group col-md-3">
-            <label for="Atendente">Atendente Atual:</label>
+            <b><label for="Atendente">Atendente Atual:</label></b>
             <p type="text" id="RequerenteNome" name="FormularioValidacaoUC.UsuarioRequerenteNome">@Model.UsuarioAtendenteId - @Model.UsuarioAtendente.Nome</p>
             <input type="text" class="form-control Oculto" id="AtendenteAtualId" disabled name="FormularioValidacaoUC.UsuarioAtendenteId" value="@Model.UsuarioAtendenteId">
         </div>
@@ -79,8 +79,8 @@
     </div>
 
     <div class="form-row pb-1 pt-4 ">
-        <label for="Atendente">Última mensagem de encaminhamento:</label>
-        <p style="word-wrap: break-word!important" class="text-break">@Model.Mensagem</p>
+        <b><label for="Atendente">Última mensagem de encaminhamento: </label></b><br />
+        <p style="word-wrap: break-word!important" type="text" class="text-break">@Model.Mensagem</p>
     </div>
 
     <h5>Anexos</h5>
@@ -101,6 +101,7 @@
     <script src="~/Content/js/select2.min.js"></script>
     <script src="~/Content/js/pt-BR.js"></script>
     <script>
+
         function CarregarParametrosAdicionaisGrid(request) {
             request.requerimentoId = @Model.Id;
         }

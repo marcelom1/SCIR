@@ -77,43 +77,67 @@ $(document).on('click', '#EncaminharRequerimentoModal', function (e) {
 var urlDirect = "/Requerimento?filtro="
 var parFiltro = $("#parFiltro").text();
 function EncaminharRequerimento() {
-    var msg = "";
-    var entidade = {
-        Id: $("#RequerimentoId").val(),
-        UsuarioAtendenteId: $("#Select2_Atendente").val(),
-        StatusRequerimentoId: $("#Select2_Status").val(),
-        Mensagem: $("#Mensagem").val()
-    };
-    $.ajax({
-        type: "POST",
-        url: "/Requerimento/EncaminharRequerimento/",
-        data: JSON.stringify(entidade),
-        contentType: "application/json; charset=utf-8",
-        dataType: "html",
-        success: function (resposta) {
-            var consistencia = JSON.parse(resposta);
-            console.log(consistencia);
-            if (consistencia.Consistencia.SucessoToString != "") {
-                msg += consistencia.Consistencia.InconsistenciasToString.replaceAll("|", "<br>")
-                addNotification(msg, 3);
 
-                window.location.href = urlDirect + parFiltro;
-            }
-            
-            if (consistencia.Consistencia.InconsistenciasToString != "") {
-                msg += consistencia.Consistencia.InconsistenciasToString.replaceAll("|", "<br>")
-                addNotification(msg, 1);
-            } else {
-                msg += consistencia.Consistencia.AdvertenciasToString.replaceAll("|", "<br>")
-                addNotification(msg, 1);
-            }
+    if (ValidarCampos()){
+        var msg = "";
+        var entidade = {
+            Id: $("#RequerimentoId").val(),
+            UsuarioAtendenteId: $("#Select2_Atendente").val(),
+            StatusRequerimentoId: $("#Select2_Status").val(),
+            Mensagem: $("#Mensagem").val()
+        };
+        $.ajax({
+            type: "POST",
+            url: "/Requerimento/EncaminharRequerimento/",
+            data: JSON.stringify(entidade),
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (resposta) {
+                var consistencia = JSON.parse(resposta);
+                console.log(consistencia);
+                if (consistencia.Consistencia.SucessoToString != "") {
+                    //msg += consistencia.Consistencia.InconsistenciasToString.replaceAll("|", "<br>")
+                    //addNotification(msg, 3);
+                    window.location.href = urlDirect + parFiltro;
+                } else {
 
-           
-        },
-        error: function (json) {
-            alert("Erro de conexão com o servidor!");
-            Console.log(json);
-        }
-    });
-    $('#ModalAlert').modal('hide');
+                    if (consistencia.Consistencia.InconsistenciasToString != "") {
+                        msg += consistencia.Consistencia.InconsistenciasToString.replaceAll("|", "<br>")
+                        addNotification(msg, 1);
+                    } else {
+                        msg += consistencia.Consistencia.AdvertenciasToString.replaceAll("|", "<br>")
+                        addNotification(msg, 1);
+                    }
+                }
+
+            },
+            error: function (json) {
+                alert("Erro de conexão com o servidor!");
+                Console.log(json);
+            }
+        });
+        $('#ModalAlert').modal('hide');
+    }
+};
+
+function ValidarCampos() {
+    var erro = 0;
+    if ($("#Select2_Atendente").val() == 0) {
+        $("#Erro_Atendente").text("*Campo obrigatório!").show();
+        erro += 1;
+    }
+    else {
+        $("#Erro_Atendente").hide();
+    }
+
+
+    if ($("#Select2_Status").val() == 0) {
+        $("#Erro_Status").text("*Campo obrigatório!").show();
+        erro += 1;
+    }
+    else {
+        $("#Erro_Status").hide();
+    }
+
+    return erro == 0;
 };

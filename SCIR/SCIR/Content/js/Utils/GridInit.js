@@ -1,5 +1,7 @@
 ﻿var commandoEspecif = false;
 var rowCountEspecif = false;
+var headerPadrao = "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-sm-12 actionBar\"><!--Your Button goes here--><p class=\"{{css.search}}\"></p><p class=\"{{css.actions}}\"></p></div></div></div>"
+
 
 function GridInit() {
     var rowCount = [10, 25, 50, -1];
@@ -70,6 +72,10 @@ function GridInit() {
                     request = parametrosAdicionais;
                 }
                 return request;
+            },
+            templates: {
+                
+                header: headerPadrao
             }
             
         });

@@ -81,13 +81,47 @@ function SetCommandoEspecifGrid(column, row) {
 
     var buttonVisualizar = '<span style="margin: 0px 0px 0px 8px;" class="text-primary ponteiro" id="Botao_Visualizar" onclick="GridVisualizar(' + row.Id + ')">' + iconVisualizar + '</span>';
 
+    if (papel == 1 || origem == 1) {
+        var iconEncaminhar = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">' +
+            '<path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z" />' +
+            '</svg>';
+
+        var buttonEncaminhar = '<span style="margin: 0px 0px 0px 8px;" class="text-success ponteiro" id="Botao_Encaminhar" onclick="GridEncaminhar(' + row.Id + ')">' + iconEncaminhar + '</span>';
+    } else {
+        var buttonEncaminhar = "";
+    }
+
 
     var divFinal = '</div>';
 
-    return divInicio + buttonVisualizar + divFinal
+    return divInicio + buttonVisualizar + buttonEncaminhar + divFinal
 }
 
 
 function GridVisualizar(id) {
     window.location.href = "/Requerimento/VisualizarRequerimento?Id=" + id + "&origem=" + origem;
+};
+
+function GridEncaminhar(id) {
+    var origem = 0;
+    var entidade = {
+        requerimentoId: id.toString(),
+        chamadoOrigem: origem.toString()
+    };
+    console.log(entidade);
+    $.ajax({
+        type: "POST",
+        url: "/Requerimento/ModalEncaminhar/",
+        data: JSON.stringify(entidade),
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (resposta) {
+            ModalAlert("", "", resposta, "", "", "Encaminhar requerimento")
+        },
+        error: function (json) {
+            alert("Erro de conexão com o servidor!");
+            Console.log(json);
+        }
+    });
+
 };

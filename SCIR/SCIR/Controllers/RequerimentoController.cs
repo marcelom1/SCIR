@@ -1,6 +1,7 @@
 ﻿using SCIR.Business.Cadastros;
 using SCIR.Business.Login;
 using SCIR.Business.Requerimentos;
+using SCIR.DAO.Cadastros;
 using SCIR.Datacontract.Grid;
 using SCIR.Models;
 using SCIR.Models.ViewModels;
@@ -188,8 +189,13 @@ namespace SCIR.Controllers
             }
             else if (filtrarPorRequerente)
             {
-                request.Entidade = new RequerimentoGridDC { UsuarioRequerenteId = LoginServer.RetornarUsuarioLogado(User.Identity.Name).Id };
-                response = ServerRequerimento.ListarPorRequerente(request);
+                var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+                request.Entidade = new RequerimentoGridDC { UsuarioRequerenteId = usuario.Id };
+                if (usuario.PapelId == (int)PapelDao.PapelUsuario.Administrador)
+                    response = ServerRequerimento.ListarTudo(request);
+                else
+                    response = ServerRequerimento.ListarPorRequerente(request);
+
             }
            
             return Json(new

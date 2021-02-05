@@ -129,6 +129,12 @@ namespace SCIR.Business.Requerimentos
                 return consiste;
             }
 
+            if (requerimento.StatusRequerimentoId == 0)
+                consiste.Add("Status Requerimento é de preenchimento obrigatório.", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (requerimento.UsuarioAtendenteId == 0)
+                consiste.Add("O próximo usuário é de preenchimento obrigatório.", ConsisteUtils.Tipo.Inconsistencia);
+
             if (pesquisa.UsuarioAtendenteId != usuario.Id && usuario.PapelId != (int)PapelDao.PapelUsuario.Administrador)
                 consiste.Add("Usuário não tem permissão de efetuar o encaminhamento do requerimento", ConsisteUtils.Tipo.Inconsistencia);
 

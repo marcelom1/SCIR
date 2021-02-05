@@ -1,4 +1,5 @@
-﻿
+﻿@using SCIR.Business.Login
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,12 +7,13 @@
 
 
 @section css{
+    <link href="~/Content/css/select2.min.css" rel="stylesheet" />
     <link href="~/Content/css/Formulario/CadastroFormularioIndex.css" rel="stylesheet" />
-   
-}
-    <div id="alert">
 
-    </div>
+}
+<div id="alert">
+
+</div>
 <hr>
 <h3 class="pb-3">Requerimentos</h3>
 @Html.ActionLink("Novo", "/Form", null, new { @class = "btn bg-success botao_cor btn-sm" })
@@ -20,7 +22,7 @@
         <tr>
             <th data-column-id="Id" data-order="asc" data-type="numeric">Id</th>
             <th data-column-id="Protocolo">Protocolo</th>
-            <th data-column-id="AberturaToString">Abertura</th> 
+            <th data-column-id="AberturaToString">Abertura</th>
             <th data-column-id="TipoRequerimentoNome">Tipo Requerimento</th>
             <th data-column-id="StatusRequerimentoNome">Status Requerimento</th>
             <th data-column-id="commands" data-formatter="commands" data-sortable="false">Ação</th>
@@ -29,18 +31,20 @@
 </table>
 
 @section scripts{
+    <script src="~/Content/js/select2.min.js"></script>
     <script>
-         var origem = @ViewBag.filtro;
+        var origem = @ViewBag.filtro;
+        var papel = @LoginServer.RetornarUsuarioLogado(User.Identity.Name).PapelId;
         function CarregarParametrosAdicionaisGrid(request) {
-           @{ 
+           @{
                var filtrarPorAtendente = ViewBag.filtrarPorAtendente == 0? false : true;
                var filtrarPorRequerente = ViewBag.filtrarPorRequerente == 0? false : true;
 
            }
-            
+
            request.filtrarPorAtendente = "@filtrarPorAtendente" == "True";
            request.filtrarPorRequerente = "@filtrarPorRequerente" == "True";
-           
+
 
         }
 
