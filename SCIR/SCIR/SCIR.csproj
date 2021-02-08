@@ -277,6 +277,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Business\Cadastros\ArquivoRequerimentoServer.cs" />
+    <Compile Include="Business\Cadastros\AuditoriaServer.cs" />
     <Compile Include="Business\Cadastros\CursosServer.cs" />
     <Compile Include="Business\Cadastros\FluxoStatusServer.cs" />
     <Compile Include="Business\Cadastros\StatusRequerimentoServer.cs" />
@@ -299,6 +300,7 @@
     <Compile Include="Controllers\UnidadeCurricularController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="DAO\Cadastros\ArquivoRequerimentoDao.cs" />
+    <Compile Include="DAO\Cadastros\AuditoriaDao.cs" />
     <Compile Include="DAO\Cadastros\CursosDao.cs" />
     <Compile Include="DAO\Cadastros\FluxoStatusDao.cs" />
     <Compile Include="DAO\Cadastros\PapelDao.cs" />
@@ -398,9 +400,14 @@
     <Compile Include="Migrations\20210131165515_CampoDataEnvioArquivo.designer.cs">
       <DependentUpon>20210131165515_CampoDataEnvioArquivo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20210208213526_Auditoria.cs" />
+    <Compile Include="Migrations\20210208213526_Auditoria.designer.cs">
+      <DependentUpon>20210208213526_Auditoria.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\ArquivoRequerimento.cs" />
+    <Compile Include="Models\Auditoria.cs" />
     <Compile Include="Models\Cursos.cs" />
     <Compile Include="Models\FluxoStatus.cs" />
     <Compile Include="Models\FormularioValidacaoUC.cs" />

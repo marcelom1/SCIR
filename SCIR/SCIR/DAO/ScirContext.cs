@@ -22,6 +22,7 @@ namespace SCIR.DAO
         public DbSet<FormularioValidacaoUC> FormularioValidacaoUC { get; set; }
         public DbSet<HistoricoRequerimento> HistoricoRequerimento { get; set; }
         public DbSet<ArquivoRequerimento> ArquivoRequerimento { get; set; }
+        public DbSet<Auditoria> Auditoria { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
