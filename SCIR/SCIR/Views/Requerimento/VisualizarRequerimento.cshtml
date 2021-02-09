@@ -21,7 +21,7 @@
 
 <span class="Oculto" id="Origem">@ViewBag.origem</span>
 <input onclick="location.href='#'" id="Encaminhar" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Encaminhar">
-<input onclick="location.href='#'" class="btn bg-info botao_cor btn-sm blockConfirmation" type="button" value="Histórico">
+<input onclick="location.href='#'" id="Auditoria" class="btn bg-info botao_cor btn-sm blockConfirmation" type="button" value="Auditoria">
 
 @using (Html.BeginForm("Salvar", "FormularioValidacaoUC", FormMethod.Post, new { @id = "CadastroFormularioValidacaoUC", @name = "CadastroFormularioValidacaoUC" }))
 {

@@ -12,7 +12,7 @@ using System.Web;
 
 namespace SCIR.Business.Requerimentos
 {
-    public class FormularioValidacaoUCServer
+    public class FormularioValidacaoUCServer : IAuditoriaRequerimento<FormularioValidacaoUC>
     {
         private FormularioValidacaoUCDao dbFormularioValidacaoUC = new FormularioValidacaoUCDao();
         private ArquivoRequerimentoServer ArquivosRequerimentoServer = new ArquivoRequerimentoServer();
@@ -84,6 +84,7 @@ namespace SCIR.Business.Requerimentos
                 formularioValidacaoUC.UsuarioAtendenteId = RequerimentoServer.PrimeiroAtendimento(formularioValidacaoUC);
                 dbFormularioValidacaoUC.Insert(formularioValidacaoUC);
                 ArquivosRequerimentoServer.Novo(formularioValidacaoUC, files, server);
+                GerarAuditoria(formularioValidacaoUC, formularioValidacaoUC, AuditoriaServer.TipoAuditoria.Insert);
 
             }
 
@@ -97,7 +98,11 @@ namespace SCIR.Business.Requerimentos
             if (consiste.Inconsistencias.Any())
                 throw new ArgumentException(consiste.Inconsistencias.ToString());
             else
+            {
+                var pesquisa = GetEntidade(formularioValidacaoUC.Id);
                 dbFormularioValidacaoUC.Delete(formularioValidacaoUC);
+                GerarAuditoria(pesquisa, formularioValidacaoUC, AuditoriaServer.TipoAuditoria.Delete);
+            }
 
             return formularioValidacaoUC;
         }
@@ -109,8 +114,11 @@ namespace SCIR.Business.Requerimentos
             if (consiste.Inconsistencias.Any())
                 throw new ArgumentException(consiste.Inconsistencias.ToString());
             else
+            {
+                var pesquisa = GetEntidade(formularioValidacaoUC.Id);
                 dbFormularioValidacaoUC.Update(formularioValidacaoUC);
-
+                GerarAuditoria(pesquisa, formularioValidacaoUC,AuditoriaServer.TipoAuditoria.Update);
+            }
 
             return formularioValidacaoUC;
         }
@@ -134,6 +142,24 @@ namespace SCIR.Business.Requerimentos
             return dbFormularioValidacaoUC.FiltroPorColuna(coluna, searchTerm);
         }
 
-        
+        public AuditoriaServer GerarAuditoria(FormularioValidacaoUC requerimentoAntes, FormularioValidacaoUC requerimentoDepois, AuditoriaServer.TipoAuditoria tipo)
+        {
+            var auditoria = RequerimentoServer.GerarCamposAuditoria(requerimentoAntes, requerimentoDepois, tipo);
+
+            if (requerimentoAntes.Nome != requerimentoDepois.Nome)
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "NOME", requerimentoAntes.Nome, requerimentoDepois.Nome);
+
+            if (requerimentoAntes.Motivo != requerimentoDepois.Motivo)
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "MOTIVO", requerimentoAntes.Motivo, requerimentoDepois.Motivo);
+
+            if (requerimentoAntes.UnidadeCurricularId != requerimentoDepois.UnidadeCurricularId)
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "USUÁRIO REQUERENTE", requerimentoAntes.UnidadeCurricularId + " - " + requerimentoAntes.UnidadeCurricular.Nome, requerimentoDepois.UnidadeCurricularId + " - " + requerimentoDepois.UnidadeCurricular.Nome);
+
+            if (requerimentoAntes.TipoValidacaoCurricularId != requerimentoDepois.TipoValidacaoCurricularId)
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "TIPO VALIDÇÃO CURRICULAR", requerimentoAntes.TipoValidacaoCurricularId + " - " + requerimentoAntes.TipoValidacaoCurricular.Nome, requerimentoDepois.TipoValidacaoCurricularId + " - " + requerimentoDepois.TipoValidacaoCurricular.Nome);
+
+            auditoria.EnviarEmail(tipo);
+            return auditoria;
+        }
     }
 }

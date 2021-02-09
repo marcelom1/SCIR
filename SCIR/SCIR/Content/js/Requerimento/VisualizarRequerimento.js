@@ -14,6 +14,7 @@
             chamadoOrigem: $("#Origem").text()
         };
         console.log(entidade);
+        $("#TamanhoModalGeneric").removeClass("modal-lg")
         $.ajax({
             type: "POST",
             url: "/Requerimento/ModalEncaminhar/",
@@ -22,6 +23,31 @@
             dataType: "html",
             success: function (resposta) {
                 ModalAlert("", "", resposta,"","","Encaminhar requerimento")
+            },
+            error: function (json) {
+                alert("Erro de conexão com o servidor!");
+                Console.log(json);
+            }
+        });
+
+    });
+
+    $("#Auditoria").click(function (e) {
+        e.preventDefault();
+        var entidade = {
+            requerimentoId: $("#Id").val(),
+        };
+        $("#TamanhoModalGeneric").addClass("modal-lg")
+        console.log("Auditoria" + entidade);
+        $.ajax({
+            type: "POST",
+            url: "/Requerimento/ModalAuditoria/",
+            data: JSON.stringify(entidade),
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (resposta) {
+                console.log(resposta);
+                ModalAlert("", "", resposta, "", "", "Auditoria")
             },
             error: function (json) {
                 alert("Erro de conexão com o servidor!");

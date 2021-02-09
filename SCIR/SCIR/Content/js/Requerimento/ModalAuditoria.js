@@ -1,15 +1,22 @@
-﻿var commandoEspecif = false;
+﻿$(document).ready(function () {
+    commandoEspecif = true;
+    console.log("JS MODAL AUDITORIA");
+    GridInitAuditoria();
+});
+
+
+var commandoEspecif = false;
 var rowCountEspecif = false;
 var headerPadrao = "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\"row\"><div class=\"col-sm-12 actionBar\"><!--Your Button goes here--><p class=\"{{css.search}}\"></p><p class=\"{{css.actions}}\"></p></div></div></div>"
 
 
-function GridInit() {
+function GridInitAuditoria() {
     var rowCount = [10, 25, 50, -1];
     if (rowCountEspecif) {
         rowCount = SetRowCountEspecifGrid();
     }
     console.log(listaGrid);
-    $("#grid-basic").bootgrid(
+    $("#grid-basic-auditoria").bootgrid(
         {
             ajax: true,
             url: listaGrid,
@@ -56,7 +63,7 @@ function GridInit() {
 
                     if ((row.Ativo) && (column.id == "Ativo")) {
                         checked = "checked=\"checked\"";
-                    }else if ((row.Cancelamento) && (column.id == "Cancelamento")) {
+                    } else if ((row.Cancelamento) && (column.id == "Cancelamento")) {
                         checked = "checked=\"checked\"";
                     }
                     return "<input type=\"checkbox\" value=\"1\" " + checked + " disabled=\"disabled\">";
@@ -69,17 +76,17 @@ function GridInit() {
             requestHandler: function (request) {
                 var parametrosAdicionais = CarregarParametrosAdicionaisGrid(request);
                 console.log("TESTEGRID");
-                if (parametrosAdicionais != null){
+                if (parametrosAdicionais != null) {
                     request = parametrosAdicionais;
                     console.log("TESTEGRIDDentro");
                 }
                 return request;
             },
             templates: {
-                
+
                 header: headerPadrao
             }
-            
+
         });
 
     $("#grid-basic-header").removeClass("container-fluid");

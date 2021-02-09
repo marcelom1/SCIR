@@ -26,6 +26,7 @@ namespace SCIR.Controllers
         private ArquivoRequerimentoServer ArquivoRequerimentoServer = new ArquivoRequerimentoServer();
         private FluxoStatusServer FluxoStatusServer = new FluxoStatusServer();
         private UsuarioServer UsuarioServer = new UsuarioServer();
+        private AuditoriaServer AuditoriaServer = new AuditoriaServer();
 
         public ActionResult Index(int filtro)
         {
@@ -107,6 +108,12 @@ namespace SCIR.Controllers
         {
             ViewBag.RequerimentoId = requerimentoId;
             ViewBag.Filtro = chamadoOrigem;
+            return PartialView();
+        }
+
+        public PartialViewResult ModalAuditoria(int requerimentoId)
+        {
+            ViewBag.RequerimentoId = requerimentoId;
             return PartialView();
         }
 
@@ -229,6 +236,25 @@ namespace SCIR.Controllers
                 total = response.QuantidadeRegistros
             }, JsonRequestBehavior.AllowGet);
         }
+        
+        public JsonResult ListarAuditoriaRequerimento(string searchPhrase, int current = 1, int rowCount = 10, int requerimentoId = 0)
+        {
+            var requerimento = new Auditoria();
+
+            var request = FormatGridUtils<Auditoria>.Format(Request, searchPhrase, requerimento, current, rowCount);
+
+            var response = AuditoriaServer.Listar(request);
+
+            return Json(new
+            {
+                rows = response.Entidades,
+                current,
+                rowCount,
+                total = response.QuantidadeRegistros
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         [WebMethod()]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
@@ -271,5 +297,7 @@ namespace SCIR.Controllers
 
 
         }
+
+
     }
 }

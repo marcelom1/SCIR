@@ -287,6 +287,7 @@
     <Compile Include="Business\Cadastros\UsuarioServer.cs" />
     <Compile Include="Business\Login\LoginServer.cs" />
     <Compile Include="Business\Requerimentos\FormularioValidacaoUCServer.cs" />
+    <Compile Include="Business\Requerimentos\IAuditoriaRequerimento.cs" />
     <Compile Include="Business\Requerimentos\RequerimentoServer.cs" />
     <Compile Include="Controllers\CursosController.cs" />
     <Compile Include="Controllers\FluxoStatusController.cs" />
@@ -1632,6 +1633,7 @@
     <Content Include="Content\js\pt-BR.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioForm.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioIndex.js" />
+    <Content Include="Content\js\Requerimento\ModalAuditoria.js" />
     <Content Include="Content\js\Requerimento\ModalEncaminhar.js" />
     <Content Include="Content\js\Requerimento\VisualizarRequerimento.js" />
     <Content Include="Content\js\StatusRequerimento\CadastroStatusRequerimentoForm.js" />
@@ -1718,6 +1720,7 @@
     <Content Include="Views\Requerimento\VisualizarRequerimento.cshtml" />
     <Content Include="Views\FormularioValidacaoUC\VisualizarRequerimento.cshtml" />
     <Content Include="Views\Requerimento\ModalEncaminhar.cshtml" />
+    <Content Include="Views\Requerimento\ModalAuditoria.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

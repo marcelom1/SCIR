@@ -1,6 +1,7 @@
 ﻿using SCIR.DAO.Cadastros;
 using SCIR.Datacontract.Grid;
 using SCIR.Models;
+using SCIR.Models.ViewModels;
 using SCIR.Utils;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,35 @@ namespace SCIR.Business.Cadastros
     public class AuditoriaServer
     {
         private AuditoriaDao dbAuditoria = new AuditoriaDao();
+        private string MsgEmail = "";
+        private Requerimento Requerimento;
+
+        public enum TipoAuditoria
+        {
+            Insert,
+            Update,
+            Delete
+        }
+
+        public AuditoriaServer()
+        {
+            Requerimento = new RequerimentoVM();
+        }
+
+        public AuditoriaServer(Requerimento requerimento)
+        {
+            Requerimento = requerimento;
+        }
+
+        public void IncluirAuditoriaEntidade(Requerimento requerimento, string campo, string campoValorAntes, string campoValorDepois)
+        {
+            MsgEmail += campo.ToUpper() + " Antes: " + campoValorAntes + " - " + "Depois: " + campoValorDepois; 
+        }
+
+        public void EnviarEmail(TipoAuditoria tipo)
+        {
+            
+        }
 
         public static void IncluirAuditoria (Requerimento requerimento, string campo, string campoValorAntes, string campoValorDepois)
         {
