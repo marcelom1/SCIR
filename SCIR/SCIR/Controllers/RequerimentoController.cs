@@ -241,6 +241,8 @@ namespace SCIR.Controllers
         {
             var requerimento = new Auditoria();
 
+            requerimento.RequerimentoId= requerimentoId;
+
             var request = FormatGridUtils<Auditoria>.Format(Request, searchPhrase, requerimento, current, rowCount);
 
             var response = AuditoriaServer.Listar(request);

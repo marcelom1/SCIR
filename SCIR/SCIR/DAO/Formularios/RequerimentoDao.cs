@@ -150,7 +150,7 @@ namespace SCIR.DAO.Formularios
             }
         }
 
-        public void UpdateEncaminhamento(Requerimento entidade)
+        public Requerimento UpdateEncaminhamento(Requerimento entidade)
         {
             using (var context = new ScirContext())
             {
@@ -164,6 +164,8 @@ namespace SCIR.DAO.Formularios
 
                 context.Requerimento.Update(requerimento);
                 context.SaveChanges();
+
+                return requerimento;
             }
         }
 

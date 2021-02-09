@@ -111,7 +111,7 @@ namespace SCIR.Business.Requerimentos
                 throw new ArgumentException(consiste.Inconsistencias.ToString());
             else
             {   var pesquisa = GetRequerimentoId(requerimento, usuario);
-                dbRequerimento.UpdateEncaminhamento(requerimento);
+                requerimento = dbRequerimento.UpdateEncaminhamento(requerimento);
                 GerarAuditoria(pesquisa, requerimento,AuditoriaServer.TipoAuditoria.Update);
             }
             return requerimento;

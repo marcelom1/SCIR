@@ -33,9 +33,10 @@ namespace SCIR.Business.Cadastros
             Requerimento = requerimento;
         }
 
-        public void IncluirAuditoriaEntidade(Requerimento requerimento, string campo, string campoValorAntes, string campoValorDepois)
+        public void IncluirAuditoriaEntidade(Requerimento requerimento, string campo, string campoValorAntes = "", string campoValorDepois = "")
         {
-            MsgEmail += campo.ToUpper() + " Antes: " + campoValorAntes + " - " + "Depois: " + campoValorDepois; 
+            MsgEmail += campo.ToUpper() + " Antes: " + campoValorAntes + " - " + "Depois: " + campoValorDepois +"|";
+            IncluirAuditoria(requerimento, campo, campoValorAntes, campoValorDepois);
         }
 
         public void EnviarEmail(TipoAuditoria tipo)
