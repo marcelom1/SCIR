@@ -40,6 +40,20 @@ namespace SCIR.DAO.Cadastros
             throw new NotImplementedException();
         }
 
+        public IList<Auditoria> FiltroPorRequerimento(int requerimentoId)
+        {
+            var where = string.Format("RequerimentoId = {0}", requerimentoId);
+           
+            using (var contexto = new ScirContext())
+            {
+                var campoOrdenacao = "DataModificacao desc";
+
+                var list = contexto.Auditoria.Include(e => e.Requerimento).AsNoTracking().Where(where).OrderBy(campoOrdenacao).ToList();
+
+                return list;
+            }
+        }
+
         public void Insert(Auditoria entidade)
         {
             using (var context = new ScirContext())
@@ -79,6 +93,8 @@ namespace SCIR.DAO.Cadastros
                 return list.ToPagedList(request.Current, request.RowCount);
             }
         }
+
+       
 
         public int TotalRegistros()
         {

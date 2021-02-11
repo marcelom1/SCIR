@@ -322,6 +322,7 @@
     <Compile Include="Datacontract\Grid\TipoRequerimentoGridDC.cs" />
     <Compile Include="Datacontract\Grid\UnidadeCurricularGridDC.cs" />
     <Compile Include="Datacontract\Grid\UsuarioGridDC.cs" />
+    <Compile Include="Email\EnvioEmail.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

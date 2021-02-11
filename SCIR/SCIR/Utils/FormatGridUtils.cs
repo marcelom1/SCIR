@@ -15,11 +15,16 @@ namespace SCIR.Utils
 
         public static FormatGridUtils<T> Format(HttpRequestBase Request, string searchPhrase, T Entidade, int current = 1, int rowCount = 10)
         {
-            var chave = Request.Form.AllKeys.Where(k => k.StartsWith("sort")).First();
-            var ordenacao = Request[chave];
-            var campo = chave.Replace("sort[", string.Empty).Replace("]", string.Empty);
+            var chave = Request.Form.AllKeys.Where(k => k.StartsWith("sort")).FirstOrDefault();
+            var campoOrdenacao = "";
+            if (chave != null)
+            {
+                var ordenacao = Request[chave];
+                var campo = chave.Replace("sort[", string.Empty).Replace("]", string.Empty);
 
-            var campoOrdenacao = String.Format("{0} {1}", campo, ordenacao);
+                campoOrdenacao = String.Format("{0} {1}", campo, ordenacao);
+            }
+
 
             return new FormatGridUtils<T> {
                 Current = current,

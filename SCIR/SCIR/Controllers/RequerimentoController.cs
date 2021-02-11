@@ -113,7 +113,20 @@ namespace SCIR.Controllers
 
         public PartialViewResult ModalAuditoria(int requerimentoId)
         {
-            ViewBag.RequerimentoId = requerimentoId;
+            //ViewBag.RequerimentoId = requerimentoId;
+
+            var response = AuditoriaServer.FiltroPorRequerimento(requerimentoId);
+            var text = "";
+            var dataAnterior = "";
+            foreach (var item in response)
+            {
+                var data = item.DataModificacao.ToString("dd/MM/yyyy");
+                if (dataAnterior != data)
+                    text += "\n" + data;
+
+                text += $" - Campo: {item.Campo}, \n Antes: {item.Antes}, \n Depois: {item.Depois} \n\n";
+            }
+            @ViewBag.Text = text;
             return PartialView();
         }
 

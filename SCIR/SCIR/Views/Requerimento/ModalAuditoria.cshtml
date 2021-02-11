@@ -1,4 +1,4 @@
-﻿<table id="grid-basic-auditoria" class="table table-condensed table-hover table-striped">
+﻿@*<table id="grid-basic-auditoria" class="table table-condensed table-hover table-striped">
     <thead>
         <tr>
             <th data-column-id="Id" data-order="asc" data-type="numeric">Id</th>
@@ -18,4 +18,9 @@
     var listaGrid = "@Url.Action("ListarAuditoriaRequerimento")";
 </script>
 <script src="~/Content/js/Utils/GridInit.js"></script>
-<script src="~/Content/js/Requerimento/ModalAuditoria.js"></script>
+<script src="~/Content/js/Requerimento/ModalAuditoria.js"></script>*@
+
+<textarea id="w3review" disabled name="w3review" rows="10" cols="100%">
+@ViewBag.Text
+</textarea>
+

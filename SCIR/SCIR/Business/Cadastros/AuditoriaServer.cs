@@ -1,5 +1,6 @@
 ﻿using SCIR.DAO.Cadastros;
 using SCIR.Datacontract.Grid;
+using SCIR.Email;
 using SCIR.Models;
 using SCIR.Models.ViewModels;
 using SCIR.Utils;
@@ -35,13 +36,14 @@ namespace SCIR.Business.Cadastros
 
         public void IncluirAuditoriaEntidade(Requerimento requerimento, string campo, string campoValorAntes = "", string campoValorDepois = "")
         {
-            MsgEmail += campo.ToUpper() + " Antes: " + campoValorAntes + " - " + "Depois: " + campoValorDepois +"|";
+            Requerimento = requerimento;
+            MsgEmail += "Campo: " + campo.ToUpper() + " Antes: " + campoValorAntes + " - " + "Depois: " + campoValorDepois +"</br>";
             IncluirAuditoria(requerimento, campo, campoValorAntes, campoValorDepois);
         }
 
         public void EnviarEmail(TipoAuditoria tipo)
         {
-            
+            EnvioEmail.SendMail(Requerimento.UsuarioRequerente, MsgEmail, Requerimento);
         }
 
         public static void IncluirAuditoria (Requerimento requerimento, string campo, string campoValorAntes, string campoValorDepois)
@@ -149,6 +151,13 @@ namespace SCIR.Business.Cadastros
         {
             return dbAuditoria.FiltroPorColuna(coluna, searchTerm);
         }
+
+        public IList<Auditoria> FiltroPorRequerimento(int requerimentoId)
+        {
+            return dbAuditoria.FiltroPorRequerimento(requerimentoId);
+        }
+
+       
 
     }
 }
