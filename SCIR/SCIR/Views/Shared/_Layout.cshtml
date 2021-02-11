@@ -127,10 +127,12 @@
                             <a class="dropdown-item" href="@Url.Action("Index", "Requerimento", new { filtro = 0})">Consultar</a>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index", "Requerimento", new {filtro = 1})">Minha Fila </a>
-                    </li>
-
+                    @if (!User.IsInRole("DISCENTE"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Requerimento", new { filtro = 1 })">Minha Fila </a>
+                        </li>
+                    }
                 </ul>
             }
         </div>

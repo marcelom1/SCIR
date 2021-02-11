@@ -92,6 +92,7 @@ function SetCommandoEspecifGrid(column, row) {
     }
 
 
+
     var divFinal = '</div>';
 
     return divInicio + buttonVisualizar + buttonEncaminhar + divFinal
