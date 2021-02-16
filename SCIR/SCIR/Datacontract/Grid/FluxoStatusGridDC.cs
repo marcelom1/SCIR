@@ -17,5 +17,7 @@ namespace SCIR.Datacontract.Grid
 
         public int TipoRequerimentoId { get; set; }
         public string TipoRequerimentoNome { get; set; }
+
+        public int TotalItensGrid { get; set; }
     }
 }

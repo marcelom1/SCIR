@@ -127,10 +127,11 @@ namespace SCIR.DAO.Cadastros
                         Id = item.Id,
                         Ativo = item.Ativo,
                         Nome = item.Nome,
-                        Curso = item.Curso.Id +" - "+ item.Curso.Nome
+                        Curso = item.Curso.Id +" - "+ item.Curso.Nome,
+                        TotalItensGrid = listUnidadeCurricular.TotalItemCount
                     });
                 }
-                return lista.ToPagedList(request.Current, request.RowCount);
+                return lista.ToPagedList(1, request.RowCount);
             }
         }
 

@@ -110,10 +110,11 @@ namespace SCIR.DAO.Cadastros
                         Id = item.Id,
                         Ativo = item.Ativo,
                         Nome = item.Nome,
-                        TipoFormulario = item.TipoFormulario.Id + " - " + item.TipoFormulario.Nome
+                        TipoFormulario = item.TipoFormulario.Id + " - " + item.TipoFormulario.Nome,
+                        TotalItensGrid = listUnidadeCurricular.TotalItemCount
                     });
                 }
-                return lista.ToPagedList(request.Current, request.RowCount);
+                return lista.ToPagedList(1, request.RowCount);
             }
         }
 

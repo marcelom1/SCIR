@@ -62,7 +62,7 @@ namespace SCIR.Business.Requerimentos
         {
             var response = new ResponseGrid<RequerimentoGridDC>();
             response.Entidades = dbRequerimento.ListGrid(request,false,false);
-            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+            response.QuantidadeRegistros = response.Entidades.Any() ? response.Entidades.FirstOrDefault().TotalItensGrid : 0;
 
             return response;
         }
@@ -71,7 +71,7 @@ namespace SCIR.Business.Requerimentos
         {
             var response = new ResponseGrid<RequerimentoGridDC>();
             response.Entidades = dbRequerimento.ListGrid(request, true, false);
-            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+            response.QuantidadeRegistros = response.Entidades.Any() ? response.Entidades.FirstOrDefault().TotalItensGrid : 0;
 
             return response;
         }
@@ -80,7 +80,7 @@ namespace SCIR.Business.Requerimentos
         {
             var response = new ResponseGrid<RequerimentoGridDC>();
             response.Entidades = dbRequerimento.ListGrid(request, false, true);
-            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+            response.QuantidadeRegistros = response.Entidades.Any() ? response.Entidades.FirstOrDefault().TotalItensGrid : 0;
 
             return response;
         }
@@ -89,7 +89,7 @@ namespace SCIR.Business.Requerimentos
         {
             var response = new ResponseGrid<RequerimentoGridDC>();
             response.Entidades = dbRequerimento.ListGrid(request, true, true);
-            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+            response.QuantidadeRegistros = response.Entidades.Any() ? response.Entidades.FirstOrDefault().TotalItensGrid : 0;
 
             return response;
         }

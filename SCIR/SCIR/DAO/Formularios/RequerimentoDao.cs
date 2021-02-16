@@ -122,10 +122,12 @@ namespace SCIR.DAO.Formularios
                        TipoRequerimentoId = item.TipoRequerimentoId,
                        StatusRequerimentoNome = item.StatusRequerimento,
                        StatusRequerimentoId = item.StatusRequerimentoId,
-                       Protocolo = item.Protocolo
+                       Protocolo = item.Protocolo,
+                       TotalItensGrid = listFluxoStatus.TotalItemCount
                     });
                 }
-                return lista.ToPagedList(request.Current, request.RowCount);
+                var retorno = lista.ToPagedList(1, request.RowCount);
+                return retorno;
             }
         }
 

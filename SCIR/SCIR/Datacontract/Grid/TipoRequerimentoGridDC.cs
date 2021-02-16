@@ -11,5 +11,6 @@ namespace SCIR.Datacontract.Grid
         public string Nome { get; set; }
         public bool Ativo { get; set; }
         public string TipoFormulario { get; set; }
+        public int TotalItensGrid { get; set; }
     }
 }

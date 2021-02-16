@@ -131,10 +131,11 @@ namespace SCIR.DAO.Cadastros
                         Id = item.Id,
                         Ativo = item.Ativo,
                         Nome = item.Nome,
-                        Papel = item.Papel.Id + " - " + item.Papel.Nome
+                        Papel = item.Papel.Id + " - " + item.Papel.Nome,
+                        TotalItensGrid = listUnidadeCurricular.TotalItemCount
                     });
                 }
-                return lista.ToPagedList(request.Current, request.RowCount);
+                return lista.ToPagedList(1, request.RowCount);
             }
         }
 

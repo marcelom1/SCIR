@@ -80,7 +80,7 @@ namespace SCIR.Business.Cadastros
         {
             var response = new ResponseGrid<FluxoStatusGridDC>();
             response.Entidades = dbFluxoStatus.ListProximosGrid(request, statusAtualId, tipoRequerimentoId);
-            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+            response.QuantidadeRegistros = response.Entidades.Any() ? response.Entidades.FirstOrDefault().TotalItensGrid : 0;
 
             return response;
         }
@@ -157,7 +157,7 @@ namespace SCIR.Business.Cadastros
         {
             var response = new ResponseGrid<FluxoStatusGridDC>();
             response.Entidades = dbFluxoStatus.ListGrid(request);
-            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+            response.QuantidadeRegistros = response.Entidades.Any() ? response.Entidades.FirstOrDefault().TotalItensGrid : 0;
 
             return response;
         }

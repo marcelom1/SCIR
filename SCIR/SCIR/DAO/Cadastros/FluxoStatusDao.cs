@@ -153,10 +153,11 @@ namespace SCIR.DAO.Cadastros
                         StatusProximoId = item.StatusProximoId,
                         StatusProximoNome = item.StatusProximoNome,
                         TipoRequerimentoId = item.TipoRequerimentoId,
-                        TipoRequerimentoNome = item.TipoRequerimentoNome
+                        TipoRequerimentoNome = item.TipoRequerimentoNome,
+                        TotalItensGrid = listFluxoStatus.TotalItemCount
                     });
                 }
-                return lista.ToPagedList(request.Current, request.RowCount);
+                return lista.ToPagedList(1, request.RowCount);
             }
         }
 
@@ -247,10 +248,11 @@ namespace SCIR.DAO.Cadastros
                         StatusAtualId = item.StatusAtualId,
                         StatusAtualNome = item.StatusAtualNome,
                         TipoRequerimentoId = item.TipoRequerimentoId,
-                        TipoRequerimentoNome = item.TipoRequerimentoNome
+                        TipoRequerimentoNome = item.TipoRequerimentoNome,
+                        TotalItensGrid = listFluxoStatus.TotalItemCount
                     });
                 }
-                return lista.ToPagedList(request.Current, request.RowCount);
+                return lista.ToPagedList(1, request.RowCount);
             }
         }
 

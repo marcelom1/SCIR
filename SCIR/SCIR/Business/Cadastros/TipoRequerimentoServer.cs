@@ -121,7 +121,7 @@ namespace SCIR.Business.Cadastros
         {
             var response = new ResponseGrid<TipoRequerimentoGridDC>();
             response.Entidades = dbTipoRequerimento.ListGrid(request);
-            response.QuantidadeRegistros = response.Entidades.TotalItemCount;
+            response.QuantidadeRegistros = response.Entidades.Any() ? response.Entidades.FirstOrDefault().TotalItensGrid : 0;
 
             return response;
         }
