@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SCIR.DAO;
 
 namespace SCIR.Migrations
 {
     [DbContext(typeof(ScirContext))]
-    partial class ScirContextModelSnapshot : ModelSnapshot
+    [Migration("20210216013140_StatusCancelado")]
+    partial class StatusCancelado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -285,7 +287,7 @@ namespace SCIR.Migrations
                         {
                             Id = 95,
                             Ativo = true,
-                            Cancelamento = false,
+                            Cancelamento = true,
                             CodigoInterno = 5,
                             Nome = "Cancelado"
                         });

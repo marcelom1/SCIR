@@ -406,6 +406,14 @@
     <Compile Include="Migrations\20210208213526_Auditoria.designer.cs">
       <DependentUpon>20210208213526_Auditoria.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20210216013140_StatusCancelado.cs" />
+    <Compile Include="Migrations\20210216013140_StatusCancelado.designer.cs">
+      <DependentUpon>20210216013140_StatusCancelado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20210216013244_StatusCancelado2.cs" />
+    <Compile Include="Migrations\20210216013244_StatusCancelado2.designer.cs">
+      <DependentUpon>20210216013244_StatusCancelado2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\ArquivoRequerimento.cs" />
@@ -433,6 +441,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConsisteUtils.cs" />
     <Compile Include="Utils\FormatGridUtils.cs" />
+    <Compile Include="Utils\StatusRequerimentoEnum.cs" />
     <Compile Include="Utils\TipoFormularioUtils\TipoFormularioUtils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1669,6 +1678,7 @@
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js.map" />
     <Content Include="Content\js\select2.min.js" />
+    <None Include="Properties\PublishProfiles\CustomProfile2.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

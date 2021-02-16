@@ -20,7 +20,7 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public StatusRequerimento BuscarPorCodigoInterno(int id)
+        public static StatusRequerimento BuscarPorCodigoInterno(int id)
         {
             using (var contexto = new ScirContext())
             {

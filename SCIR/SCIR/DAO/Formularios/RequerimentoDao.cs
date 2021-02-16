@@ -169,5 +169,26 @@ namespace SCIR.DAO.Formularios
             }
         }
 
+        public Requerimento Update(Requerimento entidade)
+        {
+            using (var context = new ScirContext())
+            {
+                var requerimento = context.Requerimento.Find(entidade.Id);
+                requerimento.StatusRequerimento = context.StatusRequerimento.Find(entidade.StatusRequerimentoId);
+                requerimento.TipoFormulario = context.TipoFormulario.Find(entidade.TipoFormularioId);
+                requerimento.TipoRequerimento = context.TipoRequerimento.Find(entidade.TipoRequerimentoId);
+                requerimento.UsuarioAtendente = context.Usuario.Find(entidade.UsuarioAtendenteId);
+                requerimento.UsuarioRequerente = context.Usuario.Find(entidade.UsuarioRequerenteId);
+                requerimento.Abertura = entidade.Abertura;
+                requerimento.Encerramento = entidade.Encerramento;
+                requerimento.Mensagem = entidade.Mensagem;
+
+                
+                context.Requerimento.Update(requerimento);
+                context.SaveChanges();
+
+                return entidade;
+            }
+        }
     }
 }

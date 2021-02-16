@@ -37,7 +37,7 @@
 
 @if ((usuarioLogado.Id == Model.UsuarioRequerenteId) && (Model.StatusRequerimento.CodigoInterno == 4))
 {
-    <input onclick="location.href='#'" id="CancelarRequerimento" class="btn bg-warning botao_cor btn-sm blockConfirmation" type="button" value="Editar Requerimento">
+    <input onclick="location.href='#'" id="EditarRequerimento" class="btn bg-warning botao_cor btn-sm blockConfirmation" type="button" value="Editar Requerimento">
 }
 @if ((usuarioLogado.Id == Model.UsuarioRequerenteId) && (Model.StatusRequerimento.Cancelamento))
 {
@@ -65,9 +65,9 @@
         <div class="form-group col-md-3">
             <b><label for="Encerramento">Encerramento:</label></b>
             <p type="text" id="Encerramento" name="FormularioValidacaoUC.Encerramento">
-                @if (Model.Encerramento != null)
+                @if (Model.Encerramento.Year > 1900 )
                 {
-                    Model.Encerramento.ToShortDateString();
+                    @Model.Encerramento.ToShortDateString();
                 }
 
             </p>

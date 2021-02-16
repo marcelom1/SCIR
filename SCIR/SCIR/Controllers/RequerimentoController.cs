@@ -188,6 +188,46 @@ namespace SCIR.Controllers
             return Json(encaminhar, JsonRequestBehavior.AllowGet);
         }
 
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult ConsisteCancelamento(RequerimentoVM requerimento)
+        {
+            try
+            {
+                var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+                requerimento.Consistencia = ServerRequerimento.ConsisteCancelamento(requerimento, usuario);
+            }
+            catch (Exception e)
+            {
+                var consistencia = new ConsisteUtils();
+                consistencia.Add(e.Message, ConsisteUtils.Tipo.Inconsistencia);
+                requerimento.Consistencia = consistencia;
+            }
+
+            return Json(requerimento, JsonRequestBehavior.AllowGet);
+        }
+
+        [WebMethod()]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public JsonResult ConfirmarCancelamento(RequerimentoVM requerimento)
+        {
+            try
+            {
+                var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+                requerimento = new RequerimentoVM(ServerRequerimento.Cancelar(requerimento, usuario));
+                requerimento.Consistencia.Add("Cancelado com sucesso", ConsisteUtils.Tipo.Sucesso);
+            }
+            catch (Exception e)
+            {
+                var consistencia = new ConsisteUtils();
+                consistencia.Add(e.Message, ConsisteUtils.Tipo.Inconsistencia);
+                requerimento.Consistencia = consistencia;
+            }
+
+
+            return Json(requerimento, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10, bool filtrarPorAtendente = false, bool filtrarPorRequerente = false)
         {
             var requerimento = new RequerimentoGridDC {};

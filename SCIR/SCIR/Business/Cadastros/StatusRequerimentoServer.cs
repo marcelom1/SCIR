@@ -123,7 +123,7 @@ namespace SCIR.Business.Cadastros
 
         public StatusRequerimento GetEntidadeCodigoInterno(int id)
         {
-            return dbStatusRequerimento.BuscarPorCodigoInterno(id);
+            return StatusRequerimentoDao.BuscarPorCodigoInterno(id);
         }
 
         public IList<StatusRequerimento> GetFiltroEntidadeString(string coluna, string searchTerm)

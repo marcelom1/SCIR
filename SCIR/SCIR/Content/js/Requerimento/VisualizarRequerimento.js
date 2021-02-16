@@ -57,7 +57,71 @@
 
     });
 
+    $("#CancelarRequerimento").click(function (e) {
+        e.preventDefault();
+        var id = $("#Id").val();
+        var protocolo = $("#Protocolo").text();
+        var entidade = {
+            Id: id
+        };
+        var msg = "";
+        $.ajax({
+            type: "POST",
+            url: "/Requerimento/ConsisteCancelamento/",
+            data: JSON.stringify(entidade),
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            success: function (resposta) {
+                var consistencia = JSON.parse(resposta);
+                if (consistencia.Consistencia.InconsistenciasToString != "") {
+                    msg += consistencia.Consistencia.InconsistenciasToString.replaceAll("|", "<br>")
+                    addNotification(msg, 1);
+                } else {
+                    msg += consistencia.Consistencia.AdvertenciasToString.replaceAll("|", "<br>")
+                    msg += ("Confirma o cancelamento do requerimento " + protocolo + "?");
+                    addNotification(msg, 2, "ConfirmarCancelamento", "LimparAlertas", [id]);
+                    $(".blockConfirmation").prop('disabled', true);
+                }
+            },
+            error: function (json) {
+                alert("Erro de conexão com o servidor!");
+                Console.log(json);
+            }
+        });
+
+    });
+
 });
+
+function ConfirmarCancelamento(id) {
+    var id = $("#Id").val();
+    var entidade = {
+        Id: id
+    };
+    var msg = "";
+    $.ajax({
+        type: "POST",
+        url: "/Requerimento/ConfirmarCancelamento/",
+        data: JSON.stringify(entidade),
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+        success: function (resposta) {
+            var consistencia = JSON.parse(resposta);
+            if (consistencia.Consistencia.InconsistenciasToString != "") {
+                msg += consistencia.Consistencia.InconsistenciasToString.replaceAll("|", "<br>")
+                addNotification(msg, 1);
+            } else if (consistencia.Consistencia.SucessoToString != "") {
+                $("#grid-basic").bootgrid("reload");
+                msg += consistencia.Consistencia.SucessoToString.replaceAll("|", "<br>")
+                addNotification(msg, 3);
+            }
+        },
+        error: function (json) {
+            alert("Erro de conexão com o servidor!");
+            Console.log(json);
+        }
+    });
+}
 
 
 function DesabilitarId() {

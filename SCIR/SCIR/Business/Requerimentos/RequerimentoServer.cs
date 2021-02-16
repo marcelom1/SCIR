@@ -3,6 +3,7 @@ using SCIR.DAO.Cadastros;
 using SCIR.DAO.Formularios;
 using SCIR.Datacontract.Grid;
 using SCIR.Models;
+using SCIR.Models.ViewModels;
 using SCIR.Utils;
 using System;
 using System.Collections.Generic;
@@ -188,6 +189,50 @@ namespace SCIR.Business.Requerimentos
                 auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "TIPO FORMULARIO", requerimentoAntes.TipoFormularioId + " - " + requerimentoAntes.TipoFormulario.Nome, requerimentoDepois.TipoFormularioId + " - " + requerimentoDepois.TipoFormulario.Nome);
 
             return auditoria;
+        }
+
+
+        public ConsisteUtils ConsisteCancelamento(Requerimento requerimento, Usuario usuario)
+        {
+            var consiste = new ConsisteUtils();
+
+            var pesquisa = dbRequerimento.GetRequerimentoId(requerimento);
+
+            if (pesquisa == null)
+            {
+                consiste.Add("Não foi encontrado o registro para atualização", ConsisteUtils.Tipo.Inconsistencia);
+                return consiste;
+            }
+
+            if (!pesquisa.StatusRequerimento.Cancelamento)
+                consiste.Add("Status atual não permite o cancelamento do requerimento", ConsisteUtils.Tipo.Inconsistencia);
+
+            if (usuario.Id != pesquisa.UsuarioRequerenteId)
+                consiste.Add("Apenas o requerente pode efetuar o cancelamento do requerimento", ConsisteUtils.Tipo.Inconsistencia);
+
+            return consiste;
+        }
+
+        public Requerimento Cancelar(Requerimento requerimento, Usuario usuario)
+        {
+            var consiste = ConsisteCancelamento(requerimento, usuario);
+
+
+            if (consiste.Inconsistencias.Any())
+                throw new ArgumentException(consiste.Inconsistencias.ToString());
+            else
+            {
+                var pesquisa = GetRequerimentoId(requerimento, usuario);
+                requerimento = new RequerimentoVM(pesquisa);//utilizado para clonar o objeto e não criar referencia 
+                requerimento.Encerramento = DateTime.Now;
+                var status = StatusRequerimentoDao.BuscarPorCodigoInterno((int)StatusRequerimentoEnum.StatusPadrao.Cancelado);
+                requerimento.StatusRequerimentoId = status.Id;
+                requerimento.StatusRequerimento = status;
+                requerimento.UsuarioAtendenteId = pesquisa.UsuarioRequerenteId;
+                requerimento = dbRequerimento.Update(requerimento);
+                GerarAuditoria(pesquisa, requerimento, AuditoriaServer.TipoAuditoria.Update);
+            }
+            return requerimento;
         }
 
 
