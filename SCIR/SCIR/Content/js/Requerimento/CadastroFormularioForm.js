@@ -32,15 +32,24 @@
 
     });
 
+    var requerimentoId = $("#requerimentoId").text();
+    if (requerimentoId != '') {
+        CarregarFormulario();
+    }
+
 });
 
 var AntesTipoRequerimentoSelect2 = 0;
 $("#Select2_TipoRequerimento").on('select2:close', function () {
+    CarregarFormulario()
+});
 
+function CarregarFormulario() {
     var tipoRequerimentoID = $("#Select2_TipoRequerimento").val();
- 
+    var requerimentoID = $("#requerimentoId").text();
+
     if ((tipoRequerimentoID != AntesTipoRequerimentoSelect2) && (tipoRequerimentoID != 0)) {
-        $("#Formulario").load("/Requerimento/CarregarFormulario/", { tipoRequerimentoID }, function () {
+        $("#Formulario").load("/Requerimento/CarregarFormulario/", { tipoRequerimentoID, requerimentoID }, function () {
 
         });
         AntesTipoRequerimentoSelect2 = tipoRequerimentoID;
@@ -50,5 +59,4 @@ $("#Select2_TipoRequerimento").on('select2:close', function () {
         AntesTipoRequerimentoSelect2 = tipoRequerimentoID;
         $("#Formulario").html("");
     }
-});
-
+}

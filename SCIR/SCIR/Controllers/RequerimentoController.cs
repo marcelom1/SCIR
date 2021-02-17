@@ -36,9 +36,17 @@ namespace SCIR.Controllers
             return View();
         }
 
-        public ActionResult Form()
+        public ActionResult Form(int id = 0)
         {
-            return View();
+            var model = new RequerimentoVM();
+            if (id > 0)
+            {
+                var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+                model.Id = id;
+                var entidade = ServerRequerimento.GetRequerimentoId(model, usuario);
+                model = new RequerimentoVM(entidade);
+            }
+            return View(model);
         }
 
         public ActionResult VisualizarRequerimento(RequerimentoVM requerimento, int origem)
@@ -148,12 +156,12 @@ namespace SCIR.Controllers
         }
 
         [WebMethod()]
-        public ActionResult CarregarFormulario(int tipoRequerimentoID = 0)
+        public ActionResult CarregarFormulario(int tipoRequerimentoID = 0, int requerimentoId = 0)
         {
             var requerimento = TipoRequerimentoServer.GetEntidade(tipoRequerimentoID);
             var action = TipoFormularioUtils.RetornarFormulario(requerimento.TipoFormulario.Codigo);
 
-            return RedirectToAction(action.Action, action.Route);
+            return RedirectToAction(action.Action, action.Route, new { requerimentoId });
         }
 
         [WebMethod()]

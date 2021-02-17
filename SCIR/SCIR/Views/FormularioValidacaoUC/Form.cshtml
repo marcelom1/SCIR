@@ -22,26 +22,35 @@
         <div class="form-group col-md-3">
             <label for="TipoValidacao">Tipo Validação</label><br />
             <select class="js-example-basic-single select2 blockConfirmation" id="Select2_TipoValidacao" name="formularioValidacaoUC.TipoValidacaoCurricularId">
-                <option value=""></option>
+                @if (Model.FormularioValidacaoUC.TipoValidacaoCurricularId > 0)
+                {
+                    <option value="@Model.FormularioValidacaoUC.TipoValidacaoCurricularId">@Model.FormularioValidacaoUC.TipoValidacaoCurricular.Nome</option>
+                }
             </select>
         </div>
         <div class="form-group col-md-3">
             <label for="formularioValidacaoUC.Curso">Curso</label><br />
             <select class="js-example-basic-single select2 blockConfirmation" id="Select2_Curso" name="formularioValidacaoUC.Curso">
-                <option value=""></option>
+                @if (Model.FormularioValidacaoUC.UnidadeCurricularId > 0)
+                {
+                    <option value="@Model.FormularioValidacaoUC.UnidadeCurricular.CursoId">@Model.FormularioValidacaoUC.UnidadeCurricular.Curso.Nome</option>
+                }
             </select>
         </div>
         <div class="form-group col-md-3">
             <label for="UnidadeCurricular">Unidade Curricular</label><br />
             <select class="js-example-basic-single select2 blockConfirmation" id="Select2_UnidadeCurricular" name="formularioValidacaoUC.UnidadeCurricularId">
-                <option value=""></option>
+                 @if (Model.FormularioValidacaoUC.UnidadeCurricularId > 0)
+                {
+                    <option value="@Model.FormularioValidacaoUC.UnidadeCurricularId">@Model.FormularioValidacaoUC.UnidadeCurricular.Nome</option>
+                }
             </select>
         </div>
     </div>
     <div class="form-row pb-1 pt-4 ">
         <div class="form-group col-md-12">
             <label for="Motivo">Motivo</label>
-            <textarea class="form-control blockConfirmation" id="Motivo" style="height:auto!important"></textarea>
+            <textarea class="form-control blockConfirmation" id="Motivo" style="height:auto!important">@Model.FormularioValidacaoUC.Motivo</textarea>
         </div>
     </div>
 

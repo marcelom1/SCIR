@@ -1,7 +1,12 @@
-﻿
+﻿@using SCIR.Models.ViewModels
+@using SCIR.Business.Login
+
+@model RequerimentoVM
 @{
-    ViewBag.Title = "Form";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "Form";
+                Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section css{
@@ -14,11 +19,15 @@
 <hr>
 <h3 class="pb-3">Requerimento</h3>
 
+<span class="Oculto" id="requerimentoId">@Model.Id</span>
 <div class="form-row pb-1 pt-4 ">
     <div class="form-group col-md-3">
         <label for="TipoRequerimento">Tipo Requerimento</label>
         <select class="js-example-basic-single select2 blockConfirmation" id="Select2_TipoRequerimento">
-            <option value=""></option>
+            @if (Model.TipoRequerimentoId > 0)
+            {
+            <option value="@Model.TipoRequerimentoId">@Model.TipoRequerimento.Nome</option>
+            }
         </select>
     </div>
 </div>

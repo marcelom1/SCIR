@@ -91,6 +91,13 @@
 
     });
 
+    $("#EditarRequerimento").click(function (e) {
+        e.preventDefault();
+        var id = $("#Id").val();
+        window.location.href = "/Requerimento/Form?id=" + id
+
+    });
+
 });
 
 function ConfirmarCancelamento(id) {

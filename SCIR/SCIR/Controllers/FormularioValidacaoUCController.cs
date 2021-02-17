@@ -28,9 +28,15 @@ namespace SCIR.Controllers
             return View();
         }
 
-        public ActionResult Form(int statusAtual = 0, int tipoRequerimento = 0)
+        public ActionResult Form(int statusAtual = 0, int tipoRequerimento = 0, int requerimentoId = 0)
         {
             var model = new FormularioValidacaoUCVM();
+
+            if (requerimentoId != 0)
+            {
+                var entidade = FormularioValidacaoUCServer.GetEntidade(requerimentoId);
+                model.FormularioValidacaoUC = entidade;
+            }
 
             return PartialView(model);
         }
