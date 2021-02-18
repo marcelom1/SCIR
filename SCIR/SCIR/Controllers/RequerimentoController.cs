@@ -70,20 +70,33 @@ namespace SCIR.Controllers
 
         public JsonResult GetAnexosRequerimento(string searchPhrase, int current = 1, int rowCount = 5, int requerimentoId = 0)
         {
-            var arquivoRequerimento = new ArquivoRequerimento {RequerimentoId = requerimentoId };
-            var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
-            var request = FormatGridUtils<ArquivoRequerimento>.Format(Request, searchPhrase, arquivoRequerimento, current, rowCount);
-            var response = new ResponseGrid<ArquivoRequerimento>();
-           
-            response = ArquivoRequerimentoServer.Listar(request, usuario);
             
+            if (requerimentoId != 0)
+            {
+                var arquivoRequerimento = new ArquivoRequerimento { RequerimentoId = requerimentoId };
+                var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+                var request = FormatGridUtils<ArquivoRequerimento>.Format(Request, searchPhrase, arquivoRequerimento, current, rowCount);
+                var response = new ResponseGrid<ArquivoRequerimento>();
+
+                response = ArquivoRequerimentoServer.Listar(request, usuario);
+
+                return Json(new
+                {
+                    rows = response.Entidades,
+                    current,
+                    rowCount,
+                    total = response.QuantidadeRegistros
+                }, JsonRequestBehavior.AllowGet);
+            }
+
             return Json(new
             {
-                rows = response.Entidades,
+                rows = "",
                 current,
                 rowCount,
-                total = response.QuantidadeRegistros
+                total = 0
             }, JsonRequestBehavior.AllowGet);
+
         }
 
         public string Download(int file, int requerimentoId)

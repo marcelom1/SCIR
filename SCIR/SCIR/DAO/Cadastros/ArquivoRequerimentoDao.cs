@@ -74,7 +74,7 @@ namespace SCIR.DAO.Cadastros
             
             using (var contexto = new ScirContext())
             {
-                if (string.IsNullOrWhiteSpace(request.CampoOrdenacao))
+                if (string.IsNullOrWhiteSpace(request.CampoOrdenacao) || request.CampoOrdenacao.ToUpper().Contains("SEQUENCIA"))
                     request.CampoOrdenacao = "Id asc";
 
                 return contexto.ArquivoRequerimento.AsNoTracking().Where(where).Include(p=> p.Requerimento).OrderBy(request.CampoOrdenacao).ToPagedList(request.Current, request.RowCount);

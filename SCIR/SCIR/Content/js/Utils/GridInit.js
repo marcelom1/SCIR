@@ -68,10 +68,8 @@ function GridInit() {
             },
             requestHandler: function (request) {
                 var parametrosAdicionais = CarregarParametrosAdicionaisGrid(request);
-                console.log("TESTEGRID");
                 if (parametrosAdicionais != null){
                     request = parametrosAdicionais;
-                    console.log("TESTEGRIDDentro");
                 }
                 return request;
             },

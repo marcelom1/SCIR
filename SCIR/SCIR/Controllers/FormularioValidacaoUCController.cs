@@ -84,7 +84,7 @@ namespace SCIR.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Salvar(FormularioValidacaoUC formularioValidacaoUC)
+        public JsonResult Salvar(FormularioValidacaoUC formularioValidacaoUC, string arquivosDeletados)
         {
             var files = Request.Files;
             

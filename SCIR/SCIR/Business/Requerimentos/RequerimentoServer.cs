@@ -97,10 +97,15 @@ namespace SCIR.Business.Requerimentos
         public Requerimento GetRequerimentoId(Requerimento requerimento, Usuario usuario)
         {
             var entityRequerimento = dbRequerimento.GetRequerimentoId(requerimento);
-            if (usuario.Id == entityRequerimento.UsuarioRequerenteId || usuario.Id == entityRequerimento.UsuarioAtendenteId || usuario.PapelId == (int)PapelDao.PapelUsuario.Administrador)
-                return entityRequerimento;
+            if (entityRequerimento != null)
+            {
+                if (usuario.Id == entityRequerimento.UsuarioRequerenteId || usuario.Id == entityRequerimento.UsuarioAtendenteId || usuario.PapelId == (int)PapelDao.PapelUsuario.Administrador)
+                    return entityRequerimento;
 
-            throw new Exception("Usuário não tem permissão de visualizar o requerimento, Protocolo: " + entityRequerimento.Protocolo);
+                throw new Exception("Usuário não tem permissão de visualizar o requerimento, Protocolo: " + entityRequerimento.Protocolo);
+            }
+
+            return null;
         }
 
         public Requerimento EncaminharRequerimento(Requerimento requerimento, Usuario usuario)

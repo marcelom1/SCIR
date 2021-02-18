@@ -1,4 +1,6 @@
 ﻿var formData = new FormData();
+var JSONArquivosSalvos = { "rows": [{ "Sequencia": "", "Id": "", "Nome": "" }] };  
+var arquivosCarregados = 0;
 $(document).ready(function () {
     
     $('#Select2_TipoValidacao').select2({
@@ -98,7 +100,9 @@ $(document).ready(function () {
 
     });
 
+    AjustarColunaGrid()
     IniciarGridAnexo();
+    
     var keyArquivo = 0;
     $("#fileUpload").on("change", function () {
         var formDataTemp = new FormData();
@@ -107,7 +111,7 @@ $(document).ready(function () {
             j++;
             formDataTemp.append(j, pair[1])
         }
-
+        
         var files = $(this).get(0).files;
         for (var i = 0; i < files.length; i++) {
             j++;
@@ -120,23 +124,77 @@ $(document).ready(function () {
 
 });
 
-function AtualizarGridArquivo() {
-    for (var pair of formData.entries()) {
-        var JSONINFO = { "rows": [{ "Sequencia": pair[0], "Nome": pair[1].name }] };   
-        $("#grid-basic").bootgrid("append", JSONINFO.rows);
-    }   
+
+function AjustarColunaGrid() {
+    if ($("#requerimentoId").text() != 0) {
+        $('<th data-column-id="Id" data-type="numeric" data-identifier="true">Id</th>').insertAfter('.SequenciaGrid');
+    }
+
 }
 
-function RemoverArquivo(posicao) {
-    formData.delete(posicao)
-    var formDataTemp = new FormData();
+function BuscarArquivos() {
+    var entidade = {
+        searchPhrase: "",
+        current: 1,
+        rowCount: 10000,
+        requerimentoId: $("#requerimentoId").text()
+    };
+
+   
+
+    $.ajax({
+        type: "POST",
+        url: "/Requerimento/GetAnexosRequerimento/",
+        data: JSON.stringify(entidade),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (resposta) {
+            JSONArquivosSalvos = resposta;
+            AtualizarGridArquivo();
+        },
+        error: function (json) {
+            alert("Erro de conexão com o servidor!");
+            Console.log(json);
+        }
+    });
+
+    
+}
+
+function AtualizarGridArquivo() {
     var j = 0;
+    arquivosCarregados = 0;
+    for (var pair of JSONArquivosSalvos.rows) {
+        j++;
+        arquivosCarregados++;
+        var JSONINFO = { "rows": [{ "Sequencia": j, "Id": pair.Id, "Nome": pair.Nome }] };
+        $("#grid-basic").bootgrid("append", JSONINFO.rows);
+    } 
+
     for (var pair of formData.entries()) {
         j++;
-        formDataTemp.append(j, pair[1])
+        var JSONINFO = { "rows": [{ "Sequencia": j,"Id": "" ,"Nome": pair[1].name }] };   
+        $("#grid-basic").bootgrid("append", JSONINFO.rows);
+    } 
+    
+}
+
+function RemoverArquivo(sequencia, idArquivo) {
+    console.log(idArquivo)
+    if (idArquivo == null) {
+        console.log(idArquivo)
+        formData.delete(sequencia - arquivosCarregados)
+        var formDataTemp = new FormData();
+        var j = 0;
+        for (var pair of formData.entries()) {
+            j++;
+            formDataTemp.append(j, pair[1])
+        }
+        formData = formDataTemp;
+        $("#grid-basic").bootgrid("clear");
+    } else {
+        console.log("Else " + idArquivo);
     }
-    formData = formDataTemp;
-    $("#grid-basic").bootgrid("clear");
     AtualizarGridArquivo()
 }
 
@@ -151,6 +209,7 @@ $(document).on('click', '#Botao_Salvar', function () {
     var msg = "";
 
     var entidade = {
+        Id: $("#requerimentoId").text(),
         TipoRequerimentoId: tipoRequerimento,
         TipoValidacaoCurricularId: tipoValidacao,
         UnidadeCurricularId: unidadeCurricular,
@@ -211,10 +270,12 @@ function ConfirmarSalvar() {
     var motivo = $("#Motivo").val();
     var msg = ""; 
 
-    formData.append("TipoRequerimentoId", tipoRequerimento)
-    formData.append("TipoValidacaoCurricularId", tipoValidacao)
-    formData.append("UnidadeCurricularId", unidadeCurricular)
-    formData.append("Motivo", motivo)
+    formData.append("Id", $("#requerimentoId").text());
+    formData.append("TipoRequerimentoId", tipoRequerimento);
+    formData.append("TipoValidacaoCurricularId", tipoValidacao);
+    formData.append("UnidadeCurricularId", unidadeCurricular);
+    formData.append("Motivo", motivo);
+    formData.append("arquivosDeletados", "TEST" );
   
     $.ajax({
         type: "POST",
@@ -285,6 +346,7 @@ function addComandosTabela() {
 }
 
 function IniciarGridAnexo() {
+   
     $("#grid-basic").bootgrid(
         {
             ajax: false,
@@ -307,9 +369,8 @@ function IniciarGridAnexo() {
                         '    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z" />' +
                         '</svg>';
 
-                   
-
-                    var buttonDelete = '<span style="margin: 0px 0px 0px 8px;" class="text-danger ponteiro" id="Botao_Excluir" onclick="RemoverArquivo(' + row.Sequencia + ')">' + iconDelete + '</span>';
+                    
+                    var buttonDelete = '<span style="margin: 0px 0px 0px 8px;" class="text-danger ponteiro" id="Botao_Excluir" onclick="RemoverArquivo(' + row.Sequencia + ',' + row.Id + ')">' + iconDelete + '</span>';
 
                     var divFinal = '</div>';
 
@@ -321,11 +382,20 @@ function IniciarGridAnexo() {
                 delay: 100,
                 characters: 3
             },
+            requestHandler: function (request) {
+                var parametrosAdicionais = CarregarParametrosAdicionaisGrid(request);
+                if (parametrosAdicionais != null) {
+                    request = parametrosAdicionais;
+                }
+                return request;
+            }
 
         });
 
     $("#grid-basic-header").removeClass("container-fluid");
     $("#grid-basic").addClass("table-responsive-md");
+
+    BuscarArquivos();
 
     addComandosTabela();
 }

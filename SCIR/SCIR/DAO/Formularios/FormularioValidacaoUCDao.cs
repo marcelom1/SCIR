@@ -21,6 +21,7 @@ namespace SCIR.DAO.Formularios
                                                      .Include(e => e.TipoRequerimento)
                                                      .Include(e => e.TipoValidacaoCurricular)
                                                      .Include(e => e.UnidadeCurricular)
+                                                     .Include(e => e.UnidadeCurricular.Curso)
                                                      .Include(e => e.UsuarioAtendente)
                                                      .Include(e => e.UsuarioRequerente)
                                                      .Where(e => e.Id == id)
