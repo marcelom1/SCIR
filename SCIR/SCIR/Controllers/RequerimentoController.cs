@@ -28,11 +28,12 @@ namespace SCIR.Controllers
         private UsuarioServer UsuarioServer = new UsuarioServer();
         private AuditoriaServer AuditoriaServer = new AuditoriaServer();
 
-        public ActionResult Index(int filtro)
+        public ActionResult Index(int filtro, int origem = 0)
         {
             ViewBag.filtro = filtro;
             ViewBag.filtrarPorAtendente = filtro;
             ViewBag.filtrarPorRequerente = filtro == 0 ? 1 : 0;
+            ViewBag.origem = origem == 0 ? 1 : 0;
             return View();
         }
 
@@ -249,16 +250,12 @@ namespace SCIR.Controllers
             return Json(requerimento, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10, bool filtrarPorAtendente = false, bool filtrarPorRequerente = false)
+        public JsonResult Listar(string searchPhrase, int current = 1, int rowCount = 10, bool filtrarPorAtendente = false, bool filtrarPorRequerente = false, bool origem = false)
         {
-            var requerimento = new RequerimentoGridDC {};
-
-            if (searchPhrase.ToLower() == "aberturatostring asc")
-                searchPhrase = "ABERTURA ASC";
-            else if (searchPhrase.ToLower() == "aberturatostring desc")
-                searchPhrase = "ABERTURA DESC";
+            var requerimento = new RequerimentoGridDC { };
 
             var request = FormatGridUtils<Requerimento>.Format(Request, searchPhrase, requerimento, current, rowCount);
+            AjustarCampoOrdenacao(request);
 
             var response = new ResponseGrid<RequerimentoGridDC>();
 
@@ -266,19 +263,19 @@ namespace SCIR.Controllers
             {
                 request.Entidade = new RequerimentoGridDC { UsuarioAtendenteId = LoginServer.RetornarUsuarioLogado(User.Identity.Name).Id };
                 response = ServerRequerimento.ListarPorAtendente(request);
-                
+
             }
             else if (filtrarPorRequerente)
             {
                 var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
                 request.Entidade = new RequerimentoGridDC { UsuarioRequerenteId = usuario.Id };
-                if (usuario.PapelId == (int)PapelDao.PapelUsuario.Administrador)
+                if ((usuario.PapelId == (int)PapelDao.PapelUsuario.Administrador || usuario.PapelId == (int)PapelDao.PapelUsuario.Servidor) && origem)
                     response = ServerRequerimento.ListarTudo(request);
                 else
                     response = ServerRequerimento.ListarPorRequerente(request);
 
             }
-           
+
             return Json(new
             {
                 rows = response.Entidades,
@@ -288,17 +285,33 @@ namespace SCIR.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        private static void AjustarCampoOrdenacao(FormatGridUtils<Requerimento> request)
+        {
+            if (request.CampoOrdenacao == "ABERTURATOSTRING ASC")
+                request.CampoOrdenacao = "ABERTURA ASC";
+            else if (request.CampoOrdenacao == "ABERTURATOSTRING DESC")
+                request.CampoOrdenacao = "ABERTURA DESC";
+
+            else if (request.CampoOrdenacao == "STATUSREQUERIMENTONOME ASC")
+                request.CampoOrdenacao = "STATUSREQUERIMENTO ASC";
+            else if (request.CampoOrdenacao == "STATUSREQUERIMENTONOME DESC")
+                request.CampoOrdenacao = "STATUSREQUERIMENTO DESC";
+
+            else if (request.CampoOrdenacao == "TIPOREQUERIMENTONOME ASC")
+                request.CampoOrdenacao = "TIPOREQUERIMENTO ASC";
+            else if (request.CampoOrdenacao == "TIPOREQUERIMENTONOME DESC")
+                request.CampoOrdenacao = "TIPOREQUERIMENTO DESC";
+           
+        }
+
         [Authorize(Roles = "ADMINISTRADOR")]
         public JsonResult ListarTodos(string searchPhrase, int current = 1, int rowCount = 10)
         {
             var requerimento = new RequerimentoGridDC();
-
-            if (searchPhrase.ToLower() == "aberturatostring asc")
-                searchPhrase = "ABERTURA ASC";
-            else if (searchPhrase.ToLower() == "aberturatostring desc")
-                searchPhrase = "ABERTURA DESC";
-
+        
             var request = FormatGridUtils<Requerimento>.Format(Request, searchPhrase, requerimento, current, rowCount);
+
+            AjustarCampoOrdenacao(request);
 
             var response = ServerRequerimento.ListarTudo(request);
 

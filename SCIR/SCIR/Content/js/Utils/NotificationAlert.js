@@ -1,5 +1,5 @@
 ﻿function addNotification(mensagem, tipo, ClickConfirmation = "LimparAlertas", ClickCancel = "LimparAlertas",  ParameterConfirmation = [], ParameterCancel = []) {
-
+    LimparAlertas();
     if (tipo == 1) {
         $("#alert").append('<div class="form-control-feedback glyphicon alert alert-danger" role="alert" id="alertConfirmation">' + mensagem + '</div>');
     } else if (tipo == 2) {

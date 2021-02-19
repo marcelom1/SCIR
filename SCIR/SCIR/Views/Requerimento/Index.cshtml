@@ -39,12 +39,13 @@
            @{
                var filtrarPorAtendente = ViewBag.filtrarPorAtendente == 0? false : true;
                var filtrarPorRequerente = ViewBag.filtrarPorRequerente == 0? false : true;
+               var origem = ViewBag.origem == 0 ? false : true;
 
            }
 
            request.filtrarPorAtendente = "@filtrarPorAtendente" == "True";
-           request.filtrarPorRequerente = "@filtrarPorRequerente" == "True";
-            console.log("ParametrosAdicionais VisualizaRequeriemto" );
+            request.filtrarPorRequerente = "@filtrarPorRequerente" == "True";
+            request.origem = "@origem" == "True";
 
         }
 

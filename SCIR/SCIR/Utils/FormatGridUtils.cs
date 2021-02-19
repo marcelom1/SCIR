@@ -22,7 +22,7 @@ namespace SCIR.Utils
                 var ordenacao = Request[chave];
                 var campo = chave.Replace("sort[", string.Empty).Replace("]", string.Empty);
 
-                campoOrdenacao = String.Format("{0} {1}", campo, ordenacao);
+                campoOrdenacao = String.Format("{0} {1}", campo, ordenacao).ToUpper();
             }
 
 

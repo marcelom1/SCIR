@@ -1,6 +1,7 @@
 ﻿var formData = new FormData();
 var JSONArquivosSalvos = { "rows": [{ "Sequencia": "", "Id": "", "Nome": "" }] };  
 var arquivosCarregados = 0;
+var arquivosDeletados = "";
 $(document).ready(function () {
     
     $('#Select2_TipoValidacao').select2({
@@ -124,6 +125,9 @@ $(document).ready(function () {
 
 });
 
+$("#Select2_Curso").on('select2:close', function () {
+    $('#Select2_UnidadeCurricular').val(null).trigger('change');
+});
 
 function AjustarColunaGrid() {
     if ($("#requerimentoId").text() != 0) {
@@ -165,10 +169,24 @@ function AtualizarGridArquivo() {
     var j = 0;
     arquivosCarregados = 0;
     for (var pair of JSONArquivosSalvos.rows) {
-        j++;
-        arquivosCarregados++;
-        var JSONINFO = { "rows": [{ "Sequencia": j, "Id": pair.Id, "Nome": pair.Nome }] };
-        $("#grid-basic").bootgrid("append", JSONINFO.rows);
+        var split = arquivosDeletados.split('|')
+        console.log(split);
+        var pularSequencia = false;
+        for (var s of split) {
+            if (pair.Id == s) {
+                pularSequencia = true;
+                console.log(pularSequencia);
+                break;
+                
+            }
+            console.log(pair.Id + " = " + s);
+        }
+        if (!pularSequencia) {
+            j++;
+            arquivosCarregados++;
+            var JSONINFO = { "rows": [{ "Sequencia": j, "Id": pair.Id, "Nome": pair.Nome }] };
+            $("#grid-basic").bootgrid("append", JSONINFO.rows);
+        }
     } 
 
     for (var pair of formData.entries()) {
@@ -182,7 +200,7 @@ function AtualizarGridArquivo() {
 function RemoverArquivo(sequencia, idArquivo) {
     console.log(idArquivo)
     if (idArquivo == null) {
-        console.log(idArquivo)
+        console.log(idArquivo + "TESTE");
         formData.delete(sequencia - arquivosCarregados)
         var formDataTemp = new FormData();
         var j = 0;
@@ -191,10 +209,14 @@ function RemoverArquivo(sequencia, idArquivo) {
             formDataTemp.append(j, pair[1])
         }
         formData = formDataTemp;
-        $("#grid-basic").bootgrid("clear");
     } else {
-        console.log("Else " + idArquivo);
+        if (arquivosDeletados != "")
+            arquivosDeletados += "|";
+
+        arquivosDeletados += idArquivo;
+        console.log(arquivosDeletados);
     }
+    $("#grid-basic").bootgrid("clear");
     AtualizarGridArquivo()
 }
 
@@ -275,7 +297,7 @@ function ConfirmarSalvar() {
     formData.append("TipoValidacaoCurricularId", tipoValidacao);
     formData.append("UnidadeCurricularId", unidadeCurricular);
     formData.append("Motivo", motivo);
-    formData.append("arquivosDeletados", "TEST" );
+    formData.append("arquivosDeletados", arquivosDeletados);
   
     $.ajax({
         type: "POST",

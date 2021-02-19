@@ -30,11 +30,12 @@ namespace SCIR.Controllers
 
         public ActionResult Form(int statusAtual = 0, int tipoRequerimento = 0, int requerimentoId = 0)
         {
-            var model = new FormularioValidacaoUCVM();
+            var model = new FormularioValidacaoUCVM { };
 
             if (requerimentoId != 0)
             {
-                var entidade = FormularioValidacaoUCServer.GetEntidade(requerimentoId);
+                var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+                var entidade = FormularioValidacaoUCServer.GetRequerimentoId(new FormularioValidacaoUC { Id = requerimentoId }, usuario);
                 model.FormularioValidacaoUC = entidade;
             }
 
@@ -51,7 +52,8 @@ namespace SCIR.Controllers
 
         public PartialViewResult VisualizarRequerimento(int requerimentoID)
         {
-            var entidade = FormularioValidacaoUCServer.GetEntidade(requerimentoID);
+            var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
+            var entidade = FormularioValidacaoUCServer.GetRequerimentoId(new FormularioValidacaoUC { Id = requerimentoID }, usuario);
             var model = new FormularioValidacaoUCVM { FormularioValidacaoUC = entidade};
 
             return PartialView(model);
@@ -95,9 +97,9 @@ namespace SCIR.Controllers
                 formularioValidacaoUC.UsuarioRequerenteId = LoginServer.RetornarUsuarioLogado(User.Identity.Name).Id;
                 if (formularioValidacaoUC.Id != 0)
                 {
-                    FormularioValidacaoUCServer.Atualizar(formularioValidacaoUC, files);
+                    formularioValidacaoUC = FormularioValidacaoUCServer.Atualizar(formularioValidacaoUC, files, Server, arquivosDeletados);
                     model.FormularioValidacaoUC = formularioValidacaoUC;
-                    model.Consistencia.Add("Alterado com sucesso!", ConsisteUtils.Tipo.Sucesso);
+                    model.Consistencia.Add("Alterado com sucesso! Protocolo: " + formularioValidacaoUC.Protocolo, ConsisteUtils.Tipo.Sucesso);
                 }
                 else
                 {

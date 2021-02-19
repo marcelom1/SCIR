@@ -66,6 +66,9 @@ namespace SCIR.Business.Requerimentos
             if (formularioValidacaoUC.UnidadeCurricularId == 0)
                 consiste.Add("O campo Unidade Curricular não pode ficar em branco", ConsisteUtils.Tipo.Inconsistencia);
 
+            if (formularioValidacaoUC.UsuarioRequerenteId != pesquisa.UsuarioRequerenteId)
+                consiste.Add("Usuário não tem permissão de editar o requerimento", ConsisteUtils.Tipo.Inconsistencia);
+
             return consiste;
         }
 
@@ -91,7 +94,7 @@ namespace SCIR.Business.Requerimentos
             return formularioValidacaoUC;
         }
 
-        public FormularioValidacaoUC Excluir(FormularioValidacaoUC formularioValidacaoUC)
+        public FormularioValidacaoUC Excluir(FormularioValidacaoUC formularioValidacaoUC, Usuario usuario)
         {
             var consiste = ConsisteExcluir(formularioValidacaoUC);
 
@@ -107,20 +110,30 @@ namespace SCIR.Business.Requerimentos
             return formularioValidacaoUC;
         }
 
-        public FormularioValidacaoUC Atualizar(FormularioValidacaoUC formularioValidacaoUC, HttpFileCollectionBase files)
+        public FormularioValidacaoUC Atualizar(FormularioValidacaoUC formularioValidacaoUC, HttpFileCollectionBase files, HttpServerUtilityBase server, string arquivosDeletados)
         {
             var consiste = ConsisteAtualizar(formularioValidacaoUC);
 
             if (consiste.Inconsistencias.Any())
                 throw new ArgumentException(consiste.Inconsistencias.ToString());
-            else
-            {
-                var pesquisa = GetEntidade(formularioValidacaoUC.Id);
-                dbFormularioValidacaoUC.Update(formularioValidacaoUC);
-                GerarAuditoria(pesquisa, formularioValidacaoUC,AuditoriaServer.TipoAuditoria.Update);
-            }
 
-            return formularioValidacaoUC;
+            var pesquisa = GetEntidade(formularioValidacaoUC.Id);
+
+            pesquisa.StatusRequerimentoId = StatusRequerimentoServer.GetEntidadeCodigoInterno(3).Id;
+            pesquisa.UsuarioAtendenteId = RequerimentoServer.PrimeiroAtendimento(formularioValidacaoUC);
+            pesquisa.Motivo = formularioValidacaoUC.Motivo;
+            pesquisa.UnidadeCurricularId = formularioValidacaoUC.UnidadeCurricularId;
+            pesquisa.TipoValidacaoCurricularId = formularioValidacaoUC.TipoValidacaoCurricularId;
+            pesquisa.Mensagem = "";
+
+            dbFormularioValidacaoUC.Update(pesquisa);
+            ArquivosRequerimentoServer.ExcluirPorStringList(arquivosDeletados);
+            ArquivosRequerimentoServer.Novo(pesquisa, files, server);
+            GerarAuditoria(pesquisa, formularioValidacaoUC,AuditoriaServer.TipoAuditoria.Update);
+
+            return pesquisa;
+          
+            
         }
 
         public ResponseGrid<FormularioValidacaoUC> Listar(FormatGridUtils<FormularioValidacaoUC> request)
@@ -135,6 +148,20 @@ namespace SCIR.Business.Requerimentos
         public FormularioValidacaoUC GetEntidade(int id)
         {
             return dbFormularioValidacaoUC.BuscarPorId(id);
+        }
+
+        public FormularioValidacaoUC GetRequerimentoId(Requerimento requerimento, Usuario usuario)
+        {
+            var entityRequerimento = dbFormularioValidacaoUC.BuscarPorId(requerimento.Id);
+            if (entityRequerimento != null)
+            {
+                if (usuario.Id == entityRequerimento.UsuarioRequerenteId || usuario.Id == entityRequerimento.UsuarioAtendenteId || usuario.PapelId == (int)PapelDao.PapelUsuario.Administrador || usuario.PapelId == (int)PapelDao.PapelUsuario.Discente)
+                    return entityRequerimento;
+
+                throw new Exception("Usuário não tem permissão de visualizar o requerimento, Protocolo: " + entityRequerimento.Protocolo);
+            }
+
+            return null;
         }
 
         public IList<FormularioValidacaoUC> GetFiltroEntidadeString(string coluna, string searchTerm)
@@ -161,5 +188,7 @@ namespace SCIR.Business.Requerimentos
             auditoria.EnviarEmail(tipo);
             return auditoria;
         }
+
+       
     }
 }

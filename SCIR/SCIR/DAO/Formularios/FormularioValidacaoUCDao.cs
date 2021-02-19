@@ -103,15 +103,38 @@ namespace SCIR.DAO.Formularios
         {
             using (var context = new ScirContext())
             {
-                entidade.StatusRequerimento = context.StatusRequerimento.Find(entidade.StatusRequerimentoId);
-                entidade.TipoFormulario = context.TipoFormulario.Find(entidade.TipoFormularioId);
-                entidade.TipoRequerimento = context.TipoRequerimento.Find(entidade.TipoRequerimentoId);
-                entidade.TipoValidacaoCurricular = context.TipoValidacaoCurricular.Find(entidade.TipoValidacaoCurricularId);
-                entidade.UnidadeCurricular = context.UnidadeCurricular.Find(entidade.UnidadeCurricularId);
-                entidade.UsuarioAtendente = context.Usuario.Find(entidade.UsuarioAtendenteId);
-                entidade.UsuarioRequerente = context.Usuario.Find(entidade.UsuarioRequerenteId);
+                var requerimento = context.FormularioValidacaoUC.Find(entidade.Id);
 
-                context.FormularioValidacaoUC.Update(entidade);
+                requerimento.StatusRequerimento = context.StatusRequerimento.Find(entidade.StatusRequerimentoId);
+                requerimento.StatusRequerimentoId = entidade.StatusRequerimentoId;
+                requerimento.TipoValidacaoCurricular = context.TipoValidacaoCurricular.Find(entidade.TipoValidacaoCurricularId);
+                requerimento.TipoValidacaoCurricularId = entidade.TipoValidacaoCurricularId;
+                requerimento.UnidadeCurricular = context.UnidadeCurricular.Find(entidade.UnidadeCurricularId);
+                requerimento.UnidadeCurricularId = entidade.UnidadeCurricularId;
+                requerimento.UsuarioAtendente = context.Usuario.Find(entidade.UsuarioAtendenteId);
+                requerimento.UsuarioAtendenteId = entidade.UsuarioAtendenteId;
+                requerimento.UsuarioRequerente = context.Usuario.Find(entidade.UsuarioRequerenteId);
+                requerimento.UsuarioRequerenteId = entidade.UsuarioRequerenteId;
+                requerimento.TipoRequerimento = context.TipoRequerimento.Find(entidade.TipoRequerimentoId);
+                requerimento.TipoFormulario = context.TipoFormulario.Find(entidade.TipoFormularioId);
+                requerimento.Motivo = entidade.Motivo;
+                requerimento.Mensagem = entidade.Mensagem;
+
+
+                //entidade.StatusRequerimento = context.StatusRequerimento.Find(entidade.StatusRequerimentoId);
+                //entidade.TipoValidacaoCurricular = context.TipoValidacaoCurricular.Find(entidade.TipoValidacaoCurricularId);
+                //entidade.UnidadeCurricular = context.UnidadeCurricular.Find(entidade.UnidadeCurricularId);
+                //entidade.UsuarioAtendente = context.Usuario.Find(entidade.UsuarioAtendenteId);
+                //entidade.UsuarioRequerente = context.Usuario.Find(entidade.UsuarioRequerenteId);
+                //entidade.Motivo = entidade.Motivo;
+                //entidade.TipoRequerimento = context.TipoRequerimento.Find(entidade.TipoRequerimentoId);
+                //entidade.TipoFormulario = context.TipoFormulario.Find(entidade.TipoFormularioId);
+                //entidade.Protocolo = requerimento.Protocolo;
+                //entidade.Abertura = requerimento.Abertura;
+                //entidade.Encerramento = requerimento.Encerramento;
+
+
+                context.FormularioValidacaoUC.Update(requerimento);
                 context.SaveChanges();
             }
         }

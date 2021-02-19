@@ -42,6 +42,11 @@ namespace SCIR.Business.Cadastros
             
         }
 
+        private void ExcluirArquivos(string caminho)
+        {
+            File.Delete(caminho);
+        }
+
 
         public ConsisteUtils ConsisteAtualizar(ArquivoRequerimento arquivoRequerimento)
         {
@@ -68,16 +73,19 @@ namespace SCIR.Business.Cadastros
             return arquivosRequerimento;
         }
 
-        public ArquivoRequerimento Excluir(ArquivoRequerimento arquivoRequerimento)
+        public void Excluir(ArquivoRequerimento arquivoRequerimento)
         {
             var consiste = ConsisteExcluir(arquivoRequerimento);
 
             if (consiste.Inconsistencias.Any())
                 throw new ArgumentException(consiste.Inconsistencias.ToString());
             else
-                dbArquivoRequerimento.Delete(arquivoRequerimento);
-
-            return arquivoRequerimento;
+            {
+                var pesquisa = dbArquivoRequerimento.BuscarPorId(arquivoRequerimento.Id);
+                var caminho = pesquisa.Caminho;
+                dbArquivoRequerimento.Delete(pesquisa);
+                ExcluirArquivos(caminho);
+            }
         }
 
         public ConsisteUtils ConsisteExcluir(ArquivoRequerimento arquivoRequerimento)
@@ -125,6 +133,26 @@ namespace SCIR.Business.Cadastros
         {
             var arquivo = dbArquivoRequerimento.BuscarPorId(id);
             return arquivo;
+        }
+
+        public ConsisteUtils ExcluirPorStringList(string list)
+        {
+            var consiste = new ConsisteUtils();
+            var spltArquivos = list.Split('|');
+            foreach (var item in spltArquivos)
+            {
+                if (item != "")
+                {
+                    var arquivo = new ArquivoRequerimento
+                    {
+                        Id = Int32.Parse(item)
+                    };
+
+                    Excluir(arquivo);
+                }
+            }
+
+            return consiste;
         }
     }
 }
