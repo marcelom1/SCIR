@@ -116,9 +116,24 @@ namespace SCIR.Business.Requerimentos
             if (consiste.Inconsistencias.Any())
                 throw new ArgumentException(consiste.Inconsistencias.ToString());
             else
-            {   var pesquisa = GetRequerimentoId(requerimento, usuario);
-                requerimento = dbRequerimento.UpdateEncaminhamento(requerimento);
-                GerarAuditoria(pesquisa, requerimento,AuditoriaServer.TipoAuditoria.Update);
+            {
+                var status = new StatusRequerimentoServer().GetEntidade(requerimento.StatusRequerimentoId);
+                switch (status.CodigoInterno)
+                {
+                    case (int)StatusRequerimentoEnum.StatusPadrao.Deferido:
+                        Encerrar(requerimento, usuario, StatusRequerimentoEnum.StatusPadrao.Deferido);
+                        break;
+                    case (int)StatusRequerimentoEnum.StatusPadrao.Indeferido:
+                        Encerrar(requerimento, usuario, StatusRequerimentoEnum.StatusPadrao.Indeferido);
+                        break;
+                    default:
+                        var pesquisa = GetRequerimentoId(requerimento, usuario);
+                        requerimento = dbRequerimento.UpdateEncaminhamento(requerimento);
+                        GerarAuditoria(pesquisa, requerimento, AuditoriaServer.TipoAuditoria.Update);
+                        break;
+                }
+                
+                
             }
             return requerimento;
         }
@@ -170,10 +185,10 @@ namespace SCIR.Business.Requerimentos
                 auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "PROTOCOLO", requerimentoAntes.Protocolo, requerimentoDepois.Protocolo);
 
             if (requerimentoAntes.Abertura != requerimentoDepois.Abertura)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "ABERTURA", requerimentoAntes.Abertura.ToString("dd/mm/yyyy HH:mm"), requerimentoDepois.Abertura.ToString("dd/mm/yyyy HH:mm"));
+                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "ABERTURA", requerimentoAntes.Abertura.ToString("dd/MM/yyyy HH:mm"), requerimentoDepois.Abertura.ToString("dd/MM/yyyy HH:mm"));
 
             if (requerimentoAntes.Encerramento != requerimentoDepois.Encerramento)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "ENCERRAMENTO", requerimentoAntes.Encerramento.ToString("dd/mm/yyyy HH:mm"), requerimentoDepois.Encerramento.ToString("dd/mm/yyyy HH:mm"));
+                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "ENCERRAMENTO", requerimentoAntes.Encerramento.ToString("dd/MM/yyyy HH:mm"), requerimentoDepois.Encerramento.ToString("dd/MM/yyyy HH:mm"));
 
             if (requerimentoAntes.Mensagem != requerimentoDepois.Mensagem)
                 auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "MENSAGEM", requerimentoAntes.Mensagem, requerimentoDepois.Mensagem);
@@ -240,6 +255,33 @@ namespace SCIR.Business.Requerimentos
             return requerimento;
         }
 
+        public Requerimento Encerrar(Requerimento requerimento, Usuario usuario, StatusRequerimentoEnum.StatusPadrao statusEncerramento)
+        {
+            var consiste = ConsisteEncerramento(requerimento, usuario);
 
+
+            if (consiste.Inconsistencias.Any())
+                throw new ArgumentException(consiste.Inconsistencias.ToString());
+            else
+            {
+                var pesquisa = GetRequerimentoId(requerimento, usuario);
+                requerimento = new RequerimentoVM(pesquisa);//utilizado para clonar o objeto e não criar referencia 
+                requerimento.Encerramento = DateTime.Now;
+                var status = StatusRequerimentoDao.BuscarPorCodigoInterno((int)statusEncerramento);
+                requerimento.StatusRequerimentoId = status.Id;
+                requerimento.StatusRequerimento = status;
+                requerimento.UsuarioAtendenteId = pesquisa.UsuarioRequerenteId;
+                requerimento = dbRequerimento.Update(requerimento);
+                GerarAuditoria(pesquisa, requerimento, AuditoriaServer.TipoAuditoria.Update);
+            }
+            return requerimento;
+        }
+
+        public ConsisteUtils ConsisteEncerramento(Requerimento requerimento, Usuario usuario)
+        {
+            var consiste = new ConsisteUtils();
+
+            return consiste;
+        }
     }
 }

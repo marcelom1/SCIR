@@ -138,9 +138,11 @@ namespace SCIR.Business.Login
         private string GeraSenhaAleatoria()
         {
             string caracteresPermitidos = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789";
-            char[] chars = new char[8];
             Random rd = new Random();
-            for (int i = 0; i < 8; i++)
+            var tamanhoSenha = rd.Next(8, 14);
+            char[] chars = new char[tamanhoSenha];
+
+            for (int i = 0; i < tamanhoSenha; i++)
             {
                 chars[i] = caracteresPermitidos[rd.Next(0, caracteresPermitidos.Length)];
             }
