@@ -4,14 +4,20 @@
         var entidade = {
             email: $("#emailModal").val()
         };
+
+        var form = $("#formulario");
+
+        var form_data = new FormData(form[0]);
+
         $.ajax({
             type: "POST",
             url: "/Login/EnviarPESenha/",
-            data: JSON.stringify(entidade),
-            contentType: "application/json; charset=utf-8",
+            processData: false,
+            contentType: false,
+            data: form_data,
             dataType: "html",
             success: function (resposta) {
-                console.log(resposta);
+                $("#conteudoModal").html(resposta);
                 
             },
             error: function (json) {

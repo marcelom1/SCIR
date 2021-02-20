@@ -445,6 +445,7 @@
     <Compile Include="Models\ViewModels\UsuarioVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\ConsisteUtils.cs" />
+    <Compile Include="Utils\CriptoAES.cs" />
     <Compile Include="Utils\FormatGridUtils.cs" />
     <Compile Include="Utils\StatusRequerimentoEnum.cs" />
     <Compile Include="Utils\TipoFormularioUtils\TipoFormularioUtils.cs" />
@@ -1646,6 +1647,7 @@
     <Content Include="Content\js\FormularioValidacaoUC\CadastroFormularioValidacaoUCForm.js" />
     <Content Include="Content\js\FormularioValidacaoUC\CadastroFormularioValidacaoUCIndex.js" />
     <Content Include="Content\js\Login\Login.js" />
+    <Content Include="Content\js\Login\ModalAlterarSenha.js" />
     <Content Include="Content\js\Login\PESenha.js" />
     <Content Include="Content\js\pt-BR.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioForm.js" />
@@ -1740,6 +1742,7 @@
     <Content Include="Views\Requerimento\ModalEncaminhar.cshtml" />
     <Content Include="Views\Requerimento\ModalAuditoria.cshtml" />
     <Content Include="Views\Login\PrimeiroAcessoEsqueciSenha.cshtml" />
+    <Content Include="Views\Login\AlterarSenha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

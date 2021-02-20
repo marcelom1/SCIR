@@ -13,6 +13,7 @@ namespace SCIR.DAO.Cadastros
 {
     public class UsuarioDao : ICadastrosDao<Usuario, UsuarioGridDC>
     {
+        private CriptoAES cripto = new CriptoAES("TRABALHOCONCLUSAOCURSOMARCELOMIGLIOLIADS2018");
         public Usuario BuscarPorId(int id)
         {
             using (var contexto = new ScirContext())
@@ -25,8 +26,8 @@ namespace SCIR.DAO.Cadastros
         {
             using (var contexto = new ScirContext())
             {
-                //Encrypt.Encrypt.getMD5Hash(senha)
-                return contexto.Usuario.Include(p=>p.Papel).FirstOrDefault(a => a.Email == login && a.Senha == senha);
+                var senhaCripto = cripto.Encrypt(senha);
+                return contexto.Usuario.Include(p=>p.Papel).FirstOrDefault(a => a.Email == login && a.Senha == senhaCripto);
             }
         }
 

@@ -45,6 +45,7 @@
                         <div id="UsuarioNome">@LoginServer.RetornarUsuarioLogado(User.Identity.Name).Nome.ToUpper()</div>
                     </label>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" id="AlterarSenha" href="#">Alterar Senha</a>
                         <a class="dropdown-item" href="@Url.Action("Logout", "Login")">Sair</a>
                     </div>
                 </div>
@@ -196,13 +197,11 @@
     <script src="~/Scripts/jquery.bootgrid.min.js"></script>
     <script src="~/Content/js/Utils/NotificationAlert.js"></script>
     <script src="~/Content/js/Utils/ModalGeneric.js"></script>
-    <script>
-
-    </script>
+    <script src="~/Content/js/Login/Login.js"></script>
     @if (!Request.IsAuthenticated)
     {
 
-        <script src="~/Content/js/Login/Login.js"></script>
+        
         if (ViewBag.Erro != "")
         {
 
@@ -210,6 +209,11 @@
         }
 
     }
+
+    <script>
+        
+
+    </script>
 
     @RenderSection("scripts", required: false)
 

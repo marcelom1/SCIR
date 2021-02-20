@@ -1,0 +1,25 @@
+﻿<div id="ModalSenha">
+    <span class="erro" id="MsgServidor"></span>
+    <div class="form-row pt-3">
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Senha Atual</label>
+            <input type="password" class="form-control" id="SenhaAtual" placeholder="Senha Atual" name="usuario.Senha" value="">
+            <span class="erro" id="Erro_Senha"></span>
+        </div>
+    </div>
+    <div class="form-row pt-3">
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Nova Senha</label>
+            <input type="password" class="form-control" id="NovaSenha" placeholder="Nova Senha" name="usuario.Senha" value="">
+            <span class="erro Erro_ConfirmaSenha" id=""></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="inputPassword4">Confirmação de Senha</label>
+            <input type="password" class="form-control" id="ConfirmaSenha" placeholder="Confirmação de senha" value="">
+            <span class="erro Erro_ConfirmaSenha" id=""></span>
+        </div>
+    </div>
+    <button class="btn botao_cor_verde btn-sm" id="SalvarNovaSenha" value="Salvar">Salvar</button>
+
+    <script src="~/Content/js/Login/ModalAlterarSenha.js"></script>
+</div>

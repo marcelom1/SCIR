@@ -44,7 +44,7 @@ namespace SCIR.Email
 
                     // Credencial para envio por SMTP Seguro (Quando o servidor exige autenticação)
                     _smtpClient.UseDefaultCredentials = false;
-                    _smtpClient.Credentials = new NetworkCredential("do.not.answer.scir@gmail.com", "emailscir");
+                    _smtpClient.Credentials = new NetworkCredential("do.not.answer.scir@gmail.com", "sciremail");
 
                     _smtpClient.EnableSsl = true;
 
@@ -94,7 +94,7 @@ namespace SCIR.Email
 
                     // Credencial para envio por SMTP Seguro (Quando o servidor exige autenticação)
                     _smtpClient.UseDefaultCredentials = false;
-                    _smtpClient.Credentials = new NetworkCredential("do.not.answer.scir@gmail.com", "emailscir");
+                    _smtpClient.Credentials = new NetworkCredential("do.not.answer.scir@gmail.com", "sciremail");
 
                     _smtpClient.EnableSsl = true;
 

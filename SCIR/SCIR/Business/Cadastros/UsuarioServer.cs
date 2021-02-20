@@ -15,6 +15,7 @@ namespace SCIR.Business.Cadastros
         private UsuarioDao dbUsuario = new UsuarioDao();
         private PapelDao dbPapel = new PapelDao();
         private RequerimentoServer ServerRequerimento = new RequerimentoServer();
+        private CriptoAES cripto = new CriptoAES("TRABALHOCONCLUSAOCURSOMARCELOMIGLIOLIADS2018");
 
 
         public ConsisteUtils ConsisteNovo(Usuario usuario)
@@ -85,7 +86,10 @@ namespace SCIR.Business.Cadastros
             if (consiste.Inconsistencias.Any())
                 throw new ArgumentException(consiste.Inconsistencias.ToString());
             else
+            {
+                usuario.Senha = cripto.Encrypt(usuario.Senha);
                 dbUsuario.Insert(usuario);
+            }
 
 
             return usuario;
@@ -106,7 +110,7 @@ namespace SCIR.Business.Cadastros
             return usuario;
         }
 
-        public Usuario Atualizar(Usuario usuario)
+        public Usuario Atualizar(Usuario usuario, bool senhaJaCriptografada = false)
         {
             var consiste = ConsisteAtualizar(usuario);
 
@@ -116,7 +120,13 @@ namespace SCIR.Business.Cadastros
             {
                 if (string.IsNullOrWhiteSpace(usuario.Senha))
                     usuario.Senha = dbUsuario.BuscarPorId(usuario.Id).Senha;
-
+                else
+                {
+                    if (!senhaJaCriptografada)
+                    {
+                        usuario.Senha = cripto.Encrypt(usuario.Senha);
+                    }
+                }
                 dbUsuario.Update(usuario);
             }
 
