@@ -316,6 +316,7 @@
     <Compile Include="DAO\ICadastrosDao.cs" />
     <Compile Include="DAO\IFormulariosDao.cs" />
     <Compile Include="DAO\ScirContext.cs" />
+    <Compile Include="Datacontract\CaptchaResponse.cs" />
     <Compile Include="Datacontract\Grid\FluxoStatusGridDC.cs" />
     <Compile Include="Datacontract\Grid\RequerimentoGridDC.cs" />
     <Compile Include="Datacontract\Grid\ResponseGrid.cs" />
@@ -414,6 +415,10 @@
     <Compile Include="Migrations\20210216013244_StatusCancelado2.designer.cs">
       <DependentUpon>20210216013244_StatusCancelado2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20210220005132_senhaReset.cs" />
+    <Compile Include="Migrations\20210220005132_senhaReset.designer.cs">
+      <DependentUpon>20210220005132_senhaReset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ScirContextModelSnapshot.cs" />
     <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\ArquivoRequerimento.cs" />
@@ -443,6 +448,7 @@
     <Compile Include="Utils\FormatGridUtils.cs" />
     <Compile Include="Utils\StatusRequerimentoEnum.cs" />
     <Compile Include="Utils\TipoFormularioUtils\TipoFormularioUtils.cs" />
+    <Compile Include="Utils\ValidateUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -1640,6 +1646,7 @@
     <Content Include="Content\js\FormularioValidacaoUC\CadastroFormularioValidacaoUCForm.js" />
     <Content Include="Content\js\FormularioValidacaoUC\CadastroFormularioValidacaoUCIndex.js" />
     <Content Include="Content\js\Login\Login.js" />
+    <Content Include="Content\js\Login\PESenha.js" />
     <Content Include="Content\js\pt-BR.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioForm.js" />
     <Content Include="Content\js\Requerimento\CadastroFormularioIndex.js" />
@@ -1732,6 +1739,7 @@
     <Content Include="Views\FormularioValidacaoUC\VisualizarRequerimento.cshtml" />
     <Content Include="Views\Requerimento\ModalEncaminhar.cshtml" />
     <Content Include="Views\Requerimento\ModalAuditoria.cshtml" />
+    <Content Include="Views\Login\PrimeiroAcessoEsqueciSenha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

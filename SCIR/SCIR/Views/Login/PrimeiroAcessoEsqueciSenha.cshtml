@@ -1,0 +1,24 @@
+﻿<p>Você receberá um e-mail com um link e uma senha provisória de acesso</p>
+<div id="conteudoModal">
+    <div id="ModalRecuperar">
+        @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", @id = "formulario" }))
+        {
+
+            <span class="erro" id="MsgServidor"></span>
+            <div class="form-row pt-1">
+                <div class="form-group col">
+                    <label for="inputPassword4">Email</label>
+                    <input type="email" class="form-control" id="emailModal" placeholder="Senha Atual" name="email" value="">
+                    <span class="erro" id="Erro_Email"></span>
+                </div>
+            </div>
+            <div class="g-recaptcha" data-sitekey="6LdAp18aAAAAADa2X_EZ3Id9WVWMYK7QtlZEKRA5"></div>
+        }
+    </div>
+</div>
+<hr>
+<input onclick="location.href='#'" id="PEModalEnviar" class="btn bg-success botao_cor btn-sm blockConfirmation" type="button" value="Enivar">
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+<script src="~/Content/js/Login/PESenha.js"></script>

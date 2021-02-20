@@ -14,6 +14,7 @@ namespace SCIR.Models
         public string Email { get; set; }
         public string Senha { get; set; }
         public bool Ativo { get; set; }
+        public string SenhaReset { get; set; }
         public int PapelId { get; set; }
         public Papel Papel { get; set; }
 
