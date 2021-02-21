@@ -121,6 +121,7 @@ function ConfirmarCancelamento(id) {
                 $("#grid-basic").bootgrid("reload");
                 msg += consistencia.Consistencia.SucessoToString.replaceAll("|", "<br>")
                 addNotification(msg, 3);
+                window.location.reload();
             }
         },
         error: function (json) {
@@ -197,7 +198,7 @@ function addComandosTabela() {
 
 
 function SetRowCountEspecifGrid() {
-    return [5, 10, 25, 50, -1];
+    return [5, 10, 25, 50];
 }
 
 function SetCommandoEspecifGrid(column, row) {

@@ -44,6 +44,8 @@ namespace SCIR.Business.Cadastros
         public void EnviarEmail(TipoAuditoria tipo)
         {
             EnvioEmail.SendMail(Requerimento.UsuarioRequerente, MsgEmail, Requerimento);
+            if (Requerimento.UsuarioRequerenteId != Requerimento.UsuarioAtendenteId)
+                EnvioEmail.SendMail(Requerimento.UsuarioAtendente, $"O Requerimento {Requerimento.Protocolo} foi encaminhado para você! acesse o SCIR para verificar.", Requerimento);
         }
 
         public static void IncluirAuditoria (Requerimento requerimento, string campo, string campoValorAntes, string campoValorDepois)

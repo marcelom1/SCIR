@@ -4,7 +4,7 @@ var headerPadrao = "<div id=\"{{ctx.id}}\" class=\"{{css.header}}\"><div class=\
 
 
 function GridInit() {
-    var rowCount = [10, 25, 50, -1];
+    var rowCount = [10, 25, 50];
     if (rowCountEspecif) {
         rowCount = SetRowCountEspecifGrid();
     }

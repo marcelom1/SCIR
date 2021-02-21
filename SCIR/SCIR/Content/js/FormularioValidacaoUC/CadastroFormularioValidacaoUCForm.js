@@ -229,6 +229,7 @@ $(document).on('click', '#Botao_Salvar', function () {
     var unidadeCurricular = $("#Select2_UnidadeCurricular").val();
     var motivo = $("#Motivo").val();
     var msg = "";
+    $(".blockConfirmation").prop('disabled', true);
 
     var entidade = {
         Id: $("#requerimentoId").text(),
@@ -244,6 +245,7 @@ $(document).on('click', '#Botao_Salvar', function () {
         contentType: "application/json; charset=utf-8",
         dataType: "html",
         success: function (resposta) {
+            $(".blockConfirmation").prop('disabled', false);
             console.log("Resposta");
             var consistencia = JSON.parse(resposta);
             if (consistencia.InconsistenciasToString != "") {
@@ -262,6 +264,7 @@ $(document).on('click', '#Botao_Salvar', function () {
             }
         },
         error: function (json) {
+            $(".blockConfirmation").prop('disabled', false);
             alert("Erro de conexão com o servidor!");
             Console.log(json);
         }

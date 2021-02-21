@@ -180,33 +180,33 @@ namespace SCIR.Business.Requerimentos
 
         public static AuditoriaServer GerarCamposAuditoria(Requerimento requerimentoAntes, Requerimento requerimentoDepois, AuditoriaServer.TipoAuditoria tipo)
         {
-            var auditoria = new AuditoriaServer(requerimentoAntes);
+            var auditoria = new AuditoriaServer(requerimentoDepois);
             if (requerimentoAntes.Protocolo != requerimentoDepois.Protocolo)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "PROTOCOLO", requerimentoAntes.Protocolo, requerimentoDepois.Protocolo);
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "PROTOCOLO", requerimentoAntes.Protocolo, requerimentoDepois.Protocolo);
 
             if (requerimentoAntes.Abertura != requerimentoDepois.Abertura)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "ABERTURA", requerimentoAntes.Abertura.ToString("dd/MM/yyyy HH:mm"), requerimentoDepois.Abertura.ToString("dd/MM/yyyy HH:mm"));
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "ABERTURA", requerimentoAntes.Abertura.ToString("dd/MM/yyyy HH:mm"), requerimentoDepois.Abertura.ToString("dd/MM/yyyy HH:mm"));
 
             if (requerimentoAntes.Encerramento != requerimentoDepois.Encerramento)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "ENCERRAMENTO", requerimentoAntes.Encerramento.ToString("dd/MM/yyyy HH:mm"), requerimentoDepois.Encerramento.ToString("dd/MM/yyyy HH:mm"));
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "ENCERRAMENTO", requerimentoAntes.Encerramento.ToString("dd/MM/yyyy HH:mm"), requerimentoDepois.Encerramento.ToString("dd/MM/yyyy HH:mm"));
 
             if (requerimentoAntes.Mensagem != requerimentoDepois.Mensagem)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "MENSAGEM", requerimentoAntes.Mensagem, requerimentoDepois.Mensagem);
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "MENSAGEM", requerimentoAntes.Mensagem, requerimentoDepois.Mensagem);
 
             if (requerimentoAntes.UsuarioRequerenteId != requerimentoDepois.UsuarioRequerenteId)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "USUÁRIO REQUERENTE", requerimentoAntes.UsuarioRequerenteId + " - " + requerimentoAntes.UsuarioRequerente.Nome, requerimentoDepois.UsuarioRequerenteId + " - " + requerimentoDepois.UsuarioRequerente.Nome);
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "USUÁRIO REQUERENTE", requerimentoAntes.UsuarioRequerenteId + " - " + requerimentoAntes.UsuarioRequerente.Nome, requerimentoDepois.UsuarioRequerenteId + " - " + requerimentoDepois.UsuarioRequerente.Nome);
 
             if (requerimentoAntes.UsuarioAtendenteId != requerimentoDepois.UsuarioAtendenteId)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "USUÁRIO ATENDENTE", requerimentoAntes.UsuarioAtendenteId + " - " + requerimentoAntes.UsuarioAtendente.Nome, requerimentoDepois.UsuarioAtendenteId + " - " + requerimentoDepois.UsuarioAtendente.Nome);
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "USUÁRIO ATENDENTE", requerimentoAntes.UsuarioAtendenteId + " - " + requerimentoAntes.UsuarioAtendente.Nome, requerimentoDepois.UsuarioAtendenteId + " - " + requerimentoDepois.UsuarioAtendente.Nome);
 
             if (requerimentoAntes.StatusRequerimentoId != requerimentoDepois.StatusRequerimentoId)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "STATUS REQUERIMENTO", requerimentoAntes.StatusRequerimentoId + " - " + requerimentoAntes.StatusRequerimento.Nome, requerimentoDepois.StatusRequerimentoId + " - " + requerimentoDepois.StatusRequerimento.Nome);
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "STATUS REQUERIMENTO", requerimentoAntes.StatusRequerimentoId + " - " + requerimentoAntes.StatusRequerimento.Nome, requerimentoDepois.StatusRequerimentoId + " - " + requerimentoDepois.StatusRequerimento.Nome);
 
             if (requerimentoAntes.TipoRequerimentoId != requerimentoDepois.TipoRequerimentoId)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "TIPO REQUERIMENTO", requerimentoAntes.TipoRequerimentoId + " - " + requerimentoAntes.TipoRequerimento.Nome, requerimentoDepois.TipoRequerimentoId + " - " + requerimentoDepois.TipoRequerimento.Nome);
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "TIPO REQUERIMENTO", requerimentoAntes.TipoRequerimentoId + " - " + requerimentoAntes.TipoRequerimento.Nome, requerimentoDepois.TipoRequerimentoId + " - " + requerimentoDepois.TipoRequerimento.Nome);
 
             if (requerimentoAntes.TipoFormularioId != requerimentoDepois.TipoFormularioId)
-                auditoria.IncluirAuditoriaEntidade(requerimentoAntes, "TIPO FORMULARIO", requerimentoAntes.TipoFormularioId + " - " + requerimentoAntes.TipoFormulario.Nome, requerimentoDepois.TipoFormularioId + " - " + requerimentoDepois.TipoFormulario.Nome);
+                auditoria.IncluirAuditoriaEntidade(requerimentoDepois, "TIPO FORMULARIO", requerimentoAntes.TipoFormularioId + " - " + requerimentoAntes.TipoFormulario.Nome, requerimentoDepois.TipoFormularioId + " - " + requerimentoDepois.TipoFormulario.Nome);
 
             return auditoria;
         }

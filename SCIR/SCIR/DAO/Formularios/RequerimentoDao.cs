@@ -119,7 +119,7 @@ namespace SCIR.DAO.Formularios
                     {
                        Id = item.Id,
                        Abertura = item.Abertura,
-                       AberturaToString = item.Abertura.ToString("dd/MM/yyyy hh:mm"),
+                       AberturaToString = item.Abertura.ToString("dd/MM/yyyy HH:mm"),
                        TipoRequerimentoNome = item.TipoRequerimento,
                        TipoRequerimentoId = item.TipoRequerimentoId,
                        StatusRequerimentoNome = item.StatusRequerimento,

@@ -72,7 +72,7 @@ namespace SCIR.Controllers
                     LoginServer.CriarUsuarioAutoCadastro(email, url);
                 else
                     LoginServer.RecuperarSenha(usuario, url);
-                return "Email enviado com sucesso! Acesse a sua caixa de email para ativação da nova senha, além da caixa de entrada verifique se o e-mail não está na caixa de span.";
+                return "Email enviado com sucesso! Acesse a sua caixa de email para ativação da nova senha, além da caixa de entrada verifique se o e-mail não está na caixa de spam.";
             }
             return "=( Ocorreu um erro tente novamente!";
         }

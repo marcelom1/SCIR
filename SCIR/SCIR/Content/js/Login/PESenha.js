@@ -1,10 +1,7 @@
 ﻿$(document).ready(function () {
     $("#PEModalEnviar").click(function (e) {
         e.preventDefault();
-        var entidade = {
-            email: $("#emailModal").val()
-        };
-
+        $(".blockConfirmation").prop('disabled', true);
         var form = $("#formulario");
 
         var form_data = new FormData(form[0]);
