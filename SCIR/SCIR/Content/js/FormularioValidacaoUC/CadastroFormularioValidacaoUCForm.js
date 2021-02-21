@@ -301,7 +301,7 @@ function ConfirmarSalvar() {
     formData.append("UnidadeCurricularId", unidadeCurricular);
     formData.append("Motivo", motivo);
     formData.append("arquivosDeletados", arquivosDeletados);
-  
+    $(".blockConfirmation").prop('disabled', true);
     $.ajax({
         type: "POST",
         url: "/FormularioValidacaoUC/Salvar/",
@@ -309,7 +309,7 @@ function ConfirmarSalvar() {
         processData: false,
         contentType: false,
         success: function (resposta) {
-            
+            $(".blockConfirmation").prop('disabled', false);
             if (resposta["InconsistenciasToString"] != "") {
                 msg += resposta["InconsistenciasToString"].replaceAll("|", "<br>")
                 addNotification(msg, 1);
@@ -325,6 +325,7 @@ function ConfirmarSalvar() {
                 addNotification(msg, 3);
                 $("#Formulario").html("");
                 $('#Select2_TipoRequerimento').val(null).trigger('change');
+                AntesTipoRequerimentoSelect2 = 0;
             }
         },
         error: function (json) {

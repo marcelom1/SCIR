@@ -94,6 +94,7 @@ namespace SCIR.Controllers
             var model = new FormularioValidacaoUCVM();
             try
             {
+               
                 formularioValidacaoUC.UsuarioRequerenteId = LoginServer.RetornarUsuarioLogado(User.Identity.Name).Id;
                 if (formularioValidacaoUC.Id != 0)
                 {
@@ -106,8 +107,9 @@ namespace SCIR.Controllers
                     FormularioValidacaoUCServer.Novo(formularioValidacaoUC, files, Server);
                     model.Consistencia.Add("Incluido com sucesso! Protocolo: " + formularioValidacaoUC.Protocolo, ConsisteUtils.Tipo.Sucesso);
                     model.FormularioValidacaoUC = new FormularioValidacaoUC();
-                    
+
                 }
+             
             }
             catch (Exception e)
             {
