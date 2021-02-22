@@ -99,7 +99,7 @@ namespace SCIR.DAO.Formularios
             throw new NotImplementedException();
         }
 
-        public void Update(FormularioValidacaoUC entidade)
+        public FormularioValidacaoUC Update(FormularioValidacaoUC entidade)
         {
             using (var context = new ScirContext())
             {
@@ -136,6 +136,8 @@ namespace SCIR.DAO.Formularios
 
                 context.FormularioValidacaoUC.Update(requerimento);
                 context.SaveChanges();
+
+                return requerimento;
             }
         }
     }

@@ -10,6 +10,8 @@ namespace SCIR.Datacontract.Grid
     {
         public string TipoRequerimentoNome { get; set; }
         public string StatusRequerimentoNome { get; set; }
+        public string RequerenteNome { get; set; }
+        public string AtendenteNome { get; set; }
         public string AberturaToString { get; set; }
         public int TotalItensGrid { get; set; }
     }

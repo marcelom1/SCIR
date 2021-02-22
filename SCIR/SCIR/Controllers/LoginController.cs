@@ -65,7 +65,7 @@ namespace SCIR.Controllers
             CaptchaReponse response = ValidateCaptcha(Request["g-recaptcha-response"]);
             if (response.Success)
             {
-                var url = Request.Url.Authority;
+                var url = Request.Url.DnsSafeHost;
 
                 var usuario = LoginServer.BuscarEmailCadastrado(email);
                 if (usuario == null)

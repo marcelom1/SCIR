@@ -23,5 +23,16 @@ namespace SCIR.Models
             TipoValidacaoCurricular = new TipoValidacaoCurricular();
         }
 
+        public FormularioValidacaoUC(FormularioValidacaoUC entidade) : base(entidade)
+        {
+            UnidadeCurricularId = entidade.UnidadeCurricularId;
+            UnidadeCurricular = entidade.UnidadeCurricular;
+            Motivo = entidade.Motivo;
+            TipoValidacaoCurricularId = entidade.TipoValidacaoCurricularId;
+            TipoValidacaoCurricular = entidade.TipoValidacaoCurricular;
+            Nome = entidade.Nome;
+
+        }
+
     }
 }

@@ -107,7 +107,7 @@ namespace SCIR.Business.Login
                 var uServer = new UsuarioServer();
                 novoUsuario = uServer.Novo(novoUsuario);
 
-                url += $"/Login/ConfirmacaoEmail?id={novoUsuario.Id}&s={novoUsuario.Senha}";
+                url += $"/Login/ConfirmacaoEmail?id={novoUsuario.Id}&s={senha}";
 
                 var textEmail = ($@"Seja Bem-Vindo ao SCIR-IFSC <br><br> Foi criado o seu usuário e senha, para acessar deve entrar no link a baixo para ativar a sua conta<br> {url} <br><br> E a sua senha após entrar no link anterior provisória é: <br>{senha} <br><br>Após efetuar o login é aconselhavel trocar a sua senha no sistema imediatamente!");
                 EnvioEmail.SendMailGeneric(novoUsuario, textEmail, "Conta de Usuário SCIR - IFSC");
@@ -119,20 +119,23 @@ namespace SCIR.Business.Login
         internal void ConfirmacaoEmail(int id, string senha)
         {
             var usuario = dbUsuario.BuscarPorId(id);
-            var senhaDescript = cripto.Decrypt(usuario.SenhaReset);
-            if (senhaDescript == senha)
+            if (usuario.SenhaReset != null)
             {
-                if (usuario.Senha == usuario.SenhaReset)//Significa que é usuário novo, e deve ativar ele no cadastro
-                    usuario.Ativo = true;
-                else //Senão é um usuário querendo recuperar a senha, não deve mudar o status ativo do usuário
-                    usuario.Senha = usuario.SenhaReset;
+                var senhaDescript = cripto.Decrypt(usuario.SenhaReset);
+                if (senhaDescript == senha)
+                {
+                    if (usuario.Senha == usuario.SenhaReset)//Significa que é usuário novo, e deve ativar ele no cadastro
+                        usuario.Ativo = true;
+                    else //Senão é um usuário querendo recuperar a senha, não deve mudar o status ativo do usuário
+                        usuario.Senha = usuario.SenhaReset;
 
-                usuario.SenhaReset = "";
-                var uServer = new UsuarioServer();
-                uServer.Atualizar(usuario,true);
+                    usuario.SenhaReset = "";
+                    var uServer = new UsuarioServer();
+                    uServer.Atualizar(usuario, true);
+                }
+                else
+                    throw new Exception("Código de autenticação não é valido");
             }
-            else
-                throw new Exception("Código de autenticação não é valido");
         }
 
         private string GeraSenhaAleatoria()

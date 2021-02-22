@@ -158,18 +158,26 @@ namespace SCIR.DAO.Cadastros
             }
         }
 
-        public IList<Usuario> ListProximos(Requerimento requerimento, string searchTerm)
+        public IList<Usuario> ListProximos(Requerimento requerimento, string searchTerm, int statusId)
         {
             using (var contexto = new ScirContext())
             {
-                
-                var entidade =  contexto.Usuario.Where(a=> (a.Id == requerimento.UsuarioRequerenteId ||
-                                                            a.PapelId == (int)PapelDao.PapelUsuario.Servidor || 
-                                                            a.PapelId == (int)PapelDao.PapelUsuario.Administrador) && 
-                                                            (a.Ativo == true))
-                                                .AsTracking()
-                                                .ToList();
- 
+                List<Usuario> entidade;
+                if (statusId == (int)StatusRequerimentoEnum.StatusPadrao.AguardandoEsclarecimento || statusId == (int)StatusRequerimentoEnum.StatusPadrao.Deferido || statusId == (int)StatusRequerimentoEnum.StatusPadrao.Indeferido)
+                {
+                    entidade = contexto.Usuario.Where(a => (a.Id == requerimento.UsuarioRequerenteId))
+                                                    .AsTracking()
+                                                    .ToList();
+                }
+                else
+                {
+                    entidade = contexto.Usuario.Where(a => (a.Id == requerimento.UsuarioRequerenteId ||
+                                                               a.PapelId == (int)PapelDao.PapelUsuario.Servidor ||
+                                                               a.PapelId == (int)PapelDao.PapelUsuario.Administrador) &&
+                                                               (a.Ativo == true))
+                                                    .AsTracking()
+                                                    .ToList();
+                }
                
                 return entidade;
             }

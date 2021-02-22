@@ -140,13 +140,18 @@ namespace SCIR.Controllers
             var response = AuditoriaServer.FiltroPorRequerimento(requerimentoId);
             var text = "";
             var dataAnterior = "";
+            var quebraLN = "";
             foreach (var item in response)
             {
-                var data = item.DataModificacao.ToString("dd/MM/yyyy");
+                var data = item.DataModificacao.ToString("dd/MM/yyyy HH:mm");
                 if (dataAnterior != data)
-                    text += "\n" + data;
+                {
+                    text += quebraLN + data + "\n";
+                    quebraLN = "\n\n";
+                    dataAnterior = data;
+                }
 
-                text += $" - Campo: {item.Campo}, \n Antes: {item.Antes}, \n Depois: {item.Depois} \n\n";
+                text += $"Campo: {item.Campo},   Antes: {item.Antes},     Depois: {item.Depois} \n";
             }
             @ViewBag.Text = text;
             return PartialView();
@@ -301,7 +306,17 @@ namespace SCIR.Controllers
                 request.CampoOrdenacao = "TIPOREQUERIMENTO ASC";
             else if (request.CampoOrdenacao == "TIPOREQUERIMENTONOME DESC")
                 request.CampoOrdenacao = "TIPOREQUERIMENTO DESC";
-           
+
+            
+            else if (request.CampoOrdenacao == "REQUERENTENOME ASC")
+                request.CampoOrdenacao = "REQUERENTE ASC";
+            else if (request.CampoOrdenacao == "REQUERENTENOME DESC")
+                request.CampoOrdenacao = "REQUERENTE DESC";
+
+            else if (request.CampoOrdenacao == "ATENDENTENOME ASC")
+                request.CampoOrdenacao = "ATENDENTE ASC";
+            else if (request.CampoOrdenacao == "ATENDENTENOME DESC")
+                request.CampoOrdenacao = "ATENDENTE DESC";
         }
 
         [Authorize(Roles = "ADMINISTRADOR")]
@@ -368,13 +383,13 @@ namespace SCIR.Controllers
 
         [WebMethod()]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public JsonResult GetProximoAtendente(string searchTerm, int requerimentoId)
+        public JsonResult GetProximoAtendente(string searchTerm, int requerimentoId, int statusId)
         {
             var usuario = LoginServer.RetornarUsuarioLogado(User.Identity.Name);
-            var request = new RequerimentoVM { Id = requerimentoId };
+            var request = new RequerimentoVM { Id = requerimentoId};
             var requerimento = ServerRequerimento.GetRequerimentoId(request, usuario);
 
-            var status = UsuarioServer.GetProximoAtendente(requerimento, searchTerm);
+            var status = UsuarioServer.GetProximoAtendente(requerimento, searchTerm, statusId);
 
             var modifica = status.Select(x => new
             {

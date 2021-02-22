@@ -13,7 +13,7 @@ namespace SCIR.DAO
         void Insert(T entidade);
         IPagedList<T2> ListGrid(FormatGridUtils<T> request);
         T BuscarPorId(int id);
-        void Update(T entidade);
+        T Update(T entidade);
         void Delete(T entidade);
         IList<T> FiltroPorColuna(string coluna, string searchPhrase);
     }

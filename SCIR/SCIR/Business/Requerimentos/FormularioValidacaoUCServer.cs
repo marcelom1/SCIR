@@ -104,7 +104,7 @@ namespace SCIR.Business.Requerimentos
             {
                 var pesquisa = GetEntidade(formularioValidacaoUC.Id);
                 dbFormularioValidacaoUC.Delete(formularioValidacaoUC);
-                GerarAuditoria(pesquisa, formularioValidacaoUC, AuditoriaServer.TipoAuditoria.Delete);
+                GerarAuditoria(pesquisa, new FormularioValidacaoUC(), AuditoriaServer.TipoAuditoria.Delete);
             }
 
             return formularioValidacaoUC;
@@ -119,17 +119,19 @@ namespace SCIR.Business.Requerimentos
 
             var pesquisa = GetEntidade(formularioValidacaoUC.Id);
 
-            pesquisa.StatusRequerimentoId = StatusRequerimentoServer.GetEntidadeCodigoInterno(3).Id;
-            pesquisa.UsuarioAtendenteId = RequerimentoServer.PrimeiroAtendimento(formularioValidacaoUC);
-            pesquisa.Motivo = formularioValidacaoUC.Motivo;
-            pesquisa.UnidadeCurricularId = formularioValidacaoUC.UnidadeCurricularId;
-            pesquisa.TipoValidacaoCurricularId = formularioValidacaoUC.TipoValidacaoCurricularId;
-            pesquisa.Mensagem = "";
+            var requerimento = new FormularioValidacaoUC(pesquisa);//Gerar um cópia e não um referencia de objeto
 
-            dbFormularioValidacaoUC.Update(pesquisa);
+            requerimento.StatusRequerimentoId = StatusRequerimentoServer.GetEntidadeCodigoInterno(3).Id;
+            requerimento.UsuarioAtendenteId = RequerimentoServer.PrimeiroAtendimento(formularioValidacaoUC);
+            requerimento.Motivo = formularioValidacaoUC.Motivo;
+            requerimento.UnidadeCurricularId = formularioValidacaoUC.UnidadeCurricularId;
+            requerimento.TipoValidacaoCurricularId = formularioValidacaoUC.TipoValidacaoCurricularId;
+            requerimento.Mensagem = "";
+
+            requerimento = dbFormularioValidacaoUC.Update(requerimento);
             ArquivosRequerimentoServer.ExcluirPorStringList(arquivosDeletados);
-            ArquivosRequerimentoServer.Novo(pesquisa, files, server);
-            GerarAuditoria(pesquisa, formularioValidacaoUC,AuditoriaServer.TipoAuditoria.Update);
+            ArquivosRequerimentoServer.Novo(requerimento, files, server);
+            GerarAuditoria(pesquisa, requerimento, AuditoriaServer.TipoAuditoria.Update);
 
             return pesquisa;
           

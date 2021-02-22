@@ -158,9 +158,10 @@ namespace SCIR.Business.Cadastros
             return dbUsuario.FiltroPorColuna(coluna, searchTerm, retornarApenasAdmServidores);
         }
 
-        public IList<Usuario> GetProximoAtendente(Requerimento requerimento, string searchTerm)
+        public IList<Usuario> GetProximoAtendente(Requerimento requerimento, string searchTerm, int statusId)
         {
-            return dbUsuario.ListProximos(requerimento, searchTerm);
+            var status = new StatusRequerimentoServer().GetEntidade(statusId);
+            return dbUsuario.ListProximos(requerimento, searchTerm, status.CodigoInterno);
         }
     }
 }

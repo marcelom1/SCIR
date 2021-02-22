@@ -19,7 +19,8 @@
             data: function (params) {
                 return {
                     searchTerm: params.term,
-                    requerimentoId: $("#RequerimentoId").val()
+                    requerimentoId: $("#RequerimentoId").val(),
+                    statusId: $("#Select2_Status").val()
                 };
             },
 

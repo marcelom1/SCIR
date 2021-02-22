@@ -93,7 +93,7 @@ namespace SCIR.DAO.Formularios
                                 join c in contexto.Usuario on a.UsuarioRequerenteId equals c.Id
                                 join d in contexto.StatusRequerimento on a.StatusRequerimentoId equals d.Id
                                 join e in contexto.TipoRequerimento on a.TipoRequerimentoId equals e.Id
-                                where (!string.IsNullOrWhiteSpace(request.SearchPhrase) ? (EF.Functions.Like(d.Nome, "%" + request.SearchPhrase + "%") || EF.Functions.Like(e.Nome, "%" + request.SearchPhrase + "%") || EF.Functions.Like(a.Protocolo,"%"+request.SearchPhrase+"%"))  && ((filtrarPorAtendente || filtrarPorRequerente) ? (filtrarPorAtendente? a.UsuarioAtendenteId == request.Entidade.UsuarioAtendenteId : 1 == 2 ) || (filtrarPorRequerente? a.UsuarioRequerenteId == request.Entidade.UsuarioRequerenteId : 1 == 2): 1 == 1) : 
+                                where (!string.IsNullOrWhiteSpace(request.SearchPhrase) ? (EF.Functions.Like(d.Nome, "%" + request.SearchPhrase + "%") || EF.Functions.Like(e.Nome, "%" + request.SearchPhrase + "%") || EF.Functions.Like(a.Protocolo,"%"+request.SearchPhrase+"%") || EF.Functions.Like(b.Nome, "%" + request.SearchPhrase + "%") || EF.Functions.Like(c.Nome, "%" + request.SearchPhrase + "%"))  && ((filtrarPorAtendente || filtrarPorRequerente) ? (filtrarPorAtendente? a.UsuarioAtendenteId == request.Entidade.UsuarioAtendenteId : 1 == 2 ) || (filtrarPorRequerente? a.UsuarioRequerenteId == request.Entidade.UsuarioRequerenteId : 1 == 2): 1 == 1) : 
                                         (filtrarPorAtendente || filtrarPorRequerente)? ((filtrarPorAtendente ? a.UsuarioAtendenteId == request.Entidade.UsuarioAtendenteId : 1 == 2) || (filtrarPorRequerente ? a.UsuarioRequerenteId == request.Entidade.UsuarioRequerenteId : 1 == 2)) : 
                                         1 == 1)
                                 select new
@@ -104,7 +104,9 @@ namespace SCIR.DAO.Formularios
                                     a.TipoRequerimentoId,
                                     TipoRequerimento = e.Nome,
                                     a.StatusRequerimentoId,
-                                    StatusRequerimento = d.Nome
+                                    StatusRequerimento = d.Nome,
+                                    Requerente = c.Nome,
+                                    Atendente = b.Nome
                                 };
 
 
@@ -125,7 +127,9 @@ namespace SCIR.DAO.Formularios
                        StatusRequerimentoNome = item.StatusRequerimento,
                        StatusRequerimentoId = item.StatusRequerimentoId,
                        Protocolo = item.Protocolo,
-                       TotalItensGrid = listFluxoStatus.TotalItemCount
+                       TotalItensGrid = listFluxoStatus.TotalItemCount,
+                       AtendenteNome = item.Atendente,
+                       RequerenteNome = item.Requerente
                     });
                 }
                 var retorno = lista.ToPagedList(1, request.RowCount);
