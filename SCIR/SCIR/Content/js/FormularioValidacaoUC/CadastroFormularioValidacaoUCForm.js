@@ -106,20 +106,23 @@ $(document).ready(function () {
     
     var keyArquivo = 0;
     $("#fileUpload").on("change", function () {
+        console.log("Inicio");
         var formDataTemp = new FormData();
         var j = 0;
         for (var pair of formData.entries()) {
             j++;
             formDataTemp.append(j, pair[1])
         }
-        
+        console.log("Meio");
         var files = $(this).get(0).files;
         for (var i = 0; i < files.length; i++) {
             j++;
             formDataTemp.append(j, files[i]);
+            console.log("teste");
         }
         formData = formDataTemp;
         AtualizarGridArquivo();
+        $(this).val('');
        
     })
 
@@ -176,6 +179,7 @@ function AtualizarGridArquivo() {
             if (pair.Id == s) {
                 pularSequencia = true;
                 console.log(pularSequencia);
+                console.log("Pulou " + s);
                 break;
                 
             }
@@ -201,6 +205,7 @@ function RemoverArquivo(sequencia, idArquivo) {
     console.log(idArquivo)
     if (idArquivo == null) {
         console.log(idArquivo + "TESTE");
+        console.log(sequencia +" - "+ arquivosCarregados);
         formData.delete(sequencia - arquivosCarregados)
         var formDataTemp = new FormData();
         var j = 0;
